@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>X2 · מה סיכמנו 8.11</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&family=Rubik:wght@500;700&display=swap');
+:root{--bg:#f6f7f9;--surface:#ffffff;--fg:#14181f;--muted:#56606e;--line:#d9dee5;--line-strong:#b8c0cb;
+--accent:#1d4fa8;--accent-fg:#ffffff;--accent-soft:#e4ecfa;
+--ok:#14683a;--ok-bg:#dcf1e3;--wait:#8a5200;--wait-bg:#fbebcc;--doubt:#a3243f;--doubt-bg:#fadde3;--cancel:#4b5563;--cancel-bg:#e5e7eb;
+--change-bg:#fff6dc;--change-line:#d9a21b;--guess-bg:#e8f0fb;--focus:#1d4fa8; color-scheme:light;
+--font-body:'Heebo','Assistant',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+--font-head:'Rubik','Heebo',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+--font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f1319;--surface:#171c24;--fg:#e6e9ee;--muted:#9aa5b4;--line:#2a323d;--line-strong:#3d4856;
+--accent:#7fa8f0;--accent-fg:#0b1320;--accent-soft:#1c2a45;
+--ok:#7ad9a0;--ok-bg:#12301f;--wait:#f1c36b;--wait-bg:#3a2a0b;--doubt:#f09aaa;--doubt-bg:#3d151f;--cancel:#aab3bf;--cancel-bg:#2a2f37;
+--change-bg:#2d2610;--change-line:#c9971f;--guess-bg:#16233a;--focus:#7fa8f0; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1319;--surface:#171c24;--fg:#e6e9ee;--muted:#9aa5b4;--line:#2a323d;--line-strong:#3d4856;
+--accent:#7fa8f0;--accent-fg:#0b1320;--accent-soft:#1c2a45;
+--ok:#7ad9a0;--ok-bg:#12301f;--wait:#f1c36b;--wait-bg:#3a2a0b;--doubt:#f09aaa;--doubt-bg:#3d151f;--cancel:#aab3bf;--cancel-bg:#2a2f37;
+--change-bg:#2d2610;--change-line:#c9971f;--guess-bg:#16233a;--focus:#7fa8f0; color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:50}
+.wrap{max-width:920px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 72px}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:3px}
+h1,h2,h3{font-family:var(--font-head);line-height:1.25;margin:0}
+.hd h1{font-size:clamp(1.7rem,5vw,2.3rem);font-weight:700;letter-spacing:-.01em}
+.hd .lede{margin:.6rem 0 0;max-width:65ch;color:var(--muted)}
+.counts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;padding:0;list-style:none}
+.counts li{font-size:.85rem;border:1px solid var(--line-strong);border-radius:999px;padding:3px 12px;background:var(--surface)}
+.counts b{font-variant-numeric:tabular-nums}
+section{margin-top:44px}
+section>h2{font-size:1.35rem;font-weight:700;padding-bottom:8px;border-bottom:2px solid var(--fg);margin-bottom:16px}
+section>h2 small{font-family:var(--font-body);font-weight:400;font-size:.85rem;color:var(--muted);margin-inline-start:8px}
+.sum{margin:0;padding-inline-start:1.2rem;max-width:72ch}
+.sum li{margin-bottom:.7rem}
+.how{margin-top:14px;font-size:.88rem;color:var(--muted);max-width:72ch}
+.how summary{cursor:pointer;color:var(--fg)}
+.how p{margin:.5rem 0}
+.chip{display:inline-block;font-size:.76rem;font-weight:700;line-height:1.4;padding:1px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap;vertical-align:baseline}
+.chip-ok{color:var(--ok);background:var(--ok-bg)}
+.chip-wait{color:var(--wait);background:var(--wait-bg)}
+.chip-doubt{color:var(--doubt);background:var(--doubt-bg)}
+.chip-cancel{color:var(--cancel);background:var(--cancel-bg)}
+code{font-family:var(--font-mono);font-size:.85em;background:var(--accent-soft);padding:0 4px;border-radius:3px}
+del{color:var(--muted)}
+.ref{font-family:var(--font-mono);font-size:.78em;color:var(--muted);font-variant-numeric:tabular-nums;unicode-bidi:isolate}
+.dl{font-weight:500}
+/* doubts */
+.doubts{display:grid;gap:14px}
+.doubt{background:var(--surface);border:1px solid var(--line);border-inline-start:4px solid var(--doubt);padding:14px 16px;border-radius:4px}
+.doubt h3{display:flex;gap:12px;align-items:baseline;font-size:1.05rem;font-weight:700}
+.doubt .num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;color:var(--doubt);font-size:1.15rem;min-width:1.6rem}
+.r{margin-top:10px;max-width:70ch}
+.k{font-size:.74rem;font-weight:700;letter-spacing:.02em;color:var(--muted);margin-bottom:2px}
+.r.quote .v{font-size:.85rem;color:var(--muted);border-inline-start:2px solid var(--line-strong);padding-inline-start:10px}
+.r.guess{background:var(--guess-bg);padding:8px 12px;border-radius:4px}
+.r.guess .k{color:var(--accent)}
+/* worklist */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.88rem;cursor:pointer;border:1px solid var(--line-strong);background:var(--surface);color:var(--fg);padding:5px 14px;border-radius:999px}
+.bar button[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.bar .shown{font-size:.82rem;color:var(--muted);margin-inline-start:auto;font-variant-numeric:tabular-nums}
+.entries{margin-top:4px}
+.entry{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:8px 22px;padding:20px 0;border-bottom:1px solid var(--line)}
+.entry[hidden]{display:none}
+.side .tc{font-family:var(--font-mono);font-weight:600;font-size:1.25rem;font-variant-numeric:tabular-nums;line-height:1.2;color:var(--accent)}
+.side .tcrest{font-size:.8rem;color:var(--muted);margin-top:4px}
+.side .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.donebox{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:.88rem;cursor:pointer}
+.donebox input{width:18px;height:18px;accent-color:var(--accent)}
+.main{min-width:0}
+.en{font-size:1.1rem;font-weight:700;margin-bottom:6px}
+.f{margin-top:10px;max-width:70ch}
+.f.do .v{font-size:1rem}
+.f.change{background:var(--change-bg);border-inline-start:4px solid var(--change-line);padding:8px 12px;border-radius:4px}
+.f.nochange .v{color:var(--muted)}
+.f.who .v{font-size:.92rem}
+.f.src{max-width:none}
+.f.src .v{font-size:.8rem;color:var(--muted);line-height:1.55}
+.f.st .v{font-size:.9rem}
+.f ul{margin:.4rem 0 0;padding-inline-start:1.2rem}
+.f li{margin-bottom:.35rem}
+.entry.cancelled .en,.entry.cancelled .tc{text-decoration:line-through;text-decoration-thickness:2px}
+.entry.cancelled{background:repeating-linear-gradient(135deg,transparent 0 10px,var(--cancel-bg) 10px 11px)}
+.entry.cancelled .do .v,.entry.cancelled .change .v{text-decoration:none}
+.entry.isdone .main{opacity:.55}
+.entry.isdone .tc{opacity:.55}
+.empty{padding:24px 0;color:var(--muted)}
+/* generic lists */
+.newlist{margin:0;padding-inline-start:1.6rem;max-width:72ch}
+.newlist li{margin-bottom:.8rem}
+.newlist li::marker{font-family:var(--font-mono);color:var(--accent);font-variant-numeric:tabular-nums}
+.cl h3{font-size:1rem;margin:22px 0 8px}
+.cl ul{list-style:none;margin:0;padding:0;max-width:74ch}
+.cl li{border-bottom:1px solid var(--line)}
+.cl label{display:flex;gap:10px;align-items:flex-start;padding:9px 0;cursor:pointer}
+.cl input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--accent)}
+.cl input:checked+span{color:var(--muted);text-decoration:line-through}
+.money{margin:0;padding-inline-start:1.2rem;max-width:72ch}
+.money li{margin-bottom:.8rem}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);font-size:.86rem;color:var(--muted);max-width:75ch}
+footer p{margin:.4rem 0}
+@media (max-width:640px){
+.entry{grid-template-columns:minmax(0,1fr);gap:4px}
+.side{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;align-items:center}
+.side .tcrest{grid-column:1 / -1;order:3}
+.side .chips{margin-top:0}
+.side .donebox{grid-column:1 / -1;order:4;margin-top:4px}
+.bar .shown{margin-inline-start:0;width:100%}
+}
+@media (prefers-reduced-motion: no-preference){
+.bar button,.entry .main,.entry .tc{transition:opacity .15s ease,background-color .15s ease}
+}
+</style>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="he">
+<div class="hd"><h1>X2 · מה סיכמנו 8.11</h1>
+<p class="lede">4 זומים, 8.11.26, עם איתן שמואלוף (המפיק). מבוסס על מסמך ההנחיות שלו לקאט 5.4 (7.11) ועל מה שנאמר ונראה בשיחות.</p>
+<ul class="counts"><li><b>41</b> סעיפים</li><li><b>11</b> ספקות</li><li><b>8</b> ממתינים ללקוח</li></ul>
+<details class="how"><summary>איך קוראים את מראי המקום</summary><p>מקורות: <code>guidelines.txt</code> (המסמך של שמואלוף לקאט 5.4, נשלח 7.11) + ארבעה חילוצים + בדיקה חוזרת בתמלולים ובפריימים במקומות שהיו לא ברורים או סותרים.</p><p>קיצורי מקור: <code><span class="ref">[זום 10:38, 12:34]</span></code> = השיחה שהתחילה ב-10:38, דקה 12:34 בתוכה. השיחות: 10:20 (פנימית, איתן ונדב), 10:38, 11:22, 12:01 (שלושתן עם שמואלוף). פריים <code>m2 f_0066</code> = צילום מסך מהשיחה של 10:38.</p><p>ציטוטים בתוך «» הם מהתמלול (Whisper, יש שגיאות). פרשנות תמיד מחוץ לציטוט. התמלול בלי הפרדת דוברים, ולכן ייחוס דובר מסומן "לפי ההקשר".</p><p>טיימקודים במסמך = נגן ה-Drive של קאט 5.4 בשניות, לא פריימים. שמואלוף: «זה לא על הפריימים, זה על השנייה, אבל התיאור מאוד מגדיר את השוטים» <span class="ref">[זום 10:38, 06:57]</span>.</p><p>ביקורת שלמות 8.11: כל 185 הסעיפים של רשימת SWEEP הוצלבו מול הקובץ הזה, וכל ארבעת התמלולים נקראו מחדש מתחילה ועד סוף. התוספות והתיקונים מפורטים ב-<code>AUDIT.md</code>. הגרסה הקודמת: <code>MASTER_before_audit.md</code>.</p></details></div>
+<section id="oneline"><h2>בשורה אחת</h2><ul class="sum"><li>ארבעה זומים היום: שיחת הכנה פנימית (איתן ונדב), ואז שלוש שיחות רצופות עם שמואלוף שעברו על כל המסמך של קאט 5.4 מ-00:00 עד 02:04 (הזום נקטע פעמיים בגלל מגבלת זמן).</li><li>השינויים הגדולים מול המסמך: <strong>01:56 בוטל</strong> (נשאר שחור לבן עם צלב, ההערה נמחקה). <strong>סדר חדש ב-01:07 עד 01:22</strong>: מעבר רחפן לעיט בלי קראש זום, ואז שוט רחפן חדש מהצד (נבנה מחדש משוט 01:19) לפני הטאבלט. <strong>קיצור שוט העיט ב-01:13 בוטל</strong> («לא צריך קיצור»). <strong>כותרות הרש"קים ב-00:48 בצד ולא מעליהם</strong> (שמואלוף «הולך עם נדב»). <strong>01:07: הרוטורים מתחילים לזוז עוד לפני המילה Launch</strong>. <strong>הרקע של התצפיתן ב-00:54 נשאר</strong>, בהשתקפות רק טשטוש ולא טנקים. <strong>סביבת העיט = סוואנה של האריה והנמר</strong>. <strong>00:55 ו-01:00</strong>: שוט המשקפת צמוד יותר, שוט 01:00 רחוק בהרבה. <strong>01:57</strong>: קאט לטנק מתפוצץ רגע לפני שהטפרים נוגעים. <strong>כותרת 02:00 נדחית</strong> לשלב הכותרות.</li><li>מה חוסם: הצבע של רקע "פריים 0" (שמואלוף שואל את רפאל, וזה חוסם את הרחפן בפתיחה, את אנימציית הרש"קים ואת הכותרת), תוכן כל מסכי הטאבלט (אחרי שיחה של שמואלוף עם המנהל הטכנולוגי של רפאל), אייקון טנק, רפרנס טנק נוסע, שוטים נקיים לפתיחה. שמואלוף ביקש במפורש לא לעשות עבודה כבדה בלי אישור מראש.</li><li>כסף ותאריכים: לא נאמר עליהם דבר בשיחות עם שמואלוף. תוספת המחיר על העיט עדיין לא סגורה.</li><li>איך עובדים מולו: שמואלוף «סיים עם האופליין» (רק מרכיבים שוטים), <strong>לא רוצה סיכום כתוב</strong> (יש לו את המסמך), זמין כל הזמן חוץ מ-9.11 בין 14:30 ל-17:00, וביקש «להיות נודניקים»: לבקש אישור לפני כל עבודה לא ודאית.</li></ul></section>
+<section id="doubts"><h2>ספקות לדבר עליהם <small>11, לפי חשיבות לעבודה</small></h2><div class="doubts"><article class="doubt" id="doubt-1">
+<h3><span class="num">1</span><span>מי מבצע את שינוי הסדר ב-01:07 עד 01:22?</span></h3>
+<div class="r"><div class="k">למה לא ברור</div><div class="v">המסמך אומר שזה תיקון אופליין ששמואלוף עושה עם קלר. בשיחה הוחלט על סדר חדש (עיט, שוט שיבוש חדש מהצד, טאבלט, Abort), אבל לא נאמר מי עורך. בנפרד, שמואלוף אמר שהוא «סיים עם האופליין». (הקיצור של שוט העיט: אומת בתמלול שבוטל, «טוב, לא צריך קיצור», אחרי שהחלפת הסדר פתרה את הבעיה. זה כבר לא ספק.)</div></div>
+<div class="r quote"><div class="k">ציטוט</div><div class="v">«אני אומר שתחליפו את הסדר» <span class="ref">[זום 11:22, 25:41]</span>; «יכול להיות שאנחנו צריכים לעשות עם קלר» <span class="ref">[23:21]</span>; «אני בשאיפה סיימתי עם האופליין» <span class="ref">[זום 12:01, 10:46]</span>.</div></div>
+<div class="r guess"><div class="k">הניחוש שלנו</div><div class="v">אנחנו בונים את הסדר החדש בהרכבה שלנו ושולחים לשמואלוף לאישור, וקלר נכנס רק אם צריך לשנות אורכים.</div></div>
+</article>
+<article class="doubt" id="doubt-2">
+<h3><span class="num">2</span><span>מה בדיוק הניסוי במעבר רחפן לעיט (01:07), ומי שולח דוגמה לכיוונים?</span></h3>
+<div class="r"><div class="k">למה לא ברור</div><div class="v">עלו שתי חלופות (עיט על ענף/סלע באותו גודל וצורה כמו הרחפן, או עיט בפרופיל 90 מעלות גדול יותר בחיתוך בתנועה). שמואלוף אמר "הרעיון שלכם", אבל שתי החלופות עלו מהצד שלנו. בעיות הכיוונים נדחו "לתוך העבודה", ומישהו אמר שישלח דוגמה, לא ברור מי.</div></div>
+<div class="r quote"><div class="k">ציטוט</div><div class="v">«אני חושב שאת הרעיון שלי הוא הרבה יותר נכון» <span class="ref">[זום 11:22, 14:00]</span>; «בואו נלך על הרעיון שלכם, ננסה אותו ונראה עד כמה הוא עובד» <span class="ref">[14:08]</span>; «אני אעשה תיקון קטן ואני אשלח לכם [לאישור]» <span class="ref">[22:15]</span>.</div></div>
+<div class="r guess"><div class="k">הניחוש שלנו</div><div class="v">הרעיון של נדב (הקבלה בצורה ובגודל, עיט על ענף/סלע, בלי קראש זום). אנחנו שולחים לשמואלוף טסט אחד שפותר גם את הכיוונים.</div></div>
+</article>
+<article class="doubt" id="doubt-3">
+<h3><span class="num">3</span><span>תוספת המחיר על העיט: מי סוגר ומתי?</span></h3>
+<div class="r"><div class="k">למה לא ברור</div><div class="v">הובטחה "תוספת" בלי סכום, וההיקף גדל מאוד (חזירי יבלות, 01:46 עד 01:57, מורף, סביבה חדשה). בשיחות עם שמואלוף זה לא עלה בכלל, ואנחנו עומדים להתחיל לעבוד על זה.</div></div>
+<div class="r quote"><div class="k">ציטוט</div><div class="v">«עוד לא סגרנו מחיר, אבל שיהיה תוספת [תשלום] על הקטע של העיט» <span class="ref">[זום 10:20, 05:00]</span>; «זה רק כזה 2-3 שוטים של העיט... פה רשום פירוט כאילו של העיט, שהוא ממש כמו [הצ'יטה]» <span class="ref">[04:50 עד 04:54]</span>.</div></div>
+<div class="r guess"><div class="k">הניחוש שלנו</div><div class="v">נדב סוגר את הסכום לפני שמתחילים את שוטי העיט החדשים (01:46 עד 01:57). להחליט אם להעלות את זה כבר ב-9.11.</div></div>
+</article>
+<article class="doubt" id="doubt-4">
+<h3><span class="num">4</span><span>כותרות הרש"קים (00:48): איפה בדיוק בצד? (צומצם בביקורת)</span></h3>
+<div class="r"><div class="k">מה סגור (אומת בתמלול)</div><div class="v">הכותרות בצד ולא מעל («אל תשים את זה מעליהם... מהצד הימני שלהם», ושמואלוף «נדב המעצב, אני הולך איתו»), והפריים הייצוגי הולך לשמואלוף בלבד («לך, לא להם»).</div></div>
+<div class="r"><div class="k">מה נשאר פתוח</div><div class="v">רק המיקום המדויק. ההסבר בשיחה מבולבל («מכאן ומכאן אתה מתכוון? כן בדיוק», "עין מסתכלת למטה על האדום, למעלה על הנושא").</div></div>
+<div class="r quote"><div class="k">ציטוט</div><div class="v"><span class="ref">[זום 10:38, 28:42 עד 29:21]</span>.</div></div>
+<div class="r guess"><div class="k">הניחוש שלנו</div><div class="v">נדב בוחר (כנראה בסגנון תגית ה-SELECTED האדומה שבעיצוב B), והפריים הייצוגי סוגר את זה.</div></div>
+</article>
+<article class="doubt" id="doubt-5">
+<h3><span class="num">5</span><span>סביבת הלוחמים: כמה לייבש ולחמם את הירוק?</span></h3>
+<div class="r"><div class="k">למה לא ברור</div><div class="v">נדב רוצה סביבה חמה ויבשה שתתאים למדים המדבריים. ההערה על "חלקים יבשים" ב-24:50 נאמרה בלי שאפשר לזהות דובר (לפי ההקשר כנראה נדב, לא בהכרח שמואלוף), ואף אחד לא התנגד לה. המסמך אומר "פחות ירוק", ושמואלוף הסכים ש"יותר מדי ירוק" בולע את הרחפן. מצד שני שמואלוף אמר לעבוד מהרפרנס הירוק שאושר ולא לפתוח אישורים, והנושא "הושם בצד". בנוסף, לא ברור איזה מעיצובי הלוקיישן אושר: על אחד נאמר «זה לא טוב, זה לא אושר» ומיד «זה כאילו אושר».</div></div>
+<div class="r quote"><div class="k">ציטוט</div><div class="v">«זה צריך להיות באמצע בין ירוק לכתום, כי זה לבוש מדברי» <span class="ref">[זום 10:38, 30:47]</span>; «צריך לשים שם חלקים יבשים» <span class="ref">[24:50]</span>; «בואו שנייה נשים את זה בצד» <span class="ref">[32:06]</span>; «תתייחסו למה שאושר כבר, אני לא רוצה לפתוח... אישורים על רקע» <span class="ref">[זום 11:22, 03:28]</span>; «לא, זה לא טוב, זה לא אושר», «זה כאילו אושר» <span class="ref">[זום 11:22, 02:14 עד 02:16]</span>.</div></div>
+<div class="r guess"><div class="k">הניחוש שלנו</div><div class="v">נשארים על הרפרנס המאושר, מוסיפים כתמים יבשים סביב הלוחמים ומורידים קצת רוויה של ירוק, ושולחים פריים אחד לאישור לפני שמחילים על כל השוטים.</div></div>
+</article>
+<article class="doubt" id="doubt-6">
+<h3><span class="num">6</span><span>חיבור הרש"קים המצולמים לאנימציה (00:48): להפוך את כיוון השוט?</span></h3>
+<div class="r"><div class="k">למה לא ברור</div><div class="v">השוט המצולם נגמר כשהרש"קים כבר במקום, והאנימציה צריכה להתחיל מאותו מצב בדיוק. נדב הציע להפוך את הכיוון. התגובה (לפי ההקשר שמואלוף) הייתה חיובית, «זה רעיון», בלי התנגדות, אבל בלי אישור מפורש.</div></div>
+<div class="r quote"><div class="k">ציטוט</div><div class="v">«אפשר להפוך את השוט», «זה רעיון [של נדב] להפוך את הכיוון», «תהפוך את הכיוון ואז ניקח את החלק האחרון שלהם» <span class="ref">[זום 10:38, 27:08 עד 27:19]</span>.</div></div>
+<div class="r guess"><div class="k">הניחוש שלנו</div><div class="v">לבדוק אצלנו אם היפוך עובד (שימו לב לכתובת EXPLOSIVE על הרש"קים, היפוך מראה יהפוך אותה), ולשלוח לשמואלוף.</div></div>
+</article>
+<article class="doubt" id="doubt-7">
+<h3><span class="num">7</span><span>מים בעולם העיט: להוריד את האגם?</span></h3>
+<div class="r"><div class="k">למה לא ברור</div><div class="v">רפאל ביקשו בלי אסוציאציה לים, אגמים ומים (זו הסיבה שהדגים יצאו). השוט של 0:31/0:33, שנאמר עליו «יותר מתאים», כולל אגם. לא נאמר כלום על האגם עצמו.</div></div>
+<div class="r quote"><div class="k">ציטוט</div><div class="v">«הם לא רצו [שניתן] לזכרונות של ים ואגמים ומים» <span class="ref">[זום 10:38, 16:48]</span>; «זה דווקא יותר מתאים» <span class="ref">[16:16]</span>. פריים m2 f_0066.</div></div>
+<div class="r guess"><div class="k">הניחוש שלנו</div><div class="v">להוריד או לצמצם מים בכל שוטי העיט, ולשאול את שמואלוף בשורה אחת.</div></div>
+</article>
+<article class="doubt" id="doubt-8">
+<h3><span class="num">8</span><span>מה נשלח קודם, ומה עושים ב-9.11?</span></h3>
+<div class="r"><div class="k">למה לא ברור</div><div class="v">אף תאריך לא נאמר היום, ושמואלוף ביקש אישור על כל ספק. לפני היום דובר על גרסה להערות הנהלה ב-9.11. רוב הסעיפים הגדולים חסומים (צבע, מסכים, רפרנס טנק).</div></div>
+<div class="r quote"><div class="k">ציטוט</div><div class="v">«בלוחות זמנים מאוד צפופים» <span class="ref">[זום 10:38, 08:13]</span>; «לפני שנעשה דברים שאנחנו לא [בטוחים] נעשה להם אישורים» <span class="ref">[זום 12:01, 22:10]</span>.</div></div>
+<div class="r guess"><div class="k">הניחוש שלנו</div><div class="v">ב-9.11 לשלוח חבילת אישורים (פריים 0 אם תגיע תשובה, רש"קים B, ניסוי 01:07, סביבת לוחמים), ובמקביל להתקדם בסעיפים הסגורים שלא תלויים בלקוח (01:42, 01:48, 01:50, 01:54, 01:55, 01:57, Abort). לשאול את שמואלוף מה נמסר ב-9.11.</div></div>
+</article>
+<article class="doubt" id="doubt-9">
+<h3><span class="num">9</span><span>התצפיתן ב-00:54: "לא ברור שהם לא אחד ליד השני"</span></h3>
+<div class="r"><div class="k">למה לא ברור</div><div class="v">הוחלט להשאיר את הרקע, אבל אחרי הצפייה ברצף מישהו מהצד שלנו אמר שיש בעיה, ושמואלוף אמר "בוא נמשיך".</div></div>
+<div class="r quote"><div class="k">ציטוט</div><div class="v">«זה לא ברור שהם לא אחד ליד השני... יש לי פה בעיה», «בוא נמשיך» <span class="ref">[זום 10:38, 35:53 עד 36:04]</span>; קודם: «הרעיון היה להכניס... שוט רחפן שמקשר ביניהם, אבל זה לא עבד» <span class="ref">[32:49]</span>.</div></div>
+<div class="r guess"><div class="k">הניחוש שלנו</div><div class="v">משאירים כמו שסוכם. אם בהרכבה זה מבלבל, מציעים לשמואלוף פתרון זול (למשל הבדל ברור בצבע/סביבה בין התצפיתנים לצוות).</div></div>
+</article>
+<article class="doubt" id="doubt-10">
+<h3><span class="num">10</span><span>01:34: מוסיפים תנועה לטנקים בעדשה, או קודם בודקים?</span></h3>
+<div class="r"><div class="k">למה לא ברור</div><div class="v">איתן ב' התנגד (רבע שנייה), ואז "אני זורם איתך". אחר כך נאמר «תוותר על זה ובוא נראה מה יוצא», ולא ברור מי ויתר על מה.</div></div>
+<div class="r quote"><div class="k">ציטוט</div><div class="v">«אני זורם איתך... רבע שנייה... אבל בסדר», «תוותר על זה ובוא נראה מה יוצא, אם זה יורגש אז נחליף», «להכניס שם תנועה אחרי זה זה שטויות» <span class="ref">[זום 12:01, 03:39 עד 04:01]</span>.</div></div>
+<div class="r guess"><div class="k">הניחוש שלנו</div><div class="v">להוסיף תנועה, זה זול ושמואלוף ביקש במפורש.</div></div>
+</article>
+<article class="doubt" id="doubt-11">
+<h3><span class="num">11</span><span>01:57: מוסיפים שוט של בהלת החזיר לפני הטפרים?</span></h3>
+<div class="r"><div class="k">למה לא ברור</div><div class="v">נאמר (לפי ההקשר איתן ב', הדובר לא ודאי) שחסרה הירידה אליהם ושנייה של בהלת החזיר, אולי POV עיט. התשובה: בשוט הפתוח של 01:57 «אני יכול לראות החזיר נבהל פה. אתה רוצה שהוא ייבהל לפני?», ואז שמואלוף עבר לכיוון ("תבחרו") ולקאט לטנק, בלי החלטה על שוט נוסף.</div></div>
+<div class="r quote"><div class="k">ציטוט</div><div class="v">«חסר לי פה את הירידה אליהם... אין לי את השנייה הזאת של הבהלה של החזיר, או איזה משהו לפני... או POV עיט» <span class="ref">[זום 12:01, 19:15 עד 19:40]</span>; «אני יכול לראות החזיר נבהל פה» <span class="ref">[19:49 עד 19:53]</span>; «תבחרו [את] הכיוון שתבנו את זה» <span class="ref">[20:26]</span>.</div></div>
+<div class="r guess"><div class="k">הניחוש שלנו</div><div class="v">לא מוסיפים שוט. נותנים לחזיר להיבהל בתוך השוט הפתוח של 01:57 (או ב-01:52), ובודקים ברצף המחובר.</div></div>
+</article></div></section>
+<section id="worklist"><h2>רשימת העבודה לפי סדר הסרט <small>קאט 5.4, 41 סעיפים</small></h2>
+<div class="bar" role="group" aria-label="סינון לפי סטטוס"><button type="button" id="f-0" data-f="all" aria-pressed="true">הכל <span class="ref">41</span></button><button type="button" id="f-1" data-f="סגור" aria-pressed="false">סגור <span class="ref">28</span></button><button type="button" id="f-2" data-f="ממתין ללקוח" aria-pressed="false">ממתין ללקוח <span class="ref">8</span></button><button type="button" id="f-3" data-f="ספק" aria-pressed="false">ספק <span class="ref">6</span></button><button type="button" id="f-4" data-f="בוטל" aria-pressed="false">בוטל <span class="ref">2</span></button><span class="shown" id="shown" aria-live="polite"></span></div>
+<div class="entries" id="entries"><article class="entry" id="e1" data-status="ממתין ללקוח">
+<div class="side">
+<div class="tc"><bdi>00:00 עד 00:16</bdi></div>
+<div class="chips"><span class="chip chip-wait">ממתין ללקוח</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-1"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">מחיקת הכותרות מהשוטים</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">מוחקים את הכותרות מ-16 השניות הראשונות (שוטי הקליפ של רפאל). שמואלוף מנסה להשיג דרך רפאל את השוטים הנקיים ממי שהפיק להם את הקליפ, כדי לחסוך לנו את העבודה. בינתיים מתחילים מהסעיפים הבאים ולא מחכים.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת. ייתכן שנקבל שוטים נקיים ואז אין עבודה.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">שמואלוף ורפאל (השגת שוטים נקיים). אם לא יגיעו: אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 07:27 עד 08:13]</span>: «אני מנסה עדיין לבדוק איתם אם הם יכולים... ליצור קשר עם זה שעשה להם... ושישלח להם את השוטים נקיים, כדי לחסוך מכם עבודה», «נתחיל טיפה קדימה» <span class="ref">[08:00]</span>. פריימים m2 f_0035, f_0036.</div></div>
+</div></article>
+<article class="entry" id="e2" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>00:16 עד 00:17</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-2"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">Introducing: שוט רחפן קרוב יותר</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">אותו שוט, יותר קרוב, אבל הרחפן כולו בפריים (לא חותכים רוטורים, מקסימום טיפה מהכנפיים). מותר זום פנימה אם לא מאבדים איכות. הסיבוב איטי יותר, כך שיסתיים באותה זווית של השוט הבא ויתחבר אליו אחד לאחד בקאט און אקשן.</div></div>
+<div class="f nochange"><div class="k">מה השתנה מול המסמך</div><div class="v">לא השתנה. הבהרה: מותר זום פנימה.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 08:21 עד 09:24]</span>: «לא לחתוך לו את הרוטורים... אולי טיפה את הכנפיים», «לא יאבד איכות», «אחד לאחד, שהוא ימשיך אותו בקאט און אקשן». פריימים m2 f_0039, f_0042.</div></div>
+<div class="f"><div class="k">הערה</div><div class="v">בחילוץ של שיחת 11:22 ההערה «שוט ראשון יותר קרוב, שוט שני הרבה יותר רחוק» שויכה לכאן. בדיקה בתמלול מראה שהיא שייכת לשוטי המשקפת (ראו 00:55).</div></div>
+</div></article>
+<article class="entry" id="e3" data-status="ממתין ללקוח">
+<div class="side">
+<div class="tc"><bdi>00:16</bdi></div>
+<div class="tcrest">ואילך (רחפן בפתיחה, רש"קים 00:48, כותרת 02:00)</div>
+<div class="chips"><span class="chip chip-wait">ממתין ללקוח</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-3"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">רקע "פריים 0" במקום שחור</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">מחליפים את הרקע השחור בכל אנימציית הרחפן בפתיחה ברקע גרפי מספר המותג ("פריים 0"). אותו רקע חוזר בשלושה מקומות: הרחפן בפתיחה, אנימציית הרש"קים, הכותרת L-SPIKE 2X בסוף. חייב להיות בו עומק: נקודת מגוז עם אלמנט גרפי, או חלוקה לשני שליש ושליש. הכיוון שעלה: "לימבו כחול עמוק" לפי צבעי המותג. שולחים לאישור.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת. לפני שאנחנו בוחרים צבע, שמואלוף שואל את רפאל באיזו צבעוניות הם עובדים (ייתכן שזה לפי חטיבה: יבשה, חימוש). במסמך היה כתוב "לבחור ולשלוח לאישור".</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">שמואלוף מול רפאל (צבע). אנחנו (עיצוב). נדב הציע את נקודת המגוז.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 09:53 עד 13:15]</span>: «יש אותו בשלושה מקומות בסרט», «תנו לי לדבר איתם... אולי זה מחולק לחטיבות... תנו לי לראות על איזה צבע מתוך צבעוניות המותג הם הולכים» <span class="ref">[12:17 עד 12:31]</span>, «לימבו כחול עמוק... אני אשאל אותם» <span class="ref">[12:46 עד 12:51]</span>. נדב: «צריך לתת נקודת מגוז בשביל שזה לא יהיה לימבו» <span class="ref">[10:57]</span>. <span class="ref">[זום 12:01, 21:02 עד 21:42]</span>: «אתה עוד צריך לתת לנו תשובה עם [הצבעים], נכון? כן», «בואו נקבל בינתיים את האישור על הצבעים». ספר המותג על המסך: m2 f_0048 עד f_0051 (כחול כהה #0B0052, "כחול מתוק" #0061af, אדום #EE192B).</div></div>
+</div></article>
+<article class="entry" id="e4" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>00:26</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-4"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">רקע ריאליסטי לעולם העיט</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">מחליפים את הרקע של שוט העיט מלמעלה (נהר ויער אשוחים/"ברושים") לרקע ריאליסטי שמתכתב עם שוטי האריה והנמר שאחריו. הוחלט: <strong>הלוקיישן של האריה והנמר</strong> (סוואנה שטוחה ועשבית) הוא הסביבה של העיט לכל אורך הסרט, כי הוא קונטרסטי ללוקיישן של הלוחמים. לא מדובר בתיקון צבע, אלא באחידות של העולם.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">הבהרה. המסמך לא קבע איזה לוקיישן, בשיחה נבחר לוקיישן האריה והנמר.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 13:24 עד 16:27]</span>: «אני לא מדבר על קולור קורקשן, אני מדבר על... הסביבה שאנחנו מייצרים» <span class="ref">[14:22]</span>, «לדעתי הלוקיישן של הנמר והאריה יותר מתאים כי הוא קונטרסטי ללוקיישן של הלוחמים» ו«אוקיי, אז אנחנו הולכים על זה» <span class="ref">[15:40 עד 15:45]</span>, «מתקנים את הרקע של ה-point of view שלו מלמעלה שם עם הברושים» <span class="ref">[16:24]</span>. פריימים m2 f_0055, f_0060 עד f_0064.</div></div>
+<div class="f"><div class="k">הערת ביקורת</div><div class="v">ברשימה הבלתי תלויה (SWEEP) נכתב שלוקיישן האריה הוא "עצים גבוהים ואגם". בדיקה: בתמלול <span class="ref">[15:06 עד 15:20]</span> נאמר «תזכרו רגע את הלוק הזה של העצים הגבוהים עם האגם... ואז אתה הולך על זה... זה שטוח ודשא ולא אותם עצים, זה לוקיישן אחר». בפריימים m2 f_0062, f_0063 האריה רץ בסוואנה שטוחה ועשבית. כלומר "עצים גבוהים ואגם" הם הרקע שלפני (שוט העיט), והלוקיישן שנבחר הוא העשבי.</div></div>
+</div></article>
+<article class="entry" id="e5" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>00:31</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-5"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">החלפה לרקע הרלוונטי, ואיחוד כל רקעי העיט</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">מתאימים את השוט לרקע של עולם העיט, ומאחדים את כל רקעי שוטי העיט בסרט לאותה סביבה. בשיחה נאמר על שוט העיט מעל הסוואנה (בנגן 0:33) ש«זה דווקא יותר מתאים», כלומר הוא כבר קרוב לכיוון.</div></div>
+<div class="f nochange"><div class="k">מה השתנה מול המסמך</div><div class="v">לא השתנה. (ראו <a class="dl" href="#doubt-7">ספק 7</a> על האגם שבשוט.)</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 16:05 עד 16:20]</span>: «זה דווקא יותר מתאים», <span class="ref">[21:16]</span>: «לאחד את כל הרקעים של השוטים של העיט בסרט, חשוב שתראה אותה סביבה». פריים m2 f_0066 (נגן 0:33).</div></div>
+</div></article>
+<article class="entry" id="e6" data-status="ספק">
+<div class="side">
+<div class="tc"><bdi>00:33</bdi></div>
+<div class="chips"><span class="chip chip-doubt">ספק</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-6"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">רקעי תרחיש הלוחמים: ריאליסטי, לא מודבק</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">מכאן והלאה מחליפים את רקעי תרחיש הלוחמים כך שהלוחמים ייראו חלק טבעי מהסביבה. הבסיס: הרקע שכבר אושר (תמונות הרפרנס שנשלחו בוואטסאפ: גבעות ירוקות, סלעים, דרך רחוקה). לא פותחים מול רפאל מחדש את אישור הרקעים. הרף: הטסטים ששלחנו לשמואלוף («מושלם»). להכניס חלקים יבשים בסביבה, במיוחד באזור שבו הלוחמים נמצאים. <strong>הטנקים לא נראים בשוטים שרואים בהם את הלוחמים</strong> (הם 15 ק"מ מהם), גם אם ברפרנס המאושר הם מופיעים בדרך הרחוקה.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספות: חלקים יבשים, הסרת הטנקים משוטי הלוחמים, עבודה מתוך הרפרנס המאושר. המדים לא משתנים (ראו "דברים חדשים").</div></div>
+<div class="f"><div class="k">פרטים נוספים מהשיחה</div><div class="v">(א) הטסטים ששמואלוף מתכוון אליהם = מה שצולם עם ברטו ועם הבן של שמואלוף, נשלחו כסטריפ בקבוצה (נדב: «שלחתי את זה בקבוצה») <span class="ref">[זום 10:38, 21:55 עד 22:42]</span>. הוא שיבח גם את החלפת הרקע וגם את הטמעת הדמויות בתוכו. (ב) עיצובי הלוקיישן המאושרים <strong>נשלחו לנדב בפרטי, לא בקבוצה</strong> («לא שלחת בקבוצה, שלחת לי את זה»), סגנון: «אזור גשום, יותר מלא בירוק» <span class="ref">[זום 11:22, 01:47 עד 02:07]</span>. (ג) על אחד העיצובים נאמר «זה לא טוב, זה לא אושר» ומיד «זה כאילו אושר» <span class="ref">[02:14 עד 02:16]</span>, ראו <a class="dl" href="#doubt-5">ספק 5</a>. (ד) איתן ב': «אנחנו עוד לא התחלנו לעבוד על הרקעים באמת» <span class="ref">[02:48]</span>, ובהרצת הקאט: רוב השוטים עדיין בלי טיפול <span class="ref">[זום 10:38, 23:03 עד 23:39]</span>.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 21:23 עד 22:20]</span>: «הטסטים ששלחתם לי היו מדהימים... זה היה מושלם», <span class="ref">[24:36 עד 24:52]</span> (דובר לא ברור, לפי ההקשר כנראה נדב): «בשביל שהעיקרון של הקמופלאז' שלהם יעבוד בתוך הלוקיישן, צריך לשים שם חלקים יבשים, במיוחד באזור שהם נמצאים». <span class="ref">[זום 11:22, 03:00 עד 03:34]</span>: «תדעו שזה הרפרנס... קחו בחשבון», «הטנקים לא צריכים להיות בשוט הזה שרואים את החיילים», «תתייחסו למה שאושר כבר, אני לא רוצה לפתוח... אישורים על רקע». פריימים m3 f_0009 עד f_0015 (הרפרנס המאושר).</div></div>
+<div class="f st"><div class="k">סטטוס</div><div class="v"><span class="chip chip-doubt">ספק</span> (כמה לייבש ולחמם את הסביבה הירוקה, ראו <a class="dl" href="#doubt-5">ספק 5</a>)</div></div>
+</div></article>
+<article class="entry" id="e7" data-status="ספק">
+<div class="side">
+<div class="tc"><bdi>00:48</bdi></div>
+<div class="chips"><span class="chip chip-doubt">ספק</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-7"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">חיבור שני הרש"קים המצולמים לאנימציה (1:1)</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">בשוט המצולם של שני הרש"קים מחליפים רקע. המעבר לאנימציה חייב להיות אחד לאחד: אותו גודל בפריים, אותו מרחק ויחס ביניהם, אותה תנועה בדיוק. אחרי המעבר מותר להפריד ביניהם ולשחק איתם באנימציה.</div></div>
+<div class="f nochange"><div class="k">מה השתנה מול המסמך</div><div class="v">לא השתנה. עלתה בעיה: השוט המצולם נגמר כשהרש"קים כבר "עומדים", ונדב הציע להפוך את כיוון השוט כדי לקחת את החלק האחרון כנקודת חיבור. התגובה (לפי ההקשר שמואלוף): «זה רעיון מה שנדב אומר, להפוך את הכיוון», ומיד המשיך לדרישת ה-1:1 בלי התנגדות. כלומר הכיוון התקבל בחיוב, אבל בלי "מאשר" מפורש.</div></div>
+<div class="f"><div class="k">הקשר</div><div class="v">למה שני רש"קים: «יש בחירה בין רש"ק [נגד טנקים] לרש"ק שהוא מולטי» <span class="ref">[זום 10:38, 26:43 עד 26:51]</span>.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 26:15 עד 27:53]</span>: «הלינקאג' לאנימציה חייב להיות אחד על אחד... המעבר... חייב להיות ממש מדויק בגודל, בנראות וביחס שלהם אחד מהשני ובתנועה», «אפשר להפוך את השוט... תהפוך את הכיוון» <span class="ref">[27:08 עד 27:19]</span>. פריימים m2 f_0102 עד f_0110.</div></div>
+<div class="f st"><div class="k">סטטוס</div><div class="v"><span class="chip chip-doubt">ספק</span> (היפוך כיוון השוט: התקבל בחיוב, לבדוק טכנית, ראו <a class="dl" href="#doubt-6">ספק 6</a>)</div></div>
+</div></article>
+<article class="entry" id="e8" data-status="סגור ממתין ללקוח">
+<div class="side">
+<div class="tc"><bdi>00:48</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span><span class="chip chip-wait">ממתין ללקוח</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-8"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">אנימציית הרש"קים: עיצוב B, רקע פריים 0, כותרות Anti-Tank / Multipurpose</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">מחליפים את האנימציה הלבנה (עיצוב A, מה שיש עכשיו בקאט) לעיצוב שאושר: B "Tactical C4I" (הימני, הכחול). רקע: פריים 0 מספר המותג (כמו בפתיחה). מוסיפים כותרת גדולה לכל רש"ק: ימני Anti-Tank, שמאלי Multipurpose. הכותרות <strong>בנוסף</strong> לכיתובים הקטנים, לא במקומם. <strong>הכותרות בצד (הימני) של כל רש"ק, לא מעליהם.</strong> שולחים לשמואלוף עוד פריים ייצוגי, <strong>לו בלבד, לא לרפאל</strong> (העיצוב כבר אושר שם ולא פותחים).</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v"><strong>שונה בעל פה</strong>: המסמך אומר "מעל כל רש"ק, במעלה הפריים". בשיחה נדב (לפי ההקשר) אמר «אל תשים את זה מעליהם... מהצד הימני שלהם», ושמואלוף: «נדב המעצב, אני הולך איתו, מה שתכלית הוא טוב». הפריים הייצוגי: «לך, לא להם».</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו (נדב מעצב את המיקום המדויק).</div></div>
+<div class="f"><div class="k">הערה קטנה</div><div class="v">באותו רגע עלתה נקודה שתומללה «מברגים למעלה» (לא ברור מה, אולי פרט בעיצוב), והתשובה: «זה יתוקן, דיברנו על זה כבר» <span class="ref">[זום 10:38, 26:05 עד 26:12]</span>. לא אומת על המסך.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 25:20 עד 26:04]</span>: «אתה זוכר שבחרנו את העיצוב הימני?», «עשינו עיצוב והם אישרו. זה הימני». <span class="ref">[28:11 עד 29:21]</span>: «מעל הרש"ק של הטנק... אנטי טנק, ומעל הרש"ק השמאלי... מולטי פרפס», «במקום הכיתובים הקטנים האלה או בנוסף? לא לא, בנוסף», «תשים את זה מהצד הימני שלהם, אל תשים את זה מעליהם», «נדב המעצב, אני הולך איתו», «אנחנו נוציא לך עוד פריים ייצוגי», «העיצוב כבר אושר. אני לא רוצה לעורר אצלם כלום». פריים m2 f_0116 (שני העיצובים במסמך), m2 f_0103 (האנימציה הלבנה בקאט).</div></div>
+<div class="f st"><div class="k">סטטוס</div><div class="v"><span class="chip chip-ok">סגור</span> לעיצוב B ולמיקום בצד. <span class="chip chip-wait">ממתין ללקוח</span> לצבע הרקע. (<a class="dl" href="#doubt-4">ספק 4</a> צומצם לפרט קטן.)</div></div>
+</div></article>
+<article class="entry" id="e9" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>00:54</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-9"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">השתקפות במשקפת, ורקע התצפיתן</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">בהשתקפות של המשקפת רואים אדם מהצוות (שמואלוף מזהה את עצמו). <strong>רק מטשטשים</strong>, לא מחליפים לטנקים מרחוק. <strong>הרקע של הלוחם עם המשקפת לא מוחלף</strong>: אלה תצפיתנים במקום אחר, רחוק מהלוחמים עם הרחפן. שוט ללא טיפול רקע.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v"><strong>שונה בעל פה</strong>: המסמך הציע להחליף את ההשתקפות לטנקים מרחוק, בשיחה: <strong>טשטוש בלבד, בלי טנקים</strong> («פחות מעניין הטנקים... משאירים את זה רק הטשטוש», אומת בתמלול). המסמך אומר "החל מ-00:33 להחליף רקעים של תרחיש הלוחמים", ולשוט הזה הוחלט במפורש לא להחליף.</div></div>
+<div class="f"><div class="k">הקשר</div><div class="v">באופליין ניסו בעבר שוט רחפן שמקשר בין התצפיתנים ללוחמים, «זה לא עבד ובזבז המון זמן» <span class="ref">[זום 10:38, 32:49 עד 32:55]</span>. לא מחזירים אותו.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 29:26 עד 29:47]</span>: «אתה רואה עומד שם מישהו, לדעתי זה אני», «אפשר... לטשטש את זה... זה פריים קבוע, אין לו טרקינג». <span class="ref">[32:17 עד 32:43]</span>: «את הרקע שלו לא צריך להחליף», «אלה תצפיתנים, הם נמצאים במקום אחר לגמרי», «אז זה שוט ללא טיפול». <span class="ref">[36:08 עד 36:19]</span>: «אם אפשר טשטש או... להחליף... טנקים מרחוק... פחות מעניין הטנקים. [נשאיר] את זה רק הטשטוש». פריימים m2 f_0119, f_0120, f_0129 עד f_0134.</div></div>
+<div class="f st"><div class="k">סטטוס</div><div class="v"><span class="chip chip-ok">סגור</span> (אבל ראו <a class="dl" href="#doubt-9">ספק 9</a>: אחרי הצפייה ברצף עלתה "בעיה" שלא נפתרה)</div></div>
+</div></article>
+<article class="entry" id="e10" data-status="ממתין ללקוח">
+<div class="side">
+<div class="tc"><bdi>00:55 + 01:00</bdi></div>
+<div class="chips"><span class="chip chip-wait">ממתין ללקוח</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-10"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">תנועת הטנקים, עשן ואבק</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">לתת לטנקים תנועה ריאליסטית. שמואלוף (טנקיסט לשעבר): לטנק יש הפרדה בין הזחל לצריח, שניהם מתנהגים כשתי ישויות נפרדות. מהמסמך: אחד מצדד תותח טיפה, עולים על גבעונת, משנים אופי נסיעה, משחקים עם העשן/האבק שכרגע קבוע. שמואלוף ישלח רפרנס של טנק נוסע (אולי מרכבה), ולומדים ממנו.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת: ההפרדה זחל/צריח, ורפרנס שיגיע. שמואלוף אמר שלא מצליח לדייק מה הבעיה, ולכן הרפרנס הכרחי.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">שמואלוף (רפרנס). אנחנו (ביצוע).</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 36:30 עד 37:30]</span>: «טנק יש לו איזושהי תנועה שמפרידה בין הזחל... הצריח שלו, ומתנהגים כשתי ישויות נפרדות», «אני אעביר לכם שוט של טנק נוסע... מרכבה». <span class="ref">[41:01 עד 41:24]</span>: «אני לא מצליח לדייק לכם מה הבעיה של הטנקים... אני אשלח לכם שוט», «אז אנחנו צריכים את הרפרנס הזה». פריימים m2 f_0147 עד f_0167.</div></div>
+</div></article>
+<article class="entry" id="e11" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>00:55 + 01:00</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-11"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">רקע הטנקים בנסיעה "מזרח תיכון מדי"</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">לשפר מעט את רקע הטנקים לכיוון הסביבה הכללית של הלוחמים, אבל רק מעט, ושעדיין ייראה שהטנקים רחוקים מהם. ההקשר: אנחנו "בערבות יוגוסלביה", מדינת נאטו. הטנקים 15 ק"מ מהלוחמים, לכן לא אותה סביבה בדיוק אלא "מאותה משפחה". לעבוד מתוך הרפרנס שכבר אושר.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">הבהרה בלבד (מיקום גאוגרפי, "אותה משפחה").</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 11:22, 00:32 עד 01:26]</span>: «אנחנו בערבות יוגוסלביה, אנחנו באחת ממדינות נאטו», «הטנקים רחוקים מהם איזה 15 קילומטר... לא את אותה סביבה בדיוק, אבל מאותה שפה, מאותה משפחה», <span class="ref">[03:51]</span>: «מעט [ל]שפר... אבל רק מעט».</div></div>
+</div></article>
+<article class="entry" id="e12" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>00:55</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-12"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">שנתות משקפת ב-POV של הלוחם, וחלוקת הסקייל בין שני שוטי הטנקים</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">בשוט ה-POV דרך המשקפת (0:55 עד 0:57): משאירים משקפת, משפרים את הקונטור שלה, מוסיפים שנתות, ומקרבים (פריים צמוד יותר). מוסיפים רעידה עדינה כאילו מחזיקים ביד (לא ריצה, לא כתף; שמואלוף: «ציר הצוואר», כמו עדשת 400 שכל תנועה קטנה בה מורגשת). בשוט 01:00 (הטנקים בלי משקפת, כרגע כמעט באותו סקייל): <strong>רחוק הרבה יותר</strong>, כך ששני השוטים לא יהיו באותו סקייל. <strong>שרב/פטה מורגנה</strong>: שמואלוף תיאר «פטה מורגנה... בעירה כזאת בקונטורים של המשקפת», ונדב העדיף שאם עושים, אז מסביב לכל הפריים. לא הוכרע, לא חובה.</div></div>
+<div class="f"><div class="v"><strong>נדב התנגד למשקפת</strong> («עושה דאבל», «קצת מיושן») והציע במקומה סילואט שחור עדין עם פייד מסביב לפריים. שמואלוף: המשקפת נשארת, «זו שפה שמאוד מזוהה» <span class="ref">[זום 10:38, 37:41 עד 39:06; 40:34]</span>.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת: חלוקת הסקייל (הערה של נדב ששמואלוף קיבל), קונטור משופר, רעידת יד. המסמך ביקש רק שנתות.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 38:57 עד 40:55]</span>: «צריך אולי לשפר את הקונטור של המשקפת ולהוסיף שנתות. אבל אני חושב שכן צריך משקפת. הבעיה שלי זה השוט השני», «לשנות את הסקייל... שזה משקפת, זה צריך להיות יותר קרוב, ושזה פוינט אוף ויו, זה צריך להיות יותר רחוק», «רעידות, בסדר». <span class="ref">[זום 11:22, 00:17 עד 00:29]</span>: «זה לא כתוב פה בהערות, ואני אקבל את ההערה של נדב, שוט ראשון יותר קרוב, שוט שני הרבה יותר רחוק», <span class="ref">[03:42]</span>: «צריך להוסיף שנתות של משקפת... סבבה». פריימים m2 f_0148 עד f_0165 (0:55 עם מסכת משקפת, 1:00 בלי).</div></div>
+<div class="f st"><div class="k">סטטוס</div><div class="v"><span class="chip chip-ok">סגור</span> (השרב: הצעה פתוחה, לא חובה)</div></div>
+</div></article>
+<article class="entry" id="e13" data-status="ממתין ללקוח">
+<div class="side">
+<div class="tc"><bdi>01:03</bdi></div>
+<div class="chips"><span class="chip chip-wait">ממתין ללקוח</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-13"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">הטאבלט נפתח, וכל המסכים מכאן והלאה</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">מניחים תמונה על הטאבלט. לכל המסכים (בערך ארבעה) התוכן והאנימציה יגיעו משמואלוף אחרי שיחה ארוכה שלו עם המנהל הטכנולוגי של רפאל: איפה לוחצים, מה קורה בלחיצה, איזו מפה, מה החלוקה. הממשקים שבקאט הם האמיתיים (הובאו לסט). מיקומי הכיתוב לא משתנים. איפה שהלוחם לוחץ על אייקון "רכב" מחליפים לאייקון טנק: שמואלוף שואל אם קיים כזה, ואם לא, אנחנו מעצבים טנק בסגנון אייקון הרכב. חייב להיות אחד לאחד מול המערכת האמיתית, כי בתערוכה יפתחו את הטאבלט.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת: אייקון הטנק, הדרישה לאחד לאחד, בקשה לקבצי הממשקים.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">שמואלוף ורפאל (תוכן, אייקון, ממשקים). אנחנו (הרכבה).</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 11:22, 04:01 עד 06:13]</span>: «אני רוצה לשבת עם המנהל הטכנולוגי שלהם, אני מקווה שזה יהיה היום», «אני אעביר לכם רשימה של כל המסכים», «צריך רק לשנות את האייקון שם לטנק, כי בדפולט של המערכת זה רכב», «אני אשאל אותו», «אם אין לו אז נעשה בסגנון של הרכב», «ברור, זה חייב להיות אחד לאחד», «יעביר את כל האינטרפייסים». פריימים m3 f_0017 עד f_0027.</div></div>
+</div></article>
+<article class="entry" id="e14" data-status="ספק">
+<div class="side">
+<div class="tc"><bdi>01:07</bdi></div>
+<div class="chips"><span class="chip chip-doubt">ספק</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-14"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">Launch: רוטורים, התרוממות, ומעבר לעיט</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v"><strong>הרוטורים מתחילים לזוז עוד לפני שהמפקד אומר "Launch"</strong>, ועם המילה הרחפן מתחיל להתרומם (רק סנטימטר או שניים, הוא עוד לא באוויר). «לפני שהוא אומר לאונץ', שהרוטורים יתחילו לזוז, שהוא אומר לאונץ', שיתחיל להתרומם» <span class="ref">[זום 11:22, 07:17 עד 07:23]</span>. (המסמך: "מיד אחרי שהמפקד אומר Launch".) אפשר לאכול קצת מהשוט. מעלימים את הרכב, מחליפים רקעים. המעבר לעיט: <strong>בלי קראש זום</strong>. הולכים על הרעיון שלנו (נדב) כניסוי: חיתוך "אינטואיטיבי" לעיט באותו גודל ובאותה צורה בפריים, בפרופיל (כ-90 מעלות), יושב על ענף/סלע ומתחיל להתרומם בדיוק כשהרחפן מתרומם, חיתוך בתנועה. "ננסה ונראה כמה הוא עובד". בעיות פתוחות שנפתור תוך כדי עבודה: כיוון היציאה של הרחפן (ימין/שמאל פריים בין שוטים), מיקום הרחפן ביחס לחיילים (בערך בין האבנים לעץ, לא צמוד אליהם; <strong>החייל עם הקשר קרוב לרחפן, החייל עם הטאבלט רחוק ממנו</strong>), ושמירה על עקביות כיוונים.</div></div>
+<div class="f"><div class="k">פרטים נוספים מהשיחה <span class="ref">[זום 11:22]</span></div><div class="v"><ul><li>נאמר «ננסה לזה בלו-אפ וננסה לזה מקרוב יותר» <span class="ref">[14:16]</span>, כלומר לנסות שתי גרסאות (דובר לא ברור).</li><li>חלופה בלי קראש זום: «קאט, בג'אמפ קאט» <span class="ref">[11:41 עד 11:45]</span>.</li><li>שוטי העיט שבקאט הם רפרנס מיוטיוב בלבד <span class="ref">[12:21 עד 12:23]</span>.</li><li>שמואלוף: «חיכוך של תנועה» לא עובד קולנועית, כי החיילים בימין פריים והרחפן בשמאל פריים <span class="ref">[14:21 עד 14:29]</span>.</li><li><strong>הוצע (לפי ההקשר נדב) לוותר על שוט החיילים והרחפן</strong> ולהרים את הרחפן כבר מהשוט הקודם עם change focus, לעשות את זה עם קלר <span class="ref">[14:52 עד 15:28]</span>. <strong>שמואלוף דחה</strong>: «זו האוריינטציה היחידה שיש בין הלוחמים לרחפן» <span class="ref">[16:02 עד 16:06]</span>. השוט נשאר.</li><li>הבעיה העיקרית בשוט היא שהוא הפוך: «אפשר להפוך אותו, זה לא סיפור» <span class="ref">[15:38 עד 15:41]</span>. שמואלוף: החיילים והרחפן בשוט הם AI, «קח את החיילים, שים אותם איפה שאתה רוצה» לפי כיוון האקשן <span class="ref">[17:33 עד 17:50]</span>.</li><li>לגבי שני השוטים: השוט הקיים: להחליף רקע ולהרים את הרחפן, וזה הכיוון הנכון; את השוט השני «מייצר הפוך, הרחפן טס לכיוון הזה» <span class="ref">[20:16 עד 20:29]</span>.</li></ul></div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">שונה ונוסף: הרוטורים לפני המילה, ויתור על קראש זום, רעיון ההקבלה בצורה/גודל, הבהרות כיוון. המסמך אמר רק "מיד אחרי Launch מניע רוטורים ומתרומם".</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו. ניסוי שנשלח לשמואלוף.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 11:22, 07:14 עד 07:42]</span>: «אתה יכול אפילו טיפה לאכול מהשוט הזה, כדי שהחיתוך בתנועה...», «צריכים להעלים מפה את הרכב». <span class="ref">[09:17]</span>: «אני פחות מתלהב מהקראש זום הזה פה», <span class="ref">[10:55 עד 11:04]</span>: «הרחפן [ב]סנטימטר, שני סנטימטר מהקרקע», <span class="ref">[11:31 עד 11:35]</span>: «הקראשים האלה זה לא בשפה הנכונה», «זה בלי קראש זום, אפשר לעשות את אותו עיקרון», <span class="ref">[14:08 עד 14:16]</span>: «בואו נלך על הרעיון שלכם, ננסה אותו ונראה עד כמה הוא עובד», <span class="ref">[18:38]</span>: «הרחפן צריך להיות בערך בין האבנים לעץ», <span class="ref">[21:30 עד 22:15]</span>: «אתם רוצים לפתור אותה תוך כדי העבודה», «אני אעשה תיקון קטן ואני אשלח לכם [לאישור]». פריימים m3 f_0029 עד f_0059.</div></div>
+<div class="f st"><div class="k">סטטוס</div><div class="v"><span class="chip chip-doubt">ספק</span> (מה בדיוק הניסוי ומי שולח דוגמה, ראו <a class="dl" href="#doubt-2">ספק 2</a>)</div></div>
+</div></article>
+<article class="entry" id="e15" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:10</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-15"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">שוט החיילים "המודבקים", גודל הרחפן, פחות ירוק</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">החיילים נראים מודבקים לגמרי, צריך לשלב אותם. הרחפן באותו גודל כמו העיט בשוט שלפניו ומתרומם באותו אופן, ומרימים אותו גבוה יותר. סביבה פחות ירוקה, והרחפן לא עף על רקע האבנים (נבלע בהן). פני החיילים בשוט הארוך (AI) לא דומים לחיילים בקלוז-אפים המצולמים: "ניקח את השוטים ונדייק אותם".</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת: הרמת הרחפן, דיוק פני החיילים מול הקלוז-אפים.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 24:14 עד 24:52]</span>: «החיילים נראים מאוד מודבקים... משחק צעצועים», «אני מציע שנרים אותו גבוה יותר». <span class="ref">[זום 11:22, 02:24 עד 02:41]</span>: «אני לא אוהב את החיבור בין הירוק לירוק הזה... הרחפן נבלע, האבן לוקחת יותר תשומת לב ממנו», <span class="ref">[20:16 עד 20:20]</span>: «צריך להחליף לו את הרקע ולהרים את הרחפן», <span class="ref">[20:53 עד 21:51]</span>: «נראים כאילו דמויות אחרות לגמרי», «זהות החיילים... ניקח את השוטים ונדייק אותם», <span class="ref">[22:25 עד 22:49]</span>: «זה דיברנו». פריימים m2 f_0097, f_0098. m3 f_0057 עד f_0059.</div></div>
+</div></article>
+<article class="entry" id="e16" data-status="סגור ספק בוטל">
+<div class="side">
+<div class="tc"><bdi>01:13</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span><span class="chip chip-doubt">ספק</span><span class="chip chip-cancel">בוטל</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-16"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">העיט: תיקון האופליין, והסדר החדש עד ה-Abort</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">הסדר שסוכם: הרחפן מתרומם, העיט מתרומם (ההקבלה), שוט שבו הרחפן יוצא מהפריים ורואים את האוריינטציה שלו ביחס לחיילים, שוט העיט, <strong>שוט רחפן חדש בתעופה עם שיבוש GPS</strong> (מהצד, באותה זווית של העיט אבל טיפה יותר גבוה כך שרואים קרקע, נבנה מחדש משוט "הריבועים" של 01:19), ואז הטאבלט עם השיבושים (הפונקציה הראשונה בטאבלט: «אם יש הפרעות GPS, הרחפן יודע להמשיך להגיע למטרה שלו» <span class="ref">[זום 11:22, 24:15]</span>), ואז חוזרים ל-Abort Mission. כלומר מחליפים את הסדר בין שוט השיבוש לשוט הטאבלט (הצעה של נדב, «סבבה, פתר את זה» <span class="ref">[25:36 עד 25:57]</span>). בלי טנקים באופק בשוטים שרואים בהם את החיילים. <strong>שוט העיט לא מתקצר.</strong></div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">שונה. המסמך: "קיצור השוט של העיט וחזרה לרחפן עף לפני הטאבלט... תיקון אופליין שאעשה עם קלר". בשיחה: אינטרקאט של רחפן בתעופה לפני הטאבלט, «על חשבון הנשר אפילו», ואז הוחלט להחליף סדר. <strong>הקיצור בוטל בעל פה</strong>: מישהו הקריא «קיצור השוט של העיט» ומיד «טוב, לא צריך קיצור» <span class="ref">[26:16 עד 26:22]</span>, אחרי שהחלפת הסדר "פתרה את זה".</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו (שוט חדש). מי מבצע את שינוי הסדר בעריכה, אנחנו או טל קלר: לא נאמר. שמואלוף אמר ב-23:21 שאולי יצטרכו «לעשות עם קלר» את האינטרקאט, אבל בשיחה של 12:01 אמר «סיימתי עם האופליין».</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 11:22, 23:19 עד 23:43]</span>: «חסר איזה שוט קטן, איזה אינטרקאט... את הרחפן... לפני שרואים את הטאבלט, אבל זה לא חובה», <span class="ref">[24:05]</span>: «הרחפן יתרומם, [העיט] יתרומם, הרחפן יצא מהפריים, [העיט] יעוף, וישר אנחנו עוברים לטאבלט», <span class="ref">[24:55]</span>: «על חשבון הנשר אפילו», <span class="ref">[25:41]</span>: «אני אומר שתחליפו את הסדר», <span class="ref">[26:18 עד 26:22]</span>: «קיצור השוט של [העיט]... טוב, לא צריך קיצור», <span class="ref">[26:32 עד 27:31]</span>: «הרעיון הוא יפה אבל צריך את השוט הזה לייצר עוד הפעם, הריבועים», «זה צריך להיות מהצד כמו [העיט]... טיפה יותר גבוה שכן רואים את הקרקע», «ואז עוברים לטאבלט עם השיבושים ואז חוזרים לאבורט מישן, מעולה». <span class="ref">[זום 11:22, 03:09 עד 03:19]</span> (בלי טנקים). פריימים m3 f_0093 עד f_0103.</div></div>
+<div class="f st"><div class="k">סטטוס</div><div class="v">הסדר <span class="chip chip-ok">סגור</span>. הקיצור <span class="chip chip-cancel">בוטל</span>. <span class="chip chip-doubt">ספק</span> רק בשאלה מי עורך את שינוי הסדר (ראו <a class="dl" href="#doubt-1">ספק 1</a>).</div></div>
+</div></article>
+<article class="entry" id="e17" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:13</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-17"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">העיט נראה גדול בהרבה מהרחפן</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">הרחפן והעיט צריכים להיראות באותו Shape פחות או יותר: מגדילים את הרחפן בפריים, או שהמצלמה מתקרבת אליו בתנועה. מכוסה גם בהחלטה על ההקבלה ב-01:07.</div></div>
+<div class="f nochange"><div class="k">מה השתנה מול המסמך</div><div class="v">לא השתנה.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 11:22, 28:13 עד 28:24]</span>: «דיברנו פה הרגע שהם צריכים להיות באותה זווית».</div></div>
+</div></article>
+<article class="entry" id="e18" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:19</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-18"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">הג'יפ הבוער ורוחות המלחמה (הופך לשוט רחפן מהצד)</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">שומרים על הג'יפ הבוער ועל תחושת רוחות המלחמה, מוסיפים עוד אלמנטים של מלחמה בהמשך/באופק. השדות הסימטריים המסודרים ("ריבועים ריבועים") ו"הכפר הנחמד עם הבתים הכפריים" יוצאים: סביבה הררית, פחות מסודרת, דומה לרפרנס של הלוחמים. בנוסף, השוט נבנה מחדש מזווית צידית כמו העיט (ראו 01:13), והוא שוט השיבוש שלפני הטאבלט.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">שונה: זווית צידית ותפקיד חדש ברצף. "יותר הררי" היא הבהרה שלנו ששמואלוף קיבל.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 11:22, 28:41 עד 29:33]</span>: «אני מאוד אוהב את השריפה של הג'יפ ותחושת רוחות המלחמה... אולי באופק», «הוא נורא כפר נחמד עם בתים כפריים», «זה לא הולך להיות מרובעים מסודרים... אנחנו נעשה את זה יותר הררי כזה, יותר דומה לרפרנס». <span class="ref">[27:09 עד 27:22]</span>. פריימים m3 f_0129 עד f_0139.</div></div>
+</div></article>
+<article class="entry" id="e19" data-status="ממתין ללקוח">
+<div class="side">
+<div class="tc"><bdi>01:22 עד 01:32</bdi></div>
+<div class="chips"><span class="chip chip-wait">ממתין ללקוח</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-19"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">השוט המאתגר: חלוקה לכמה שוטים, וסביבה חדשה</h3>
+<div class="f"><div class="k">מה הסצנה אמורה להראות (שמואלוף)</div><div class="v">שכאשר צועקים Abort Mission הרחפן לא נופל בשבי (שהאויב לא ילמד ממנו), לא מתבזבז כספית ולא צריך לפוצץ אותו, אלא «מסתובב, חוזר ומתיישב ליד הלוחמים» לשימוש חוזר במשימה הבאה. אחרי ה"סוגריים" חוזרים לאותה נקודה, למהירות רגילה, וממשיכים לעבר המטרה <span class="ref">[זום 11:22, 29:45 עד 31:11]</span>.</div></div>
+<div class="f do"><div class="k">מה עושים</div><div class="v">הסביבה נראית כמו משחק מחשב ישן: מחליפים לסביבה מהשוט של רוחות המלחמה, ומראים התקדמות הגיונית של הרחפן לאופק. לא וואן שוט: מחלקים לסגורים, עדיף בקאט. אם יש זמן לכניסה דרמטית, זה דולי של מצלמה (גם הרקע זז) ולא "קראש זום של שנות ה-80". הרעיון (שמואלוף): עוצרים את העולם ופותחים סוגריים קולנועיים כדי להסביר את ה-Abort, בלי לקטוע את הזרימה. בשלב מאוחר יותר ייכנסו כאן כותרות מסרים. לפני הביצוע אנחנו שולחים לשמואלוף הסבר כללי או דוגמה כדי לוודא שמדברים על אותו דבר.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת: איסור קראש זום, דוגמה לפני ביצוע, כותרות מסרים בהמשך.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו. שמואלוף מאשר את הדוגמה.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 11:22, 29:45 עד 32:11]</span>: «עוצרים את העולם ופותחים סוגריים בצורה קולנועית ויזואלית», «זה לא one shot מההתחלה עד הסוף... לדעתי עדיף בקאט», «לא קראש זום כזה של שנות ה-80... זה יותר דולי של המצלמה». <span class="ref">[זום 12:01, 02:00 עד 02:28]</span>: «[בולט טיים]... יציאה אחורה ללונג שוט», «אני פשוט לא רוצה שאתם [תעשו] סתם עבודה... יש פה משהו מאוד מדויק», «אנחנו נעשה... הסבר כללי או דוגמה לפניכם שתדע שאנחנו מדברים על אותו כיוון».</div></div>
+<div class="f st"><div class="k">סטטוס</div><div class="v"><span class="chip chip-wait">ממתין ללקוח</span> (אישור הדוגמה)</div></div>
+</div></article>
+<article class="entry" id="e20" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:22</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-20"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">המשך השוט הקודם מזווית צידית</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">ממשיכים את שוט הרחפן הצידי החדש (זה שנבנה מ-01:19), באותה סביבה, אותה זווית, אותה מהירות ותנועה, כאילו כלום לא השתנה. עד סוף המילים "Abort Mission" אין שום שינוי. היום בקאט הרחפן "יודע" שהמשימה בוטלה לפני שהקריין אומר את זה.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">הבהרה: אין שינוי בתנועה לפני המילים.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 11:22, 32:34 עד 32:38]</span>: «הוא חייב להמשיך את השוט הקודם בתעופה מאותה זווית, בתנועה», <span class="ref">[34:12 עד 35:23]</span>: «ניקח את השוט של הצד... ונמשיך אותו באותה תנועה», «הרחפן ידע שהמשימה התבטלה עוד לפני שאמרת אבורט מישן», «רק אחרי ששמעתי את האבורט מישן».</div></div>
+</div></article>
+<article class="entry" id="e21" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:23</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-21"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">Abort Mission: סלואו מושן, ואקסטרים קלוז-אפ על רוטור</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">בסוף צמד המילים עוברים לסלואו מושן מאותה זווית: גם הרחפן וגם הרוטורים, וגם כל העולם מסביב (ציפורים, עשן מהטנקים, כל מה שזז) מואט בערך פי שלוש. המצלמה ממשיכה לזוז (דולי), לאט יותר. כשהקריין מסיים "If the mission is aborted": אקסטרים קלוז-אפ על רוטור מסתובב בסלואו, על סאונד Woosh, עד סוף "L-Spike 2X can safely return".</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת: הסלואו חל על כל האלמנטים, לא רק על הרחפן. לא העתקה של "מטריקס".</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 11:22, 33:01 עד 33:49]</span>: «הכל בבולט טיים... התנועה נהיית קצרה פי שלוש, אבל ממשיכה, בלי קראש», «אם יש ציפורים מסביב... הכל צריך להרגיש את הבולט טיים», <span class="ref">[35:54 עד 36:48]</span>.</div></div>
+</div></article>
+<article class="entry" id="e22" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:27</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-22"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">אותה זווית של הקלוז-אפ, פתוח יותר, עד "and reuse"</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">אחרי ה-return חוזרים לאותה זווית של הקלוז-אפ אבל פתוח (לונג), רואים את כל הרחפן, עד סוף "and reuse". הקריין מוביל את אורך השוטים.</div></div>
+<div class="f nochange"><div class="k">מה השתנה מול המסמך</div><div class="v">לא השתנה.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 11:22, 36:48 עד 37:35]</span>: «אני חוזר לאותו שוט, מאותה זווית של הקלוז-אפ», «אתה כאילו פותח ללונג... עד סוף המילים [and reuse]».</div></div>
+</div></article>
+<article class="entry" id="e23" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:29</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-23"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">שינוי זווית לצד השני, עד "Military"</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">כשהקריין אומר "and reuse" משנים זווית לצד השני, הרחפן עדיין בסלואו, עד סוף המילה Military. התחושה: הוא "חזר" בלי לחזור, סוגרים סוגריים. שינוי הזווית הוא תנועת ה"מטריקס" שכבר קיימת בקאט: «אתה עושה את המטריקס הזה שעשית» <span class="ref">[זום 11:22, 37:43]</span>. (ב-01:23 עצמו לא עושים מטריקס, ראו שם.)</div></div>
+<div class="f nochange"><div class="k">מה השתנה מול המסמך</div><div class="v">לא השתנה.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 11:22, 37:40 עד 38:49]</span>: «כשהקריין אומר and reuse ואתה משנה זווית לצד שני, זה כאילו נותן את התחושה שהוא חזר בלי שהוא חוזר».</div></div>
+</div></article>
+<article class="entry" id="e24" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:31</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-24"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">חזרה למהירות רגילה, מצלמה שמאלה כמעט לחזית</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">הרחפן חוזר למהירות רגילה וטס קדימה עד סוף השוט, המצלמה זזה לאט שמאלה (דולי) כמעט עד החזית שלו, כאילו הוא ממשיך לכיוון שלנו.</div></div>
+<div class="f nochange"><div class="k">מה השתנה מול המסמך</div><div class="v">לא השתנה.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 11:22, 38:51 עד 39:10]</span>: «המצלמה משנה זווית בתנועה איטית שמאלה, כמעט שהיא מגיעה לחזית שלו, במין דולי כזה».</div></div>
+</div></article>
+<article class="entry" id="e25" data-status="ספק">
+<div class="side">
+<div class="tc"><bdi>01:34</bdi></div>
+<div class="chips"><span class="chip chip-doubt">ספק</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-25"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">הטנקים שמשתקפים בעדשת הרחפן צריכים לזוז</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">להכניס תנועה לטנקים בהשתקפות בעדשה. שמואלוף: זה יוקרן על מסך ענק, והעין תלך לשם. איתן ב' טען שזה רבע עד חצי שנייה, ובסוף «אני זורם איתך».</div></div>
+<div class="f nochange"><div class="k">מה השתנה מול המסמך</div><div class="v">לא השתנה בתוכן. לא ברור אם בסוף מוסיפים או בודקים קודם. המשפט האחרון בדיון, «להכניס שם תנועה אחרי זה זה שטויות», פירושו לפי ההקשר שהוספת התנועה בהמשך היא עבודה קלה.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 02:35 עד 04:01]</span>: «זה הולך להיות מוקרן על מסך ענק... רואים שהם עומדים, זה דופק את הכל», «מה שצריך לשים שם זה איזושהי תנועה, זה הכל», «אני זורם איתך», «תוותר על זה ובוא נראה מה יוצא, אם זה יורגש אז נחליף», «להכניס שם תנועה אחרי זה זה שטויות». פריימים m4 f_0013, f_0014.</div></div>
+<div class="f st"><div class="k">סטטוס</div><div class="v"><span class="chip chip-doubt">ספק</span> (ראו <a class="dl" href="#doubt-10">ספק 10</a>. ההמלצה: להוסיף, זה זול)</div></div>
+</div></article>
+<article class="entry" id="e26" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:35</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-26"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">שני חזירי יבלות במקום הדגים</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">מייצרים ב-AI שוט של שני חזירי יבלות בתנועה זהה לשני הטנקים, בתוך סביבת העיט (הסוואנה). רפאל לא רוצה דגים ולא רוצה אסוציאציה לים, אגמים ומים (חטיבת ים נפרדת). דגשים: בוגר אבל לא גדול מדי (שיהיה הגיוני שהעיט מנצח, בערך בגודל העיט בפריסת כנפיים), לא גור ולא חמוד, בלי הקרניים האמצעיות שיוצאות מהאף (תמונה 3), רק הקרניים הצידיות. החזירים רצים: אין בריכה ואין ציפור, התמונות הן רפרנס בלבד. לצפות לפני הבנייה בסרטון ששמואלוף שלח, בדקה 1:02 (האנטומיה, הריצה עם זנב זקוף ורגליים קצרות). גם החזיר ב-1:02 «גדול מדי, אבל זה המבנה שלו». בדקה 0:54 של הסרטון יש «אמא שמנמנה מבוגרת»: גדולה מדי, לא כזה <span class="ref">[זום 10:38, 20:05 עד 20:27]</span>.</div></div>
+<div class="f"><div class="k">פרטים נוספים</div><div class="v">איתן ב' הטיל ספק אם עיט מסוגל לתקוף חזיר יבלות, ושמואלוף: «נבדק העניין» <span class="ref">[זום 10:38, 16:59 עד 17:12]</span>. שמואלוף שלח בוואטסאפ תמונה של עיט מרים גור חזיר יבלות: «אנחנו לא הולכים להתעסק עם גורים... עזבו את זה» <span class="ref">[17:40 עד 17:52]</span>. הסרטון: 18 דקות, 13 עד 14 חיות שהעיט טורף, נשלח לקבוצה "טסט פרויקט רפאל" <span class="ref">[17:58 עד 18:16]</span>.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת: הגודל ביחס לעיט, אין בריכה וציפור, סרטון רפרנס.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו. שמואלוף שלח רפרנס.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 10:38, 16:29 עד 21:04]</span>: «הם לא רצו דגים... והם לא רצו [שניתן] לזכרונות של ים ואגמים ומים», «ב-1.02 בתוך הסרט... יש חזיר יבלות שגם בורח מהעיט», «העיט [יהיה] בערך בגודל שלו כשפורס כנפיים», «העיט יורד רק על אחד, כמו שהרחפן תוקף רק טנק אחד». <span class="ref">[זום 12:01, 04:04 עד 04:59]</span>: «בלי הקרניים האמצעיות האלה שיוצאות לו מהאף, רק הקרניים הצידיות», «זה רפרנס, אין בריכה ואין ציפור». פריימים m2 f_0080 עד f_0085 (יוטיוב), m4 f_0017, f_0019.</div></div>
+</div></article>
+<article class="entry" id="e27" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:42</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-27"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">ביטול הרעידה בסוף הסיבוב ל-45 מעלות</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">מבטלים את הרעידה/ה"זליק" בסוף התנועה. התנועה צריכה להיות נחושה ובעלת משקל, לא "צעצוע סיני מאלי אקספרס". איתן ב' הציג טייק נוסף.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">הבהרה: הבעיה היא תחושת חוסר משקל.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 05:01 עד 06:04]</span>: «התחושה שזה מייצר זה שאין לו משקל... זה נראה צעצוע סיני», «אז אנחנו נעשה את השוט יותר נחוש». פריים m4 f_0023.</div></div>
+</div></article>
+<article class="entry" id="e28" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:42</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-28"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">רקע ההרים בתחתית הפריים</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">בדיקה בלבד: שההרים בתחתית תואמים את ההרים באופק בשוטי הטיסה. בצפייה נראה שהם באותו סגנון. לשמור על אותו סגנון הרים כדי שזה יתחבר.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">הוקטן: שמואלוף אמר שזו אולי הערה מיותרת, לבדוק.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 06:13 עד 06:54]</span>: «נראה לי הערה מיותרת, תבדקו אם באמת», «תשמרו על סגנון [ההרים] הזה באופק כדי שזה יתחבר» (Whisper כתב "ערים"). פריים m4 f_0027.</div></div>
+</div></article>
+<article class="entry" id="e29" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:46</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-29"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">החזירים משתקפים בעין העיט, תחילת הצלילה</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">לפי כרטיס ה-AI SHOT שעל השוט בקאט: קלוז-אפ על עין העיט, באותו גודל ואותה זווית כמו העדשה של הרחפן ב-01:34, והחזירים משתקפים בעין כמו הטנקים בעדשה. החזירים כבר מבחינים בסכנה ומתחילים לברוח מהר. השוט נגמר כשהעיט מתחיל את תנועת הצלילה, ומתחבר לשוט הבא בקאט און אקשן.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">הבהרה (ההתאמה המדויקת לשוט העדשה).</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 07:31 עד 08:56]</span>: «אנחנו בקלוז-אפ על העין של [העיט], באותו גודל, אותה זווית, אותו הכל», «הוא מתחיל את הצלילה והוא מתחבר לשוט הבא... כאילו קאט און אקשן», «כתבתי, לפי התיאור המופיע על גבי השוט». פריים m4 f_0033 (הכרטיס).</div></div>
+</div></article>
+<article class="entry" id="e30" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:48</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-30"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">קאט בתנועה לשוט עיט פתוח</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">חיתוך בתנועה מתמשכת מהשוט הקודם לשוט פתוח של העיט, מאותה זווית של השוט האמיתי, רק קצת גדול יותר בפריים. העיט בתחילת הצלילה, לא באמצעה. <strong>השוט האמיתי עצמו לא שמיש</strong>: מייצרים אותו מהעיט שלנו («השוט הזה אי אפשר להשתמש בו, תיקחו את העיט שאתם מייצרים» <span class="ref">[זום 12:01, 09:18 עד 09:26]</span>).</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">הבהרה בלבד.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 09:03 עד 09:56]</span>: «הוא לא כבר בצלילה, הוא התחלה של הצלילה». פריים m4 f_0039.</div></div>
+</div></article>
+<article class="entry" id="e31" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:50</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-31"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">מהירות צלילת הרחפן מול מהירות ההתקרבות לטנקים</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">מאטים קצת את הצלילה של הרחפן (לא מאיצים בעריכה, כי אז גם הטנקים יאיצו, והשוט חוזר פעמיים בקאט). איתן ב' העדיף בהתחלה להאיץ את הזום אין, אבל כיוון שאותו שוט חוזר פעמיים, «נגיע קרוב מדי» לשוט השני, ולכן «פשוט נאט טיפה את הרחפן» <span class="ref">[זום 12:01, 12:15 עד 12:49]</span>. את האיזון הסופי בין כל המהירויות (צלילת רחפן, צלילת עיט, התקרבות, ריצת חזירים, נסיעת טנקים) קובעים אחרי שכל השוטים מחוברים ברצף. שמואלוף לא רוצה לחזור לאופליין; קלר רק אם בסוף אין ברירה.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">נקבעה שיטה (האטה אצלנו, החלטה סופית אחרי הרכבה). המסמך רק ביקש להתאים.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו. טל קלר רק אם הכרחי.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 10:42 עד 10:48]</span>: «אני בשאיפה לא רוצה לחזור לעריכה, אני בשאיפה סיימתי עם האופליין», <span class="ref">[11:01 עד 11:09]</span>: «אתה עושה פאסט מושן אז גם הטנקים [ייסעו] יותר מהר», <span class="ref">[12:39 עד 12:49]</span>: «יש לך אותו פעמיים», «אז פשוט נאט טיפה את הרחפן», <span class="ref">[13:57 עד 14:06]</span>: «מכיוון שאין לנו את כל השוטים, נחבר אותם ביחד, נרגיש אותם ונחליט לאיזה כיוון». פריימים m4 f_0043 עד f_0055.</div></div>
+</div></article>
+<article class="entry" id="e32" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:51</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-32"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">המשך צלילת העיט, בסביבה הנכונה</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">שוט חדש של העיט ממשיך לצלול, ברקע של הסביבה הרלוונטית (הסוואנה). השוט האמיתי הוא רפרנס בלבד (יש מאחוריו עצים, זו לא הסביבה).</div></div>
+<div class="f nochange"><div class="k">מה השתנה מול המסמך</div><div class="v">לא נדון, כמו במסמך. (השוט הוצג על המסך בלבד.)</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v">לא נדון. על המסך: m4 f_0043 עד f_0051.</div></div>
+</div></article>
+<article class="entry" id="e33" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:52</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-33"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">ירידה לחזירי היבלות במנוסה (POV העיט)</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">POV של העיט מאחורי החזירים הבורחים, רואים רק אותם, בהקבלה ל-POV הרחפן שרואה רק את הטנקים. תנועת הריצה לפי סרטון הטבע (מ-1:02). מהירויות: החזירים רצים מהר יותר מהטנקים, אבל מצמצמים את הפער: הטנקים קצת יותר מהר, החזירים קצת יותר לאט.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת: התאמת המהירויות בין החזירים לטנקים.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 14:16 עד 15:31]</span>: «בקורלציה לטנקים, אם ראינו רק את הטנקים... רואים רק את [החזירים]», «שהם בורחים», «אנחנו צריכים לאחד את כל המהירות, גם של הירידה, גם של הצלילה, גם של ההתקרבות, גם של הריצה», «הטנקים יכולים [לנסוע] טיפה יותר מהר, וחזירי בר יכולים טיפה יותר לאט». פריימים m4 f_0057 עד f_0061.</div></div>
+</div></article>
+<article class="entry" id="e34" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:54</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-34"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">מורף עיט לרחפן בצלילה, מצלמה ב-dolly</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">מורף מעיט צולל לרחפן צולל, לפי הכרטיס שעל השוט. זווית צילום צידית מעט מלמטה, לא 90 מעלות: בערך 45 עד 50 מעלות, קצת יותר מהצד מאשר מהחזית. המצלמה עוקבת אחרי הגופים ב-dolly למטה, הרקע בתנועה מהירה. שני הגופים באותו גודל בפריים. המורף נגמר כשהרחפן עדיין באוויר. מותר להאריך את השוט ב-10 פריימים.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת: הזווית, אותו גודל, סיום המורף באוויר.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 15:32 עד 16:53]</span>: «לא 45, קצת פחות מ-45, 50 מעלות נגיד», «קצת יותר צידי», «דולי למטה מה שנקרא», «המורף מסתיים כשהוא עדיין באוויר». פריים m4 f_0065 (הכרטיס).</div></div>
+</div></article>
+<article class="entry" id="e35" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>01:55</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-35"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">עיט קרוב: מצלילה לרגליים קדימה עם טפרים</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">שוט עיט חדש וקרוב יותר (השוט הקיים יורד לים ולדגים ובזווית לא נכונה). העיט עובר מתנוחת צלילה לתנוחת רגליים קדימה, פותח טפרים, בסביבה הנכונה, מול שני חזירי יבלות במנוסה, ומתביית על אחד (כמו שהרחפן מתביית על טנק). מצלמה נמוכה, מלמטה, והעיט מביא את הטפרים לתוך המצלמה.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת: זווית המצלמה מלמטה.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 16:55 עד 17:45]</span>: «כאן הוא יורד לים ולדגים, אז כמובן לא», «אני רוצה [ש]המצלמה שלי תבוא מפה, מלמטה דווקא», «הוא יורד, ואז כאילו הוא מביא את הטפרים לתוך המצלמה». פריימים m4 f_0069 עד f_0073.</div></div>
+</div></article>
+<article class="entry cancelled" id="e36" data-status="בוטל">
+<div class="side">
+<div class="tc"><bdi>01:56</bdi></div>
+<div class="chips"><span class="chip chip-cancel">בוטל</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-36"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en"><del>להפוך לשוט צבע בלי צלב</del> <strong>בוטל</strong></h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v"><strong>כלום. הסעיף בוטל.</strong> שוט הטנקים נשאר כמו שהוא: שחור לבן עם הצלב, POV של הרחפן.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v"><strong>בוטל לגמרי, וההערה נמחקה מהרשימה.</strong> המסמך ביקש להפוך לצבע ולא POV. אומת בתמלול: שמואלוף הקריא את ההערה, אמר «אבל האמת אפשר להשאיר את זה בפוינט אוף ויו גם», הסביר שרצה הקבלה מהירה בין העיט לרחפן, ואז: «אל תחליף לצבע, לא צריך. תמחוק את [ה]החלף לצבע, תמחוק את שוט 1:56, מבחינת הערה, לא צריך אותו». «סבבה». <strong>השוט נשאר בדיוק כמו שהוא.</strong></div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אין.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 18:22 עד 18:58]</span>: «אפשר להשאיר את זה בפוינט אוף ויו גם», «אל תחליף לצבע, לא צריך», «תמחוק את [ה]החלף לצבע, תמחוק את שוט 156, מבחינת הערה, לא צריך אותו». פריים m4 f_0075.</div></div>
+</div></article>
+<article class="entry" id="e37" data-status="ספק">
+<div class="side">
+<div class="tc"><bdi>01:57</bdi></div>
+<div class="chips"><span class="chip chip-doubt">ספק</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-37"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">סלואו מושן: טפרים נפתחים, העיט תוקף, קאט לטנק מתפוצץ</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">סלואו מושן. קלוז-אפ הטפרים (לפי ההקשר) מתחלק לשניים: «שוט אחד הוא צולל, הוא מתכונן, והשוט השני זה הקלוז-אפ של הטפרים... כבר קרוב לחזיר» (לפי סרטון הטבע) <span class="ref">[זום 12:01, 18:59 עד 19:12]</span>. אחריו אותו רגע פתוח יותר, «עוד שוט צידי יותר, עם הטפרים פה והחזיר פה»: העיט תוקף. כיוון ההגעה לבחירתנו. <strong>רגע לפני שהטפרים נוגעים בחזיר, קאט לטנק המתפוצץ.</strong> לא רואים טריפה, לא אכילה, לא פגיעה.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">תוספת: הקאט לטנק המתפוצץ והאיסור על טריפה (המסמך אמר "עד פריים לפני שהוא תוקע טפריו").</div></div>
+<div class="f"><div class="k">שוט &quot;הירידה לחזירים&quot; שחסר <span class="ref">[זום 12:01, 19:15 עד 19:53]</span></div><div class="v">נאמר (דובר לא ודאי, לפי ההקשר איתן ב'; ב-SWEEP יוחס לשמואלוף) «חסר לי פה את הירידה אליהם... יש לי אותו פותח טפרים, יש לנו קאט לרחפן, ואז קאט עוד פעם לטפרים, אין לי את השנייה הזאת של הבהלה של החזיר, או איזה משהו לפני... או POV עיט, או משהו בסגנון». התגובה: «בשוט הזה [הפתוח] אני רואה את החזיר, אני יכול לראות החזיר נבהל פה. אתה רוצה שהוא ייבהל לפני?». לא נסגר אם מוסיפים שוט. ראו <a class="dl" href="#doubt-11">ספק 11</a>.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 19:05 עד 20:57]</span>: «חסר לי פה... את הירידה אליהם... אין לי את השנייה הזאת של הבהלה של החזיר», «זה עוד שוט צידי יותר, עם הטפרים פה והחזיר פה», «תבחרו [את] הכיוון שתבנו את זה», «רגע לפני שהוא מניח עליו את הטפרים אתה עובר לטנק המתפוצץ... ולא רוצים לראות טרף. אנחנו לא רוצים שהוא יאכל אותו». פריימים m4 f_0077 עד f_0083.</div></div>
+<div class="f st"><div class="k">סטטוס</div><div class="v"><span class="chip chip-doubt">ספק</span> (שוט הבהלה הנוסף, ראו <a class="dl" href="#doubt-11">ספק 11</a>)</div></div>
+</div></article>
+<article class="entry" id="e38" data-status="ממתין ללקוח">
+<div class="side">
+<div class="tc"><bdi>02:00</bdi></div>
+<div class="chips"><span class="chip chip-wait">ממתין ללקוח</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-38"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">כותרת המוצר L-SPIKE 2X ב-Full Frame</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">כמו במסמך: על רקע פריים 0, הכותרת מתחילה קטנה במרכז עם אותיות מרוחקות, גדלה ב"קראש זום" דרמטי קדימה, האותיות מתקרבות עד העימוד הנכון, קריאה אחרי 20 פריימים, ממשיכה לגדול לאט עד סוף השוט, ו-Solid מואר אלכסוני עובר עליה מימין לשמאל בתזמון עם הקריין. כל הזמן בתנועה. <strong>לא מתחילים עכשיו</strong>: עושים יחד עם כל הכותרות בשלב הבא, אחרי אישור הצבעים והרקע.</div></div>
+<div class="f change"><div class="k">מה השתנה מול המסמך</div><div class="v">נדחה בזמן. התוכן לא השתנה. (הקראש זום כאן הוא אנימציית טקסט מהמסמך, לא תנועת מצלמה, ולא נפסל בשיחה.)</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו, אחרי תשובת רפאל על הצבע.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 20:57 עד 21:45]</span>: «לדעתי אתם לא תתחילו לעבוד על זה עכשיו», «לא, יש לנו הרבה דברים לפני», «בואו נקבל בינתיים את האישור על הצבעים והדברים». פריימים m4 f_0085, f_0087.</div></div>
+</div></article>
+<article class="entry" id="e39" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>02:02</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-39"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">החלפת רקע לשוט הרחפן על הקרקע</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">זה ה"ביוטי שוט". מחליפים לו רקע כמו לשאר שוטי הרחפן.</div></div>
+<div class="f nochange"><div class="k">מה השתנה מול המסמך</div><div class="v">לא השתנה.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">אנחנו.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v"><span class="ref">[זום 12:01, 21:50 עד 21:58]</span>: «זה הביוטי שוט, אז כאילו להחליף לו את הרקע כמו שהחלפנו לכל הזה». פריים m4 f_0087.</div></div>
+</div></article>
+<article class="entry" id="e40" data-status="סגור">
+<div class="side">
+<div class="tc"><bdi>02:04</bdi></div>
+<div class="chips"><span class="chip chip-ok">סגור</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-40"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">לוגו רפאל</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">לא נדון, כמו במסמך: הלוגו קיים.</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v">לא נדון. על המסך: m4 f_0087.</div></div>
+</div></article>
+<article class="entry" id="e41" data-status="ממתין ללקוח">
+<div class="side">
+<div class="tc"><bdi>סוף המסמך</bdi></div>
+<div class="chips"><span class="chip chip-wait">ממתין ללקוח</span></div>
+<label class="donebox"><input type="checkbox" class="done" id="done-41"> בוצע</label>
+</div>
+<div class="main">
+<h3 class="en">"כל הכותרות שיש להכניס במהלך הסרט יועברו בשלב העבודה הבא"</h3>
+<div class="f do"><div class="k">מה עושים</div><div class="v">לא נדון, כמו במסמך. משתלב עם ההחלטה לדחות את אנימציית 02:00 לשלב הכותרות, ועם כותרות המסרים שייכנסו ב-Abort Mission.</div></div>
+<div class="f who"><div class="k">מי</div><div class="v">שמואלוף (טקסטים).</div></div>
+<div class="f src"><div class="k">מקור</div><div class="v">לא נדון. <span class="ref">[זום 11:22, 30:30 עד 31:16]</span> (כותרות מסרים ב-Abort, בשלב אחר).</div></div>
+</div></article></div></section>
+<section id="new"><h2>דברים חדשים שלא היו במסמך <small>לא קשורים לטיימקוד אחד, 17</small></h2><ol class="newlist"><li class="newitem"><strong>עקרון העבודה של שמואלוף</strong>: לא לעשות עבודה שלוקחת זמן בלי לוודא קודם שזה מה שצריך. "להיות נודניקים" על כל ספק: רקע, נראות, תנועה, אייקונים, אנימציות. מצדנו: לפני דברים לא ודאיים, מבקשים אישור. <span class="ref">[זום 12:01, 22:10 עד 23:18]</span>: «לפני שנעשה דברים שאנחנו לא [בטוחים] נעשה להם אישורים», «להיות כמה שיותר נודניקים... אני לא רוצה שתעשו עבודה מיותרת».</li><li class="newitem"><strong>אין קראש זום בתנועות מצלמה בסרט</strong>: "לא בשפה הנכונה". כניסה דרמטית = דולי. <span class="ref">[זום 11:22, 11:31 עד 11:35; 31:42 עד 31:52]</span>.</li><li class="newitem"><strong>שמואלוף לא רוצה לחזור לאופליין</strong>: רק להרכיב שוטים. עריכה חוזרת של טל קלר רק אם הכרחי. <span class="ref">[זום 12:01, 10:42 עד 10:48]</span>.</li><li class="newitem"><strong>איחוד מהירויות בכל קו העיט/הרחפן</strong> (ירידה, צלילה, התקרבות, ריצה, נסיעה): מחליטים אחרי שמחברים את כל השוטים. <span class="ref">[זום 12:01, 13:57 עד 14:06; 15:09 עד 15:19]</span>.</li><li class="newitem"><strong>הקריין</strong>: מותר להזיז מילה או שתיים של הקריין כדי להתאים לתמונה, אבל הזרימה והתזמון לפי המילים חשובים. <span class="ref">[זום 11:22, 37:50 עד 38:33]</span>: «אם אתה מייצר את זה ואחרי זה הזזת את הקריין לכאן או לכאן, זה בסדר».</li><li class="newitem"><strong>הטנקים לא נראים בשוטים של הלוחמים</strong>: 15 ק"מ ביניהם. <span class="ref">[זום 11:22, 03:09 עד 03:19]</span>.</li><li class="newitem"><strong>לא פותחים מחדש מול רפאל את אישורי הרקעים</strong>: עובדים מתוך הרפרנס שאושר. <span class="ref">[זום 11:22, 03:28 עד 03:32]</span>.</li><li class="newitem"><strong>מדי הלוחמים לא משתנים</strong>: נבחרו "בכפייה" ואושרו, מדי נאטו (לפי ההקשר שמואלוף). נדב העיר שמדים מדבריים בסביבה ירוקה לא הגיוניים («צריך להיות באמצע בין ירוק לכתום») והציע לחמם את הסביבה: «שזה ירגיש שזה מקום חם, עם השמש קופחת, אולי אפילו עננים, אבל שהם יהיו טבעיים ללוקיישן». איתן ב': «אני מבין, אני פשוט לא בטוח כמה זה נחוץ». <strong>משימה שלנו: איתן ב' מחפש צילומים של חיילי מדינות נאטו במדים דומים</strong> (כרפרנס לסביבה שמתאימה למדים). המשפט נאמר לאיתן בשמו («בריצי, תחפש צילומים...»), הדובר לפי ההקשר נדב, ייתכן שמואלוף. הנושא "הושם בצד", «נרשום את זה». <span class="ref">[זום 10:38, 29:59 עד 32:11]</span>.</li><li class="newitem"><strong>עקביות כיווני מסך</strong> בין שוטי הלוחמים והרחפן (לא לשבור כיוון). החיילים והרחפן הם AI, אפשר להזיז אותם כדי שהכיוון יסתדר. <span class="ref">[זום 11:22, 16:26 עד 17:50]</span>.</li><li class="newitem"><strong>דיוק פני החיילים</strong> בשוטי ה-AI מול הקלוז-אפים המצולמים. <span class="ref">[זום 11:22, 20:53 עד 21:51]</span>.</li><li class="newitem"><strong>זמינות</strong>: שמואלוף זמין כל הזמן, <strong>חוץ ממחר (9.11) בין 14:30 ל-17:00</strong> («אני זמין למה שצריך חוץ ממחר, בין שתיים וחצי לחמש»). איתן ב' מחר מתחיל מוקדם ויוצא בסביבות 14:00. (ביום השיחה עצמו שמואלוף היה צריך לצאת ב-12:30.) <span class="ref">[זום 12:01, 01:24; 22:41 עד 22:47; 23:58 עד 24:11]</span>.</li><li class="newitem"><strong>לא שולחים לשמואלוף סיכום כתוב</strong>: הוצע פעמיים, והוא ענה «לא... יש פירוט על מה שדיברנו» (כלומר המסמך שלו הוא הבסיס). <span class="ref">[זום 12:01, 22:21 עד 22:34]</span>. הוא יודע שהשיחה הוקלטה ושאנחנו מתמללים ומפרקים למשימות <span class="ref">[זום 11:22, 27:37 עד 27:53]</span>. מה שכן שולחים: אישורים נקודתיים (סעיף 4).</li><li class="newitem"><strong>איך קוראים את הטיימקודים במסמך</strong>: לפי נגן ה-Drive בשניות, והתזמון לפי תחילת וסוף מילים של הקריין. <span class="ref">[זום 10:38, 06:57 עד 07:17]</span>. המסמך מכסה את כל הסרט "wall to wall", ועובדים לפיו בסדר כרונולוגי <span class="ref">[04:56 עד 05:18]</span>.</li><li class="newitem"><strong>הקאט הקובע = אופליין 5.4 של טל קלר</strong>, שנשלח לשמואלוף כלינק ל-Drive ביום חמישי. סימן זיהוי: כשהקריין אומר "introducing" רואים את הרחפן (בגרסה הקודמת לא ראו). <span class="ref">[זום 10:38, 05:33 עד 06:23]</span>.</li><li class="newitem"><strong>רוב השוטים בקאט עדיין בלי טיפול</strong>, ואיתן ונדב עוד לא ראו את קאט 5.4 מתחילתו ועד סופו. שמואלוף: «בהליך עבודה נכון הייתי שמח אם קודם תראו אותו», והסרט הורץ בשיחה עם סאונד. <span class="ref">[זום 10:38, 22:57 עד 23:39; 33:13 עד 33:40]</span>.</li><li class="newitem"><strong>שוטי העיט שבקאט הם רפרנס מיוטיוב בלבד</strong>, לא חומר לשימוש. <span class="ref">[זום 11:22, 12:19 עד 12:23]</span>.</li><li class="newitem"><strong>לא פותחים מחדש את "המברגים למעלה"</strong> (נקודה בעיצוב הרש"קים שתומללה כך): «זה יתוקן, דיברנו על זה כבר». <span class="ref">[זום 10:38, 26:05 עד 26:12]</span>. משמעות לא ודאית.</li></ol></section>
+<section id="checklists" class="cl"><h2>מה מחכים לקבל, ומה שולחים לאישור <small>22: 11 מהלקוח, 4 אצלנו, 7 לאישור</small></h2><h3>מה אנחנו מחכים לקבל מהלקוח (11)</h3><ul><li><label><input type="checkbox" class="chk" id="chk-1-1"><span><strong>תשובה על הצבע/החטיבה לרקע פריים 0</strong> מספר המותג (שמואלוף שואל את רפאל). חוסם: פתיחת הרחפן, אנימציית הרש"קים, הכותרת. <span class="ref">[זום 10:38, 12:17; זום 12:01, 21:02]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-1-2"><span><strong>רשימת כל המסכים</strong> (בערך 4): תוכן, אנימציה, לחיצות, מפה, חלוקה, אחרי השיחה של שמואלוף עם המנהל הטכנולוגי של רפאל (קיווה שתהיה ב-8.11). <span class="ref">[זום 11:22, 04:06 עד 05:44]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-1-3"><span><strong>קבצי הממשקים</strong> (UX/UI) של המערכת. <span class="ref">[זום 11:22, 05:44 עד 06:13]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-1-4"><span><strong>אייקון טנק</strong>: האם קיים במערכת. אם לא, אנחנו מעצבים. <span class="ref">[זום 11:22, 05:08 עד 05:17]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-1-5"><span><strong>רפרנס של טנק נוסע</strong> (אולי מרכבה). בסוף השיחה של 10:38 אמר «אני שולח לינק בקבוצה», ובתחילת 11:22 «אני אמצא לכם שוט». לבדוק בקבוצה אם כבר הגיע. <span class="ref">[זום 10:38, 37:25; 41:08 עד 41:28; זום 11:22, 00:10]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-1-6"><span><strong>שוטים נקיים בלי כותרות</strong> ל-00:00 עד 00:16 (אם רפאל ישיג). <span class="ref">[זום 10:38, 07:41]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-1-7"><span><strong>כל הכותרות של הסרט</strong> (שלב הבא), כולל כותרות המסרים ב-Abort Mission. (מסמך, וגם <span class="ref">[זום 11:22, 30:30 עד 31:16]</span>)</span></label></li><li><label><input type="checkbox" class="chk" id="chk-1-8"><span><strong>קבצי הפונט Gotham</strong>: לא עלה בשיחות היום. היה פתוח מלפני, וספר המותג קובע Gotham לכותרות באנגלית. נדרש לפני שלב הכותרות.</span></label></li><li><label><input type="checkbox" class="chk" id="chk-1-9"><span><strong>סרטון חזירי היבלות</strong> (דקה 1:02): לפי הפריימים נשלח לקבוצה "טסט לפרויקט רפאל" (youtu.be/XsB-wC24XGc, m2 f_0080). לוודא שהוא אצלנו. <span class="ref">[זום 10:38, 17:58]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-1-10"><span><strong>הצילום מסרטון הטבע של טפרי העיט</strong> ("ששלחתי" במסמך, 01:57): לא נדון. לוודא שהוא אצלנו.</span></label></li><li><label><input type="checkbox" class="chk" id="chk-1-11"><span><strong>אישור שקאט 5.4 הוא הסופי</strong> (עדיפות נמוכה): בשיחה אומת שזה הלינק מקלר ("5.4") ונתן סימן זיהוי (הרחפן נראה ב-introducing). נשאר רק ספק קטן שנאמר («אני לא זוכר אם היו עוד שינויים... הוא שלח לי משהו V5»), דובר לא ברור. <span class="ref">[זום 10:38, 05:41 עד 06:23]</span></span></label></li></ul><h3>מה אנחנו משיגים או בודקים בעצמנו (4, חדש בביקורת)</h3><ul><li><label><input type="checkbox" class="chk" id="chk-2-1"><span><strong>צילומים של חיילי מדינות נאטו במדים דומים</strong> (רפרנס לסביבה מול המדים). איתן ב'. <span class="ref">[זום 10:38, 31:55 עד 32:04]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-2-2"><span><strong>עיצובי הלוקיישן המאושרים</strong> של סביבת הלוחמים: נמצאים בצ'אט הפרטי של נדב עם שמואלוף, לא בקבוצה. לוודא איזה מהם אושר בפועל (<a class="dl" href="#doubt-5">ספק 5</a>). <span class="ref">[זום 11:22, 01:47 עד 02:16]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-2-3"><span><strong>הטסטים הישנים (ברטו והבן של שמואלוף)</strong>: הרף לאיכות ההטמעה. נמצאים בקבוצה. <span class="ref">[זום 10:38, 21:52 עד 22:42]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-2-4"><span><strong>הסרטון של חזירי היבלות</strong> ותמונת העיט מהוואטסאפ: לצפות בדקה 1:02 לפני שבונים (ראו ברשימה הקודמת).</span></label></li></ul><h3>מה אנחנו צריכים לשלוח לו לאישור (7)</h3><ul><li><label><input type="checkbox" class="chk" id="chk-3-1"><span><strong>הצעה לרקע פריים 0</strong> (עומק, נקודת מגוז או שני שליש ושליש), אחרי שתגיע תשובה על הצבע. דרך שמואלוף לרפאל.</span></label></li><li><label><input type="checkbox" class="chk" id="chk-3-2"><span><strong>פריים ייצוגי של אנימציית הרש"קים בעיצוב B</strong> עם כותרות Anti-Tank / Multipurpose בצד. <strong>לשמואלוף בלבד, לא לרפאל</strong> («לך, לא להם»). <span class="ref">[זום 10:38, 29:10 עד 29:21]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-3-3"><span><strong>ניסוי המעבר רחפן לעיט ב-01:07</strong> ("ננסה ונראה"), אולי בשתי גרסאות (בלו-אפ ומקרוב יותר). <span class="ref">[זום 11:22, 14:08 עד 14:16]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-3-4"><span><strong>תיקון קטן/דוגמה לכיווני הרחפן והחיילים</strong> לפני שממשיכים. <span class="ref">[זום 11:22, 22:07 עד 22:15]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-3-5"><span><strong>הסבר כללי או דוגמה לרצף ה-Abort Mission</strong> לפני ביצוע מלא. <span class="ref">[זום 12:01, 02:23 עד 02:28]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-3-6"><span><strong>רצף מחובר של קטע העיט והרחפן</strong> (01:34 עד 01:57) כדי להחליט על המהירויות. <span class="ref">[זום 12:01, 14:02]</span></span></label></li><li><label><input type="checkbox" class="chk" id="chk-3-7"><span>מומלץ (לפי בקשת שמואלוף לבדוק כל ספק, לא נאמר במפורש): פריים סגנון לסביבת העיט (סוואנה), פריים לסביבת הלוחמים אחרי הייבוש, מראה חזיר היבלות, אייקון הטנק אם נעצב.</span></label></li></ul></section>
+<section id="money"><h2>לוחות זמנים וכסף</h2><ul class="money"><li><strong>תאריכים</strong>: בשלוש השיחות עם שמואלוף <strong>לא נאמר אף תאריך מסירה</strong>. נאמר רק «בלוחות זמנים מאוד צפופים» <span class="ref">[זום 10:38, 08:13]</span>. המועדים שהיו ידועים לפני היום (גרסה להערות הנהלה 9.11, דדליין פנימי 11.11, טיסה לתערוכה 12 או 13.11) לא הוזכרו ולא אושרו מחדש. עם היקף ההערות הזה צריך לוודא מולו מה נמסר ב-9.11.</li><li><strong>זמינות</strong>: שמואלוף זמין חוץ מ-9.11 בין 14:30 ל-17:00. איתן ב' ב-9.11 עד בערך 14:00. <span class="ref">[זום 12:01, 22:41; 24:01]</span></li><li><strong>כסף</strong>: לא דובר בשיחות עם שמואלוף. מהשיחה הפנימית: שמואלוף אמר בעל פה שתהיה <strong>תוספת תשלום על קטע העיט, בלי מחיר סגור</strong> <span class="ref">[זום 10:20, 05:00 עד 05:04]</span>: «עוד לא סגרנו מחיר, אבל שיהיה תוספת [תשלום] על הקטע של העיט». ההיקף גדל: בתחילת השבוע שעבר דובר על 2 עד 3 שוטי עיט, והמסמך מפרט את העיט כמו הסרטון עם הצ'יטה <span class="ref">[זום 10:20, 04:39 עד 04:54]</span>.</li><li><strong>הגישה הפנימית שסוכמה</strong>: לסיים את הפרויקט עם כמה שפחות חיכוכים, לעשות מה שצריך ולהסיק מסקנות בסוף. <span class="ref">[זום 10:20, 03:28 עד 03:39; 06:02 עד 06:09]</span>: נדב: «בוא ננסה להבין איך מסיימים את הפרויקט הזה עם כמה שפחות חיכוכים». כך נסגר הוויכוח מיום חמישי: נדב כתב לשמואלוף «נעשה מה שצריך, בלי תוספות, ונסיק מסקנות בסוף העניין».</li><li><strong>החששות של נדב לפני השיחה</strong> <span class="ref">[זום 10:20, 03:50 עד 05:33]</span>: במסמך כ-40 הערות; רמת דיוק «ברמת המילימטר»; «כל דבר יש לו הערה, כל דבר צריך לשנות משהו», והוא בספק אם משהו ממה שהוא עשה שמיש מבחינת שמואלוף. רקע: אצל הלקוח כל סרטון בסדרה עם חיה אחרת (בסרטון השני צ'יטה). נדב גם אמר ש-X2 הוא כרגע רוב הפעילות ו«הדבר המרכזי» <span class="ref">[09:17 עד 09:24]</span>.</li><li><strong>עלות נסתרת אצל שמואלוף</strong>: הוא לא רוצה לחזור לאופליין עם קלר <span class="ref">[זום 12:01, 10:44]</span>, וזה משפיע על 01:13 (שינוי סדר) ועל 01:50.</li></ul></section>
+<footer><p><strong>מקורות:</strong> תמלולי ארבעת הזומים של 8.11.26 בתיקייה <code>context/משרד-הביטחון/תמלול-זום-8.11.26-*</code> (שיחות 10:20, 10:38, 11:22, 12:01), ומסמך ההנחיות של שמואלוף לקאט 5.4 (7.11).</p><p>התמלול בלי הפרדת דוברים, ולכן ייחוס דובר מסומן "לפי ההקשר". הציטוטים הם מתמלול Whisper ויש בו שגיאות.</p></footer>
+</div>
+<script>
+(function(){
+var KEY='x2-zoom-811-v1';
+function load(){try{var r=localStorage.getItem(KEY);return r?JSON.parse(r)||{}:{};}catch(e){return {};}}
+function save(o){try{localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}}
+var state=load();
+var boxes=document.querySelectorAll('input.done,input.chk');
+function apply(b){
+  var en=b.closest('.entry');
+  if(en&&b.classList.contains('done')){en.classList.toggle('isdone',b.checked);}
+}
+for(var i=0;i<boxes.length;i++){
+  (function(b){
+    if(state[b.id]){b.checked=true;}
+    apply(b);
+    b.addEventListener('change',function(){
+      if(b.checked){state[b.id]=1;}else{delete state[b.id];}
+      save(state);apply(b);
+    });
+  })(boxes[i]);
+}
+var btns=document.querySelectorAll('.bar button');
+var ents=document.querySelectorAll('.entry');
+var shown=document.getElementById('shown');
+function filter(f){
+  var n=0;
+  for(var i=0;i<ents.length;i++){
+    var st=(ents[i].getAttribute('data-status')||'').split(' ');
+    var ok=false;
+    if(f==='all'){ok=true;}
+    else{for(var j=0;j<st.length;j++){if(f===st[j]||(f==='ממתין ללקוח'&&st.join(' ').indexOf(f)>-1)){ok=true;}}}
+    ents[i].hidden=!ok;
+    if(ok){n++;}
+  }
+  for(var k=0;k<btns.length;k++){btns[k].setAttribute('aria-pressed',btns[k].getAttribute('data-f')===f?'true':'false');}
+  shown.textContent='מוצגים '+n+' מתוך '+ents.length;
+}
+for(var m=0;m<btns.length;m++){
+  (function(b){b.addEventListener('click',function(){filter(b.getAttribute('data-f'));});})(btns[m]);
+}
+filter('all');
+})();
+</script>
+</body>
+</html>
