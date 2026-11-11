@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>X2 · תיעדוף שוטים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&family=Rubik:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f9;--surface:#ffffff;--surface-2:#eef1f5;--fg:#14181f;--muted:#56606e;--line:#d9dee5;--line-strong:#b8c0cb;
+--accent:#1d4fa8;--accent-fg:#ffffff;--accent-soft:#e4ecfa;
+--nadav:#6b3fa0;--nadav-fg:#ffffff;--nadav-soft:#efe6fa;
+--ok:#14683a;--ok-bg:#dcf1e3;--wait:#8a5200;--wait-bg:#fbebcc;--doubt:#a3243f;--doubt-bg:#fadde3;--cancel:#4b5563;--cancel-bg:#e5e7eb;
+--focus:#1d4fa8;color-scheme:light;
+--font-body:'Heebo','Assistant',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+--font-head:'Rubik','Heebo',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+--font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f1319;--surface:#171c24;--surface-2:#1e242e;--fg:#e6e9ee;--muted:#9aa5b4;--line:#2a323d;--line-strong:#3d4856;
+--accent:#7fa8f0;--accent-fg:#0b1320;--accent-soft:#1c2a45;
+--nadav:#c4a0ef;--nadav-fg:#1a1024;--nadav-soft:#2a1f3b;
+--ok:#7ad9a0;--ok-bg:#12301f;--wait:#f1c36b;--wait-bg:#3a2a0b;--doubt:#f09aaa;--doubt-bg:#3d151f;--cancel:#aab3bf;--cancel-bg:#2a2f37;
+--focus:#7fa8f0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1319;--surface:#171c24;--surface-2:#1e242e;--fg:#e6e9ee;--muted:#9aa5b4;--line:#2a323d;--line-strong:#3d4856;
+--accent:#7fa8f0;--accent-fg:#0b1320;--accent-soft:#1c2a45;
+--nadav:#c4a0ef;--nadav-fg:#1a1024;--nadav-soft:#2a1f3b;
+--ok:#7ad9a0;--ok-bg:#12301f;--wait:#f1c36b;--wait-bg:#3a2a0b;--doubt:#f09aaa;--doubt-bg:#3d151f;--cancel:#aab3bf;--cancel-bg:#2a2f37;
+--focus:#7fa8f0;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.55;overflow-x:hidden}
+.wrap{max-width:var(--maxw,960px);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 72px}
+h1,h2,h3{font-family:var(--font-head);line-height:1.25;margin:0}
+.hd h1{font-size:clamp(1.6rem,5vw,2.2rem);font-weight:700;letter-spacing:-.01em}
+.hd .lede{margin:.5rem 0 0;max-width:68ch;color:var(--muted)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+button{font:inherit;color:inherit}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.tc{font-family:var(--font-mono);font-weight:600;font-variant-numeric:tabular-nums;color:var(--accent);unicode-bidi:isolate;direction:ltr;display:inline-block}
+.tc.none{font-family:var(--font-body);font-weight:500;color:var(--muted);direction:rtl}
+.badge{display:inline-flex;align-items:center;font-size:.74rem;font-weight:700;line-height:1.4;padding:1px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.b-eytan{color:var(--accent);background:var(--accent-soft)}
+.b-nadav{color:var(--nadav);background:var(--nadav-soft)}
+.b-client{color:var(--wait);background:var(--wait-bg)}
+.b-status{color:var(--muted);background:var(--surface-2);border-color:var(--line-strong);font-weight:500;white-space:normal}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
+.btn{cursor:pointer;border:1px solid var(--line-strong);background:var(--surface);padding:7px 16px;border-radius:999px;font-size:.92rem;min-height:40px}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent);font-weight:600}
+.btn:hover{border-color:var(--fg)}
+.note{font-size:.82rem;color:var(--muted);margin:8px 0 0}
+.toast{position:fixed;inset-inline:16px;bottom:20px;margin-inline:auto;max-width:420px;background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.92rem;text-align:center;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .2s,transform .2s;z-index:100}
+.toast.show{opacity:1;transform:none}
+.sharebox{display:none;margin-top:10px;gap:8px;align-items:center;flex-wrap:wrap}
+.sharebox.show{display:flex}
+.sharebox input{flex:1 1 220px;min-width:0;font:inherit;font-size:.82rem;padding:7px 10px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);color:var(--fg);direction:ltr}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+:root{--maxw:1320px}
+.board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px;align-items:start}
+.col{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.col h2{display:flex;align-items:center;gap:10px;font-size:1.08rem;padding:2px 4px 10px}
+.col h2 .dot{width:10px;height:10px;border-radius:50%;flex:none}
+.col[data-p="high"] .dot{background:var(--doubt)}
+.col[data-p="medium"] .dot{background:var(--wait)}
+.col[data-p="low"] .dot{background:var(--cancel)}
+.col h2 .cnt{margin-inline-start:auto;font-family:var(--font-mono);font-size:.9rem;background:var(--surface);border:1px solid var(--line-strong);border-radius:999px;padding:0 10px}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:8px;min-height:64px;border-radius:8px}
+.list.over{outline:2px dashed var(--accent);outline-offset:3px}
+.empty{color:var(--muted);font-size:.86rem;padding:14px 6px;text-align:center}
+.card{background:var(--surface);border:1px solid var(--line);border-inline-start:4px solid var(--line-strong);border-radius:8px;padding:10px 12px;cursor:grab;min-width:0}
+.col[data-p="high"] .card{border-inline-start-color:var(--doubt)}
+.col[data-p="medium"] .card{border-inline-start-color:var(--wait)}
+.col[data-p="low"] .card{border-inline-start-color:var(--cancel)}
+.card.dragging{opacity:.4}
+.card .top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card .num{font-family:var(--font-mono);font-weight:600;color:var(--muted);font-size:.85rem;min-width:1.6em}
+.card .tc{font-size:.9rem}
+.card .badges{display:flex;gap:4px;margin-inline-start:auto}
+.card .name{font-weight:700;font-size:.98rem;margin-top:4px;overflow-wrap:anywhere}
+.card .task{font-size:.86rem;color:var(--muted);margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.card .ctl{display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap}
+.chip{cursor:pointer;min-width:36px;height:34px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);font-weight:700;font-size:.9rem;padding:0 10px}
+.chip[aria-pressed="true"]{color:#fff;border-color:transparent}
+.chip[data-to="high"][aria-pressed="true"]{background:var(--doubt);color:var(--surface)}
+.chip[data-to="medium"][aria-pressed="true"]{background:var(--wait);color:var(--surface)}
+.chip[data-to="low"][aria-pressed="true"]{background:var(--cancel);color:var(--surface)}
+.arrows{margin-inline-start:auto;display:flex;gap:4px}
+.arr{cursor:pointer;width:36px;height:34px;border-radius:8px;border:1px solid var(--line-strong);background:var(--surface);font-size:1rem;line-height:1}
+.arr:disabled{opacity:.35;cursor:default}
+.legend{font-size:.82rem;color:var(--muted);margin-top:6px}
+@media (max-width:980px){.board{grid-template-columns:minmax(0,1fr)}}
+@media print{.tools,.note,.ctl,.sharebox{display:none!important}.board{grid-template-columns:repeat(3,1fr)}.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hd">
+<h1>X2 · תיעדוף שוטים</h1>
+<p class="lede">כל השוטים הפעילים מהזומים של 11.11.26, לפי עדיפות. גוררים כרטיס בין העמודות, או לוחצים על ג / ב / נ. החצים מזיזים בתוך העמודה.</p>
+<div class="tools">
+<button type="button" class="btn primary" id="share">שתף מצב</button>
+<button type="button" class="btn" id="reset">איפוס</button>
+<span class="legend" id="total"></span>
+</div>
+<div class="sharebox" id="sharebox"><input id="shareurl" readonly aria-label="קישור לשיתוף"></div>
+<p class="note">הסימונים נשמרים בדפדפן שלך. לשיתוף: כפתור שתף מצב</p>
+</header>
+<main class="board" id="board">
+<section class="col" data-p="high" aria-labelledby="h-high"><h2 id="h-high"><span class="dot"></span>עדיפות גבוהה<span class="cnt" id="c-high">0</span></h2><ol class="list" data-p="high" id="l-high"></ol></section>
+<section class="col" data-p="medium" aria-labelledby="h-medium"><h2 id="h-medium"><span class="dot"></span>עדיפות בינונית<span class="cnt" id="c-medium">0</span></h2><ol class="list" data-p="medium" id="l-medium"></ol></section>
+<section class="col" data-p="low" aria-labelledby="h-low"><h2 id="h-low"><span class="dot"></span>עדיפות נמוכה<span class="cnt" id="c-low">0</span></h2><ol class="list" data-p="low" id="l-low"></ol></section>
+</main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+var U = (function(){
+  function lsGet(k){ try { var v = window.localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
+  function lsSet(k, v){ try { window.localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  function lsDel(k){ try { window.localStorage.removeItem(k); } catch(e){} }
+  function enc(obj){
+    var s = btoa(unescape(encodeURIComponent(JSON.stringify(obj))));
+    return s.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  }
+  function dec(str){
+    try {
+      var s = str.replace(/-/g,'+').replace(/_/g,'/');
+      while (s.length % 4) s += '=';
+      return JSON.parse(decodeURIComponent(escape(atob(s))));
+    } catch(e){ return null; }
+  }
+  function readHash(){
+    var m = /(?:^#|&)s=([^&]+)/.exec(location.hash || '');
+    return m ? dec(m[1]) : null;
+  }
+  function clearHash(){
+    try { history.replaceState(null, '', location.pathname + location.search); } catch(e){ try { location.hash = ''; } catch(e2){} }
+  }
+  var tt;
+  function toast(msg){
+    var t = document.getElementById('toast'); if (!t) return;
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(tt); tt = setTimeout(function(){ t.classList.remove('show'); }, 2600);
+  }
+  function share(obj){
+    var url = location.href.split('#')[0] + '#s=' + enc(obj);
+    var box = document.getElementById('sharebox'), inp = document.getElementById('shareurl');
+    function manual(){ if (box && inp){ inp.value = url; box.classList.add('show'); inp.focus(); inp.select(); } toast('העתיקו את הקישור מהתיבה'); }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(function(){ toast('הקישור עם המצב הנוכחי הועתק'); if (inp) inp.value = url; }, manual);
+      } else { manual(); }
+    } catch(e){ manual(); }
+  }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function tcHtml(r){
+    if (r.tc) return '<span class="tc">' + esc(r.tc) + '</span>';
+    return '<span class="tc none">' + (r.general ? 'כל הסרט' : 'לא צוין') + '</span>';
+  }
+  var OWN = {eytan:'איתן', nadav:'נדב'};
+  return {lsGet:lsGet, lsSet:lsSet, lsDel:lsDel, readHash:readHash, clearHash:clearHash, toast:toast, share:share, esc:esc, tcHtml:tcHtml, OWN:OWN};
+})();
+
+var DATA = [{"id": "drone-open-016", "num": 1, "tc": "0:16", "general": false, "name": "שוט הרחפן בפתיחה", "task": "למרכז את הרחפן, להגדיל אותו בפריים ולהחליק את התנועה.", "client_requested": false, "owner_default": "eytan", "priority_default": "medium", "status_note": "גרסה נשלחה, עדיין צריך תיקון"}, {"id": "drone-eagle-023", "num": 2, "tc": "0:23", "general": false, "name": "חיבור הרחפן לעיט", "task": "החיבור עובד. להתחיל את תנועת הרחפן אלינו עוד לפני המעבר ולהמשיך אותה בעיט (לגנוב כמה פריימים מהרחפן).", "client_requested": true, "owner_default": "eytan", "priority_default": "medium", "status_note": null}, {"id": "lion-032", "num": 3, "tc": "0:32", "general": false, "name": "שוט האריה", "task": "לאתר את שוט האריה מהצד שנעשה ולא נוצל ולשלוח ללקוח להחלטה. בכל מקרה לשמור על סוג השוט: המצלמה הולכת עם האריה ופותחת את הסוואנה.", "client_requested": true, "owner_default": "eytan", "priority_default": "medium", "status_note": "ממתין להחלטת הלקוח"}, {"id": "soldiers-descend-036", "num": 4, "tc": "0:36", "general": false, "name": "כניסת הלוחמים והירידה למטה", "task": "להוסיף מחסה: סידור של כמה סלעים עם אדמה מתחת (לא בולדר אחד) שהלוחמים יורדים מאחוריו. סלע בצד שמאל של הפריים, הלוחם השני מאחוריו.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "rashkim-blue-048", "num": 5, "tc": "0:48", "general": false, "name": "אנימציית הרש\"קים בכחול", "task": "לבנות מחדש את כל שוטי הרש\"קים בכחול, לא רק את הגליץ'. איתן מעלה לנדב את השוט לדרייב.", "client_requested": false, "owner_default": "nadav", "priority_default": "medium", "status_note": "ממתין שאיתן יעלה את השוט"}, {"id": "binoculars-sky-054", "num": 6, "tc": "0:54", "general": false, "name": "המשקפת: שמיים והשתקפות", "task": "לשנות את השמיים ממעונן לבהיר כך שיתאימו לסצנה. בהשתקפות בעדשות רק טשטוש. ג'נרוט מחדש.", "client_requested": false, "owner_default": "nadav", "priority_default": "medium", "status_note": null}, {"id": "binoculars-pov-055", "num": 7, "tc": "0:55", "general": false, "name": "מבט דרך המשקפת", "task": "לשפר את הקונטור של המשקפת ולהוסיף שנתות.", "client_requested": false, "owner_default": "eytan", "priority_default": "low", "status_note": "ייתכן שכבר בוצע, לבדוק"}, {"id": "tank2-056", "num": 8, "tc": "0:56", "general": false, "name": "הטנק השני (האחורי)", "task": "התנועה נראית כמו טנק צעצוע ומנותקת מהקרקע. לתקן בבלנדר: תנועה טבעית ויציבה, בלי רעידות, ואבק ריאליסטי.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "tanks-far-100", "num": 9, "tc": "1:00", "general": false, "name": "הטנקים הרחוקים (לונג שוט)", "task": "עוד לא טופל: להרחיק את הטנקים ולחבר לשוט שלפניו.", "client_requested": false, "owner_default": "nadav", "priority_default": "medium", "status_note": "עוד לא התחיל"}, {"id": "screen-105", "num": 10, "tc": "1:05", "general": false, "name": "מסך 1:05", "task": "לעדכן את נתוני הסטריפ התחתון (תאריך, שעה, נ\"צ) ואת הסוללה. המפה והנקודות נשארים.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "launch-eagle-108", "num": 11, "tc": "1:08", "general": false, "name": "Launch: העיט מתרומם מהענף", "task": "לייצר מחדש: העיט גבוה יותר על ענף עבה והגיוני, בפרופורציה נכונה, ומתרומם מאפס (פורס כנפיים) באותה זווית של הרחפן.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "launch-cut-108", "num": 12, "tc": "1:08", "general": false, "name": "Launch: חיתוך דאבל אקשן", "task": "החיתוך בין הרחפן שמתרומם לעיט (1:08 עד 1:09) לא באמצע תנועה: דאבל אקשן, שניהם מתרוממים מאפס. לתת לעיט עוד זמן להתרומם.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "screen-117", "num": 13, "tc": "1:17", "general": false, "name": "מסך 1:17 (טאבלט)", "task": "סטריפ, שעה וסוללה. X אדום מהבהב על אייקון ה-GPS בגודל האייקון. במסך השמאלי מבט מהרחפן, המפה נשארת מימין. כותרת עליונה: Take Off הופך ל-Mission.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "pov-117", "num": 14, "tc": "1:17", "general": false, "name": "מבט רחפן מרחף למסך 1:17", "task": "לייצר שוט POV של רחפן מרחף באותה סביבה של השוטים שלפני ואחרי, להצבה על המסך.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "glitch-order-119", "num": 15, "tc": "1:19", "general": false, "name": "סדר המוניטור והגליץ'", "task": "לפי האופליין: להחזיר את המוניטור למקומו המקורי, כך שהגליץ' יבוא אחרי המסך עם ה-GPS.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "glitch-shot-119", "num": 16, "tc": "1:19", "general": false, "name": "שוט הרחפן מהצד (שוט הגליץ')", "task": "השוט מזווית צד ולמעלה, בלי ריבועי השדות, עדיין צריך תיקון באנימציה. הגליץ' מתרחש בתוך השוט הזה.", "client_requested": true, "owner_default": "nadav", "priority_default": "medium", "status_note": null}, {"id": "bullet-entry-122", "num": 17, "tc": "1:22", "general": false, "name": "הכניסה לבולט טיים", "task": "הבולט טיים ממשיך את השוט הקודם (שדה הקרב למטה, אותה סביבה וזווית צד) עד abort mission. לחבר את שוט הרחפן הקודם לבולט טיים.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "bullet-structure-123", "num": 18, "tc": "1:23", "general": false, "name": "בולט טיים: מבנה לפי המסמך", "task": "לפי המסמך: בסוף abort mission (1:23) סלואו מושן באותה זווית. aborted: קאט לאקסטרים קלוז של רוטור. return: קאט לפתוח. reuse (1:29): סיבוב 180 עד military (1:31), ואז מהירות רגילה. כיתוב ב-1:27.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": "גרסה בשני חלקים כבר בטיימליין, לבנות מחדש לפי המסמך"}, {"id": "screen-132", "num": 19, "tc": "1:32", "general": false, "name": "מסך 1:32", "task": "סטריפ, שעה וסוללה (28:06). כותרת עליונה: Mission הופך ל-Hover (אם כבר Hover, להשאיר). בסטריפ התחתון: אייקון הרכב הופך לאייקון טנק, רקע שחור ואייקון לבן.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "pigs-pov-135", "num": 20, "tc": "1:35", "general": false, "name": "מבט העיט על החזירים", "task": "החזירים הולכים ברוגע, בתנועה כמו הטנקים: לא עומדים ולא בורחים.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "pigs-pov-trim-135", "num": 21, "tc": "1:35", "general": false, "name": "קיצור מבט העיט", "task": "לא לוותר על ה-POV של העיט: לקצר אותו לחצי שנייה עד שנייה וחצי, ואז לחתוך לשוט הפרונטלי של החזירים.", "client_requested": true, "owner_default": "eytan", "priority_default": "medium", "status_note": null}, {"id": "pigs-front-notice-136", "num": 22, "tc": "1:36", "general": false, "name": "שוט חדש: החזירים מבחינים בעיט", "task": "לייצר שוט פרונטלי: שני החזירים הולכים לכיוון המצלמה (בגובה שלהם, לא מלמטה), מבחינים בעיט ומתחילים לרוץ. כ-2.5 שניות.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "screen-137", "num": 23, "tc": "1:37", "general": false, "name": "מסך 1:37", "task": "סטריפ, שעה וסוללה. על המסך מבט הרחפן על שני הטנקים בתנועה על השביל. הצלב הלבן מגיב ללחיצה ועוקב אחרי טנק אחד (עדיף הקדמי). אייקון הטנק נדלק בכחול, אייקון האדם לא דלוק.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "screen-141", "num": 24, "tc": "1:41", "general": false, "name": "מסך 1:41", "task": "סטריפ, שעה וסוללה. כותרת עליונה Hover הופכת ל-Homing רק אחרי שהלוחם מרים את האצבע (חצי השנייה האחרונה). הטנק דלוק, הצלב עליו, אותו מבט ואותו מרחק.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "eye-dive-146", "num": 25, "tc": "1:46", "general": false, "name": "מעין העיט לצלילה", "task": "להחזיר את תנועת המצלמה בין העין לצלילה, לפי המסמך, כדי לבנות מתח. צלילה ריאליסטית: עולה מעט, פותח כנפיים, מכוון ראש, ואז מיישר ונופל. לעשות מחדש בבלנדר.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "pigs-front-eagle-152", "num": 26, "tc": "1:52", "general": false, "name": "החזירים בורחים, העיט מאחוריהם", "task": "להחליף את שוט החזירים מאחור בשוט פרונטלי: שני החזירים רצים לכיוון המצלמה והעיט צולל מאחוריהם ונכנס לפריים.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "morph-154", "num": 27, "tc": "1:54", "general": false, "name": "מורף עיט לרחפן", "task": "נדב מכין את שוט המורף בנפרד לקולוריסט, לפי הקצב. איתן מציב בטיימליין (עם פליפ) ומוסיף לפניו POV רחפן שחסר.", "client_requested": false, "owner_default": "nadav", "priority_default": "medium", "status_note": "בתהליך, הוצב בטיימליין בזום של 14:48"}, {"id": "drone-dive-tank-157", "num": 28, "tc": "1:57", "general": false, "name": "צלילת הרחפן לתוך הטנק", "task": "לעשות מחדש בבלנדר את צלילת הרחפן לתוך הטנק (כרגע צולל סתם לקרקע). בטיימליין: סוף הצלילה לפני ה-POV, יותר מהנחיתה ליד הטנק, ולקצר.", "client_requested": false, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "pov-bw-157", "num": 29, "tc": "1:57", "general": false, "name": "מבט הרחפן בשחור לבן", "task": "לחתוך לפני הפיצוץ שמגיע מוקדם מדי, ולהחזיר את הפיצוץ בצבע בסוף.", "client_requested": false, "owner_default": "eytan", "priority_default": "medium", "status_note": null}, {"id": "lspike-title-200", "num": 30, "tc": "2:00", "general": false, "name": "כותרת L-SPIKE 2X", "task": "אנימציה נפרדת (התרחבות) לפי הלוגו של המוצר מספר המותג, בפונט בולד.", "client_requested": true, "owner_default": "eytan", "priority_default": "medium", "status_note": null}, {"id": "lspike-on-rashak", "num": 31, "tc": null, "general": false, "name": "L-Spike 2X על הקלוז אפ של הרש\"ק", "task": "כשהקריין אומר L-Spike 2X, התמונה צריכה להיות על הקלוז אפ של הרש\"ק ולא על הרחפן.", "client_requested": true, "owner_default": "eytan", "priority_default": "medium", "status_note": null}, {"id": "tiger-bite", "num": 32, "tc": null, "general": false, "name": "הנמר נותן ביס (Instinct)", "task": "כמו באופליין: על המילה Instinct הנמר נותן ביס לכיוון המצלמה, ולא רק מאיים.", "client_requested": true, "owner_default": "nadav", "priority_default": "medium", "status_note": null}, {"id": "soldiers-assembly", "num": 33, "tc": null, "general": false, "name": "הרכבת הרחפן על הגבעה", "task": "הלוחם חשוף לגמרי על פסגת הגבעה: להוסיף אבן או סלעים כמחסה, ולהגביה את האבן עד גובה הראש של הלוחם שמסתכל על הרחפן.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "soldiers-closeup-rock", "num": 34, "tc": null, "general": false, "name": "קלוז אפ של לוחם", "task": "להוסיף סלע מאחורי חצי הגב והכתף של הלוחם, כך שייראה מוגן.", "client_requested": true, "owner_default": "nadav", "priority_default": "medium", "status_note": null}, {"id": "soldiers-drone-rise", "num": 35, "tc": null, "general": false, "name": "הרחפן עולה מאזור הלוחמים", "task": "לתקן את הייצוב (יש ריצוד והשוט לא ממורכז). להשתמש בסלע שכבר קיים בשוט כדי לחבר את האוריינטציה למקום הלוחמים.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": "גרסה נשלחה, יש ריצוד, לתקן"}, {"id": "eagle-after-launch", "num": 36, "tc": null, "general": false, "name": "שוט העיט אחרי ה-Launch", "task": "השוט ארוך מדי: לקצר, ולשקול פליפ לכניסת הציפור.", "client_requested": false, "owner_default": "eytan", "priority_default": "low", "status_note": null}, {"id": "screen-timing-military", "num": 37, "tc": null, "general": false, "name": "תזמון המסך מול built to military standard", "task": "המסך מגיע הרבה אחרי שהקריין אומר built to military standard. להקדים אותו לפי האופליין, כדי שלא יהיה צורך להאריך את שוט העיט והבולט טיים.", "client_requested": true, "owner_default": "eytan", "priority_default": "medium", "status_note": null}, {"id": "eagle-hero", "num": 38, "tc": null, "general": false, "name": "העיט: השוט הראשון שלו", "task": "הגיבור נכנס במלוא תפארתו: חצי שנייה אחרי הכניסה מנפנף בכנפיים לאט ורחב, באותה זווית, ולא רק גולש.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "eagle-closeup-eye", "num": 39, "tc": null, "general": false, "name": "קלוז אפ של העיט", "task": "ג'נרוט מחדש: עין בלי מצמוץ, ברקע הסוואנה, ומקור צהוב במקום שחור. לתקן גם את המצמוץ ב-POV הנפילה.", "client_requested": false, "owner_default": "nadav", "priority_default": "medium", "status_note": "מהזום של הבוקר, לוודא שעדיין פתוח"}, {"id": "eagle-talons", "num": 40, "tc": null, "general": false, "name": "העיט מתקרב לחזירים: רגליים וטפרים", "task": "סביבה ירוקה יותר, העיט פותח יותר את הרגליים, שוט מוגדל על הרגליים בלי הפנים.", "client_requested": false, "owner_default": "nadav", "priority_default": "medium", "status_note": null}, {"id": "clips-to-client", "num": 41, "tc": null, "general": false, "name": "שני קליפים ללקוח (תנועת מצלמה)", "task": "לשלוח ללקוח את שני הקליפים שהוכנו (בלי גורים ובלי קראש זום) ולשאול אם תנועת המצלמה בסדר.", "client_requested": false, "owner_default": "eytan", "priority_default": "low", "status_note": "לוודא אם כבר נשלח"}, {"id": "eagle-life", "num": 42, "tc": null, "general": true, "name": "העיט לאורך כל הסרט", "task": "להוסיף לעיט חיים (נשימה, תנועות ראש וכנפיים טבעיות) בשוטים שבהם הוא נראה מכני.", "client_requested": true, "owner_default": "nadav", "priority_default": "medium", "status_note": null}, {"id": "soldiers-cover-general", "num": 43, "tc": null, "general": true, "name": "הלוחמים חשופים לאורך הסרט", "task": "לתת ללוחמים מחסה טבעי (סלעים, גל אבנים) בכל שוטי הלוחמים כדי שייראו מבצעיים. הפירוט בשוטי הלוחמים ברשימה.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "rocks-artificial", "num": 44, "tc": null, "general": true, "name": "סלעים שנראים מלאכותיים", "task": "להוריד סלעים שנראים כמו אנימציה. סלע ענק אחד כבר הוסר. ממשיכים אם יימצאו עוד.", "client_requested": true, "owner_default": "nadav", "priority_default": "low", "status_note": "סלע אחד כבר הוסר"}, {"id": "blenders-green", "num": 45, "tc": null, "general": true, "name": "סביבה ירוקה לשוטי הבלנדר", "task": "פריים פתיחה חדש עם סביבה ירוקה לכל שוטי הבלנדר, כולל הבולט טיים. הרצפה החומה לא עובדת.", "client_requested": false, "owner_default": "nadav", "priority_default": "high", "status_note": "בתהליך מאז 14:48"}, {"id": "screens-general", "num": 46, "tc": null, "general": true, "name": "כל המסכים: סטריפ וסוללה", "task": "בכל המסכים: תאריך 25/10/2026, שעה מתחילה ב-16:09:16 ומתקדמת לפי התרחיש, N34 נשאר, E משתנה. סוללה למעלה משמאל: 28:06.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "titles-general", "num": 47, "tc": null, "general": true, "name": "כל הכותרות בסרט", "task": "פונט Gotham Bold, קצת יותר גדול. אות ראשונה גדולה בכל מילה, ומילות קישור קטנות, למשל in, at, a. לא להנפיש לפני שהלקוח מאשר את כל הנוסחים.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": "ממתין לנוסחי כותרות הפתיחה ולאישור הנוסחים"}];
+(function(){
+  var KEY = 'x2-prio-11-11-26', P = ['high','medium','low'], LBL = {high:'ג',medium:'ב',low:'נ'}, FULL = {high:'גבוהה',medium:'בינונית',low:'נמוכה'};
+  var byId = {}; DATA.forEach(function(r){ byId[r.id] = r; });
+  function defaults(){ var s = {high:[],medium:[],low:[]}; DATA.forEach(function(r){ s[r.priority_default].push(r.id); }); return s; }
+  function normalize(saved){
+    var s = {high:[],medium:[],low:[]}, seen = {};
+    if (saved && saved.p) P.forEach(function(p){ (saved.p[p] || []).forEach(function(id){ if (byId[id] && !seen[id]){ s[p].push(id); seen[id] = 1; } }); });
+    DATA.forEach(function(r){ if (!seen[r.id]) s[r.priority_default].push(r.id); });
+    return s;
+  }
+  var st;
+  var fromHash = U.readHash();
+  if (fromHash && fromHash.p){ st = normalize(fromHash); U.lsSet(KEY, {p:st}); U.clearHash(); setTimeout(function(){ U.toast('נטען מצב משותף'); }, 300); }
+  else { st = normalize(U.lsGet(KEY)); }
+  function save(){ U.lsSet(KEY, {p:st}); }
+  function card(id, p, i, n){
+    var r = byId[id];
+    var chips = P.map(function(q){ return '<button type="button" class="chip" data-act="to" data-to="'+q+'" aria-pressed="'+(q===p)+'" aria-label="עדיפות '+FULL[q]+'">'+LBL[q]+'</button>'; }).join('');
+    return '<li class="card" draggable="true" data-id="'+r.id+'">' +
+      '<div class="top"><span class="num">'+r.num+'</span>'+U.tcHtml(r)+'<span class="badges">'+(r.client_requested?'<span class="badge b-client">לקוח</span>':'')+'<span class="badge b-'+r.owner_default+'">'+U.OWN[r.owner_default]+'</span></span></div>' +
+      '<div class="name">'+U.esc(r.name)+'</div>' +
+      '<div class="task" title="'+U.esc(r.task)+'">'+U.esc(r.task)+'</div>' +
+      '<div class="ctl">'+chips+'<span class="arrows"><button type="button" class="arr" data-act="up" aria-label="למעלה"'+(i===0?' disabled':'')+'>&#8593;</button><button type="button" class="arr" data-act="down" aria-label="למטה"'+(i===n-1?' disabled':'')+'>&#8595;</button></span></div>' +
+      '</li>';
+  }
+  function render(){
+    P.forEach(function(p){
+      var l = document.getElementById('l-'+p), ids = st[p];
+      l.innerHTML = ids.length ? ids.map(function(id, i){ return card(id, p, i, ids.length); }).join('') : '<li class="empty">אין כאן שוטים. גררו לכאן או לחצו '+LBL[p]+'.</li>';
+      document.getElementById('c-'+p).textContent = ids.length;
+    });
+    document.getElementById('total').textContent = DATA.length + ' שוטים פעילים';
+  }
+  function where(id){ for (var k = 0; k < 3; k++){ var i = st[P[k]].indexOf(id); if (i > -1) return {p:P[k], i:i}; } return null; }
+  function moveTo(id, p, idx){
+    var w = where(id); if (!w) return;
+    st[w.p].splice(w.i, 1);
+    if (idx == null || idx > st[p].length) idx = st[p].length;
+    st[p].splice(idx, 0, id); save(); render();
+  }
+  var board = document.getElementById('board');
+  board.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-act]'); if (!b) return;
+    var c = b.closest('.card'), id = c.getAttribute('data-id'), w = where(id), act = b.getAttribute('data-act');
+    if (act === 'to'){ var to = b.getAttribute('data-to'); if (to !== w.p){ moveTo(id, to, null); U.toast('#'+byId[id].num+' עבר לעדיפות '+FULL[to]); } }
+    else if (act === 'up' && w.i > 0){ moveTo(id, w.p, w.i - 1); focusArr(id, 'up'); }
+    else if (act === 'down' && w.i < st[w.p].length - 1){ moveTo(id, w.p, w.i + 1); focusArr(id, 'down'); }
+  });
+  function focusArr(id, a){ var el = board.querySelector('.card[data-id="'+id+'"] [data-act="'+a+'"]'); if (el && !el.disabled) el.focus(); else { el = board.querySelector('.card[data-id="'+id+'"] .arr:not(:disabled)'); if (el) el.focus(); } }
+  var dragId = null;
+  board.addEventListener('dragstart', function(e){ var c = e.target.closest('.card'); if (!c) return; dragId = c.getAttribute('data-id'); c.classList.add('dragging'); try { e.dataTransfer.setData('text/plain', dragId); e.dataTransfer.effectAllowed = 'move'; } catch(x){} });
+  board.addEventListener('dragend', function(e){ var c = e.target.closest('.card'); if (c) c.classList.remove('dragging'); dragId = null; clearOver(); });
+  function clearOver(){ board.querySelectorAll('.list.over').forEach(function(l){ l.classList.remove('over'); }); }
+  function listAt(e){ var col = e.target.closest('.col'); return col ? col.querySelector('.list') : null; }
+  board.addEventListener('dragover', function(e){ var l = listAt(e); if (!l || !dragId) return; e.preventDefault(); clearOver(); l.classList.add('over'); });
+  board.addEventListener('drop', function(e){
+    var l = listAt(e); if (!l || !dragId) return; e.preventDefault(); clearOver();
+    var p = l.getAttribute('data-p'), cards = Array.prototype.slice.call(l.querySelectorAll('.card')).filter(function(c){ return c.getAttribute('data-id') !== dragId; });
+    var idx = cards.length;
+    for (var k = 0; k < cards.length; k++){ var r = cards[k].getBoundingClientRect(); if (e.clientY < r.top + r.height / 2){ idx = k; break; } }
+    var w = where(dragId), target = idx;
+    moveTo(dragId, p, target);
+  });
+  document.getElementById('share').addEventListener('click', function(){ U.share({p:st}); });
+  document.getElementById('reset').addEventListener('click', function(){
+    var ok = true; try { ok = window.confirm('לאפס את כל הסימונים לסדר המקורי?'); } catch(e){}
+    if (!ok) return; U.lsDel(KEY); st = defaults(); render(); U.toast('אופס לסדר המקורי');
+  });
+  render();
+})();
+</script>
+</body>
+</html>

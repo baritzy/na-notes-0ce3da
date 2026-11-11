@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>X2 · חלוקת משימות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&family=Rubik:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f9;--surface:#ffffff;--surface-2:#eef1f5;--fg:#14181f;--muted:#56606e;--line:#d9dee5;--line-strong:#b8c0cb;
+--accent:#1d4fa8;--accent-fg:#ffffff;--accent-soft:#e4ecfa;
+--nadav:#6b3fa0;--nadav-fg:#ffffff;--nadav-soft:#efe6fa;
+--ok:#14683a;--ok-bg:#dcf1e3;--wait:#8a5200;--wait-bg:#fbebcc;--doubt:#a3243f;--doubt-bg:#fadde3;--cancel:#4b5563;--cancel-bg:#e5e7eb;
+--focus:#1d4fa8;color-scheme:light;
+--font-body:'Heebo','Assistant',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+--font-head:'Rubik','Heebo',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+--font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f1319;--surface:#171c24;--surface-2:#1e242e;--fg:#e6e9ee;--muted:#9aa5b4;--line:#2a323d;--line-strong:#3d4856;
+--accent:#7fa8f0;--accent-fg:#0b1320;--accent-soft:#1c2a45;
+--nadav:#c4a0ef;--nadav-fg:#1a1024;--nadav-soft:#2a1f3b;
+--ok:#7ad9a0;--ok-bg:#12301f;--wait:#f1c36b;--wait-bg:#3a2a0b;--doubt:#f09aaa;--doubt-bg:#3d151f;--cancel:#aab3bf;--cancel-bg:#2a2f37;
+--focus:#7fa8f0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1319;--surface:#171c24;--surface-2:#1e242e;--fg:#e6e9ee;--muted:#9aa5b4;--line:#2a323d;--line-strong:#3d4856;
+--accent:#7fa8f0;--accent-fg:#0b1320;--accent-soft:#1c2a45;
+--nadav:#c4a0ef;--nadav-fg:#1a1024;--nadav-soft:#2a1f3b;
+--ok:#7ad9a0;--ok-bg:#12301f;--wait:#f1c36b;--wait-bg:#3a2a0b;--doubt:#f09aaa;--doubt-bg:#3d151f;--cancel:#aab3bf;--cancel-bg:#2a2f37;
+--focus:#7fa8f0;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.55;overflow-x:hidden}
+.wrap{max-width:var(--maxw,960px);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 72px}
+h1,h2,h3{font-family:var(--font-head);line-height:1.25;margin:0}
+.hd h1{font-size:clamp(1.6rem,5vw,2.2rem);font-weight:700;letter-spacing:-.01em}
+.hd .lede{margin:.5rem 0 0;max-width:68ch;color:var(--muted)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+button{font:inherit;color:inherit}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.tc{font-family:var(--font-mono);font-weight:600;font-variant-numeric:tabular-nums;color:var(--accent);unicode-bidi:isolate;direction:ltr;display:inline-block}
+.tc.none{font-family:var(--font-body);font-weight:500;color:var(--muted);direction:rtl}
+.badge{display:inline-flex;align-items:center;font-size:.74rem;font-weight:700;line-height:1.4;padding:1px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.b-eytan{color:var(--accent);background:var(--accent-soft)}
+.b-nadav{color:var(--nadav);background:var(--nadav-soft)}
+.b-client{color:var(--wait);background:var(--wait-bg)}
+.b-status{color:var(--muted);background:var(--surface-2);border-color:var(--line-strong);font-weight:500;white-space:normal}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
+.btn{cursor:pointer;border:1px solid var(--line-strong);background:var(--surface);padding:7px 16px;border-radius:999px;font-size:.92rem;min-height:40px}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent);font-weight:600}
+.btn:hover{border-color:var(--fg)}
+.note{font-size:.82rem;color:var(--muted);margin:8px 0 0}
+.toast{position:fixed;inset-inline:16px;bottom:20px;margin-inline:auto;max-width:420px;background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.92rem;text-align:center;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .2s,transform .2s;z-index:100}
+.toast.show{opacity:1;transform:none}
+.sharebox{display:none;margin-top:10px;gap:8px;align-items:center;flex-wrap:wrap}
+.sharebox.show{display:flex}
+.sharebox input{flex:1 1 220px;min-width:0;font:inherit;font-size:.82rem;padding:7px 10px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);color:var(--fg);direction:ltr}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+:root{--maxw:980px}
+.prog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+.pbox{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:0}
+.pbox .lbl{font-size:.84rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.pbox .lbl b{color:var(--fg);font-weight:700;font-variant-numeric:tabular-nums}
+.bar{height:10px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .25s}
+.pbox.e .bar i{background:var(--accent)}
+.pbox.n .bar i{background:var(--nadav)}
+.filters{position:sticky;top:0;z-index:30;background:var(--bg);display:flex;flex-wrap:wrap;gap:8px;padding:12px 0;margin-top:14px;border-bottom:1px solid var(--line)}
+.filters .f{cursor:pointer;border:1px solid var(--line-strong);background:var(--surface);padding:6px 14px;border-radius:999px;font-size:.9rem;min-height:38px}
+.filters .f[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.filters .f span{font-family:var(--font-mono);font-size:.8rem;margin-inline-start:4px;opacity:.75}
+.rows{list-style:none;margin:8px 0 0;padding:0}
+.row{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:6px 14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.row[hidden]{display:none}
+.vbtn{width:52px;height:52px;border-radius:12px;border:2px solid var(--line-strong);background:var(--surface);cursor:pointer;display:grid;place-items:center;font-size:1.7rem;font-weight:700;color:transparent;line-height:1}
+.vbtn:hover{border-color:var(--ok)}
+.vbtn[aria-checked="true"]{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.body{min-width:0}
+.body .top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.body .num{font-family:var(--font-mono);font-weight:600;color:var(--muted);font-size:.85rem}
+.body .name{font-weight:700;font-size:1.02rem;overflow-wrap:anywhere}
+.body .task{font-size:.9rem;color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
+.body .st{margin-top:6px}
+.pri{font-size:.72rem;color:var(--muted)}
+.row.done .body{opacity:.5}
+.row.done .name,.row.done .task{text-decoration:line-through;text-decoration-thickness:1.5px}
+.sw{cursor:pointer;display:inline-grid;grid-template-columns:1fr 1fr;position:relative;border:1px solid var(--line-strong);background:var(--surface-2);border-radius:999px;padding:3px;min-width:132px;height:42px;font-size:.9rem;font-weight:600}
+.sw span{position:relative;z-index:1;display:grid;place-items:center;padding:0 10px;color:var(--muted);transition:color .2s}
+.sw::before{content:"";position:absolute;top:3px;bottom:3px;inset-inline-start:3px;width:calc(50% - 3px);border-radius:999px;background:var(--accent);transition:inset-inline-start .2s,background .2s}
+.sw[data-o="eytan"] .s-e{color:var(--accent-fg)}
+.sw[data-o="nadav"]::before{inset-inline-start:50%;background:var(--nadav)}
+.sw[data-o="nadav"] .s-n{color:var(--nadav-fg)}
+.emptyrow{padding:24px 0;color:var(--muted)}
+details.more{margin-top:40px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+details.more summary{cursor:pointer;font-family:var(--font-head);font-weight:700;font-size:1.05rem}
+details.more h3{font-size:.98rem;margin:18px 0 6px}
+details.more ul{margin:0;padding-inline-start:1.2rem}
+details.more li{margin-bottom:.45rem;font-size:.92rem}
+details.more .src{font-family:var(--font-mono);font-size:.76rem;color:var(--muted)}
+@media (max-width:640px){
+.prog{grid-template-columns:minmax(0,1fr)}
+.row{grid-template-columns:52px minmax(0,1fr);align-items:start}
+.row .swwrap{grid-column:2}
+}
+@media print{.filters,.tools,.note,.sharebox{display:none!important}.row{break-inside:avoid}details.more{border:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hd">
+<h1>X2 · חלוקת משימות</h1>
+<p class="lede">כל השוטים הפעילים מהזומים של 11.11.26. המתג קובע מי מבצע, ה-V מסמן שבוצע.</p>
+<div class="tools">
+<button type="button" class="btn primary" id="share">שתף מצב</button>
+<button type="button" class="btn" id="reset">איפוס</button>
+</div>
+<div class="sharebox" id="sharebox"><input id="shareurl" readonly aria-label="קישור לשיתוף"></div>
+<p class="note">הסימונים נשמרים בדפדפן שלך. לשיתוף: כפתור שתף מצב</p>
+<div class="prog" aria-live="polite">
+<div class="pbox a"><div class="lbl"><span>הכל</span><b id="p-all"></b></div><div class="bar"><i id="b-all"></i></div></div>
+<div class="pbox e"><div class="lbl"><span>איתן</span><b id="p-e"></b></div><div class="bar"><i id="b-e"></i></div></div>
+<div class="pbox n"><div class="lbl"><span>נדב</span><b id="p-n"></b></div><div class="bar"><i id="b-n"></i></div></div>
+</div>
+</header>
+<nav class="filters" role="group" aria-label="סינון">
+<button type="button" class="f" data-f="all" aria-pressed="true">הכל<span id="n-all"></span></button>
+<button type="button" class="f" data-f="eytan" aria-pressed="false">איתן<span id="n-eytan"></span></button>
+<button type="button" class="f" data-f="nadav" aria-pressed="false">נדב<span id="n-nadav"></span></button>
+<button type="button" class="f" data-f="open" aria-pressed="false">פתוח<span id="n-open"></span></button>
+<button type="button" class="f" data-f="done" aria-pressed="false">בוצע<span id="n-done"></span></button>
+</nav>
+<main><ol class="rows" id="rows"></ol><p class="emptyrow" id="empty" hidden>אין שוטים בסינון הזה.</p></main>
+<details class="more" id="more">
+<summary>שאלות פתוחות, ממתין ללקוח, דדליינים ומה בוטל</summary>
+<h3>ממתין ללקוח</h3><ul id="wait"></ul>
+<h3>שאלות פתוחות</h3><ul id="oq"></ul>
+<h3>דדליינים וזמינות</h3><ul id="dl"></ul>
+<h3>בוטל (לא ברשימה)</h3><ul id="cx"></ul>
+</details>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+var U = (function(){
+  function lsGet(k){ try { var v = window.localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
+  function lsSet(k, v){ try { window.localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  function lsDel(k){ try { window.localStorage.removeItem(k); } catch(e){} }
+  function enc(obj){
+    var s = btoa(unescape(encodeURIComponent(JSON.stringify(obj))));
+    return s.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  }
+  function dec(str){
+    try {
+      var s = str.replace(/-/g,'+').replace(/_/g,'/');
+      while (s.length % 4) s += '=';
+      return JSON.parse(decodeURIComponent(escape(atob(s))));
+    } catch(e){ return null; }
+  }
+  function readHash(){
+    var m = /(?:^#|&)s=([^&]+)/.exec(location.hash || '');
+    return m ? dec(m[1]) : null;
+  }
+  function clearHash(){
+    try { history.replaceState(null, '', location.pathname + location.search); } catch(e){ try { location.hash = ''; } catch(e2){} }
+  }
+  var tt;
+  function toast(msg){
+    var t = document.getElementById('toast'); if (!t) return;
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(tt); tt = setTimeout(function(){ t.classList.remove('show'); }, 2600);
+  }
+  function share(obj){
+    var url = location.href.split('#')[0] + '#s=' + enc(obj);
+    var box = document.getElementById('sharebox'), inp = document.getElementById('shareurl');
+    function manual(){ if (box && inp){ inp.value = url; box.classList.add('show'); inp.focus(); inp.select(); } toast('העתיקו את הקישור מהתיבה'); }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(function(){ toast('הקישור עם המצב הנוכחי הועתק'); if (inp) inp.value = url; }, manual);
+      } else { manual(); }
+    } catch(e){ manual(); }
+  }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function tcHtml(r){
+    if (r.tc) return '<span class="tc">' + esc(r.tc) + '</span>';
+    return '<span class="tc none">' + (r.general ? 'כל הסרט' : 'לא צוין') + '</span>';
+  }
+  var OWN = {eytan:'איתן', nadav:'נדב'};
+  return {lsGet:lsGet, lsSet:lsSet, lsDel:lsDel, readHash:readHash, clearHash:clearHash, toast:toast, share:share, esc:esc, tcHtml:tcHtml, OWN:OWN};
+})();
+
+var DATA = {"shots": [{"id": "drone-open-016", "num": 1, "tc": "0:16", "general": false, "name": "שוט הרחפן בפתיחה", "task": "למרכז את הרחפן, להגדיל אותו בפריים ולהחליק את התנועה.", "client_requested": false, "owner_default": "eytan", "priority_default": "medium", "status_note": "גרסה נשלחה, עדיין צריך תיקון"}, {"id": "drone-eagle-023", "num": 2, "tc": "0:23", "general": false, "name": "חיבור הרחפן לעיט", "task": "החיבור עובד. להתחיל את תנועת הרחפן אלינו עוד לפני המעבר ולהמשיך אותה בעיט (לגנוב כמה פריימים מהרחפן).", "client_requested": true, "owner_default": "eytan", "priority_default": "medium", "status_note": null}, {"id": "lion-032", "num": 3, "tc": "0:32", "general": false, "name": "שוט האריה", "task": "לאתר את שוט האריה מהצד שנעשה ולא נוצל ולשלוח ללקוח להחלטה. בכל מקרה לשמור על סוג השוט: המצלמה הולכת עם האריה ופותחת את הסוואנה.", "client_requested": true, "owner_default": "eytan", "priority_default": "medium", "status_note": "ממתין להחלטת הלקוח"}, {"id": "soldiers-descend-036", "num": 4, "tc": "0:36", "general": false, "name": "כניסת הלוחמים והירידה למטה", "task": "להוסיף מחסה: סידור של כמה סלעים עם אדמה מתחת (לא בולדר אחד) שהלוחמים יורדים מאחוריו. סלע בצד שמאל של הפריים, הלוחם השני מאחוריו.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "rashkim-blue-048", "num": 5, "tc": "0:48", "general": false, "name": "אנימציית הרש\"קים בכחול", "task": "לבנות מחדש את כל שוטי הרש\"קים בכחול, לא רק את הגליץ'. איתן מעלה לנדב את השוט לדרייב.", "client_requested": false, "owner_default": "nadav", "priority_default": "medium", "status_note": "ממתין שאיתן יעלה את השוט"}, {"id": "binoculars-sky-054", "num": 6, "tc": "0:54", "general": false, "name": "המשקפת: שמיים והשתקפות", "task": "לשנות את השמיים ממעונן לבהיר כך שיתאימו לסצנה. בהשתקפות בעדשות רק טשטוש. ג'נרוט מחדש.", "client_requested": false, "owner_default": "nadav", "priority_default": "medium", "status_note": null}, {"id": "binoculars-pov-055", "num": 7, "tc": "0:55", "general": false, "name": "מבט דרך המשקפת", "task": "לשפר את הקונטור של המשקפת ולהוסיף שנתות.", "client_requested": false, "owner_default": "eytan", "priority_default": "low", "status_note": "ייתכן שכבר בוצע, לבדוק"}, {"id": "tank2-056", "num": 8, "tc": "0:56", "general": false, "name": "הטנק השני (האחורי)", "task": "התנועה נראית כמו טנק צעצוע ומנותקת מהקרקע. לתקן בבלנדר: תנועה טבעית ויציבה, בלי רעידות, ואבק ריאליסטי.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "tanks-far-100", "num": 9, "tc": "1:00", "general": false, "name": "הטנקים הרחוקים (לונג שוט)", "task": "עוד לא טופל: להרחיק את הטנקים ולחבר לשוט שלפניו.", "client_requested": false, "owner_default": "nadav", "priority_default": "medium", "status_note": "עוד לא התחיל"}, {"id": "screen-105", "num": 10, "tc": "1:05", "general": false, "name": "מסך 1:05", "task": "לעדכן את נתוני הסטריפ התחתון (תאריך, שעה, נ\"צ) ואת הסוללה. המפה והנקודות נשארים.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "launch-eagle-108", "num": 11, "tc": "1:08", "general": false, "name": "Launch: העיט מתרומם מהענף", "task": "לייצר מחדש: העיט גבוה יותר על ענף עבה והגיוני, בפרופורציה נכונה, ומתרומם מאפס (פורס כנפיים) באותה זווית של הרחפן.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "launch-cut-108", "num": 12, "tc": "1:08", "general": false, "name": "Launch: חיתוך דאבל אקשן", "task": "החיתוך בין הרחפן שמתרומם לעיט (1:08 עד 1:09) לא באמצע תנועה: דאבל אקשן, שניהם מתרוממים מאפס. לתת לעיט עוד זמן להתרומם.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "screen-117", "num": 13, "tc": "1:17", "general": false, "name": "מסך 1:17 (טאבלט)", "task": "סטריפ, שעה וסוללה. X אדום מהבהב על אייקון ה-GPS בגודל האייקון. במסך השמאלי מבט מהרחפן, המפה נשארת מימין. כותרת עליונה: Take Off הופך ל-Mission.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "pov-117", "num": 14, "tc": "1:17", "general": false, "name": "מבט רחפן מרחף למסך 1:17", "task": "לייצר שוט POV של רחפן מרחף באותה סביבה של השוטים שלפני ואחרי, להצבה על המסך.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "glitch-order-119", "num": 15, "tc": "1:19", "general": false, "name": "סדר המוניטור והגליץ'", "task": "לפי האופליין: להחזיר את המוניטור למקומו המקורי, כך שהגליץ' יבוא אחרי המסך עם ה-GPS.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "glitch-shot-119", "num": 16, "tc": "1:19", "general": false, "name": "שוט הרחפן מהצד (שוט הגליץ')", "task": "השוט מזווית צד ולמעלה, בלי ריבועי השדות, עדיין צריך תיקון באנימציה. הגליץ' מתרחש בתוך השוט הזה.", "client_requested": true, "owner_default": "nadav", "priority_default": "medium", "status_note": null}, {"id": "bullet-entry-122", "num": 17, "tc": "1:22", "general": false, "name": "הכניסה לבולט טיים", "task": "הבולט טיים ממשיך את השוט הקודם (שדה הקרב למטה, אותה סביבה וזווית צד) עד abort mission. לחבר את שוט הרחפן הקודם לבולט טיים.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "bullet-structure-123", "num": 18, "tc": "1:23", "general": false, "name": "בולט טיים: מבנה לפי המסמך", "task": "לפי המסמך: בסוף abort mission (1:23) סלואו מושן באותה זווית. aborted: קאט לאקסטרים קלוז של רוטור. return: קאט לפתוח. reuse (1:29): סיבוב 180 עד military (1:31), ואז מהירות רגילה. כיתוב ב-1:27.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": "גרסה בשני חלקים כבר בטיימליין, לבנות מחדש לפי המסמך"}, {"id": "screen-132", "num": 19, "tc": "1:32", "general": false, "name": "מסך 1:32", "task": "סטריפ, שעה וסוללה (28:06). כותרת עליונה: Mission הופך ל-Hover (אם כבר Hover, להשאיר). בסטריפ התחתון: אייקון הרכב הופך לאייקון טנק, רקע שחור ואייקון לבן.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "pigs-pov-135", "num": 20, "tc": "1:35", "general": false, "name": "מבט העיט על החזירים", "task": "החזירים הולכים ברוגע, בתנועה כמו הטנקים: לא עומדים ולא בורחים.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "pigs-pov-trim-135", "num": 21, "tc": "1:35", "general": false, "name": "קיצור מבט העיט", "task": "לא לוותר על ה-POV של העיט: לקצר אותו לחצי שנייה עד שנייה וחצי, ואז לחתוך לשוט הפרונטלי של החזירים.", "client_requested": true, "owner_default": "eytan", "priority_default": "medium", "status_note": null}, {"id": "pigs-front-notice-136", "num": 22, "tc": "1:36", "general": false, "name": "שוט חדש: החזירים מבחינים בעיט", "task": "לייצר שוט פרונטלי: שני החזירים הולכים לכיוון המצלמה (בגובה שלהם, לא מלמטה), מבחינים בעיט ומתחילים לרוץ. כ-2.5 שניות.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "screen-137", "num": 23, "tc": "1:37", "general": false, "name": "מסך 1:37", "task": "סטריפ, שעה וסוללה. על המסך מבט הרחפן על שני הטנקים בתנועה על השביל. הצלב הלבן מגיב ללחיצה ועוקב אחרי טנק אחד (עדיף הקדמי). אייקון הטנק נדלק בכחול, אייקון האדם לא דלוק.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "screen-141", "num": 24, "tc": "1:41", "general": false, "name": "מסך 1:41", "task": "סטריפ, שעה וסוללה. כותרת עליונה Hover הופכת ל-Homing רק אחרי שהלוחם מרים את האצבע (חצי השנייה האחרונה). הטנק דלוק, הצלב עליו, אותו מבט ואותו מרחק.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "eye-dive-146", "num": 25, "tc": "1:46", "general": false, "name": "מעין העיט לצלילה", "task": "להחזיר את תנועת המצלמה בין העין לצלילה, לפי המסמך, כדי לבנות מתח. צלילה ריאליסטית: עולה מעט, פותח כנפיים, מכוון ראש, ואז מיישר ונופל. לעשות מחדש בבלנדר.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "pigs-front-eagle-152", "num": 26, "tc": "1:52", "general": false, "name": "החזירים בורחים, העיט מאחוריהם", "task": "להחליף את שוט החזירים מאחור בשוט פרונטלי: שני החזירים רצים לכיוון המצלמה והעיט צולל מאחוריהם ונכנס לפריים.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "morph-154", "num": 27, "tc": "1:54", "general": false, "name": "מורף עיט לרחפן", "task": "נדב מכין את שוט המורף בנפרד לקולוריסט, לפי הקצב. איתן מציב בטיימליין (עם פליפ) ומוסיף לפניו POV רחפן שחסר.", "client_requested": false, "owner_default": "nadav", "priority_default": "medium", "status_note": "בתהליך, הוצב בטיימליין בזום של 14:48"}, {"id": "drone-dive-tank-157", "num": 28, "tc": "1:57", "general": false, "name": "צלילת הרחפן לתוך הטנק", "task": "לעשות מחדש בבלנדר את צלילת הרחפן לתוך הטנק (כרגע צולל סתם לקרקע). בטיימליין: סוף הצלילה לפני ה-POV, יותר מהנחיתה ליד הטנק, ולקצר.", "client_requested": false, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "pov-bw-157", "num": 29, "tc": "1:57", "general": false, "name": "מבט הרחפן בשחור לבן", "task": "לחתוך לפני הפיצוץ שמגיע מוקדם מדי, ולהחזיר את הפיצוץ בצבע בסוף.", "client_requested": false, "owner_default": "eytan", "priority_default": "medium", "status_note": null}, {"id": "lspike-title-200", "num": 30, "tc": "2:00", "general": false, "name": "כותרת L-SPIKE 2X", "task": "אנימציה נפרדת (התרחבות) לפי הלוגו של המוצר מספר המותג, בפונט בולד.", "client_requested": true, "owner_default": "eytan", "priority_default": "medium", "status_note": null}, {"id": "lspike-on-rashak", "num": 31, "tc": null, "general": false, "name": "L-Spike 2X על הקלוז אפ של הרש\"ק", "task": "כשהקריין אומר L-Spike 2X, התמונה צריכה להיות על הקלוז אפ של הרש\"ק ולא על הרחפן.", "client_requested": true, "owner_default": "eytan", "priority_default": "medium", "status_note": null}, {"id": "tiger-bite", "num": 32, "tc": null, "general": false, "name": "הנמר נותן ביס (Instinct)", "task": "כמו באופליין: על המילה Instinct הנמר נותן ביס לכיוון המצלמה, ולא רק מאיים.", "client_requested": true, "owner_default": "nadav", "priority_default": "medium", "status_note": null}, {"id": "soldiers-assembly", "num": 33, "tc": null, "general": false, "name": "הרכבת הרחפן על הגבעה", "task": "הלוחם חשוף לגמרי על פסגת הגבעה: להוסיף אבן או סלעים כמחסה, ולהגביה את האבן עד גובה הראש של הלוחם שמסתכל על הרחפן.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "soldiers-closeup-rock", "num": 34, "tc": null, "general": false, "name": "קלוז אפ של לוחם", "task": "להוסיף סלע מאחורי חצי הגב והכתף של הלוחם, כך שייראה מוגן.", "client_requested": true, "owner_default": "nadav", "priority_default": "medium", "status_note": null}, {"id": "soldiers-drone-rise", "num": 35, "tc": null, "general": false, "name": "הרחפן עולה מאזור הלוחמים", "task": "לתקן את הייצוב (יש ריצוד והשוט לא ממורכז). להשתמש בסלע שכבר קיים בשוט כדי לחבר את האוריינטציה למקום הלוחמים.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": "גרסה נשלחה, יש ריצוד, לתקן"}, {"id": "eagle-after-launch", "num": 36, "tc": null, "general": false, "name": "שוט העיט אחרי ה-Launch", "task": "השוט ארוך מדי: לקצר, ולשקול פליפ לכניסת הציפור.", "client_requested": false, "owner_default": "eytan", "priority_default": "low", "status_note": null}, {"id": "screen-timing-military", "num": 37, "tc": null, "general": false, "name": "תזמון המסך מול built to military standard", "task": "המסך מגיע הרבה אחרי שהקריין אומר built to military standard. להקדים אותו לפי האופליין, כדי שלא יהיה צורך להאריך את שוט העיט והבולט טיים.", "client_requested": true, "owner_default": "eytan", "priority_default": "medium", "status_note": null}, {"id": "eagle-hero", "num": 38, "tc": null, "general": false, "name": "העיט: השוט הראשון שלו", "task": "הגיבור נכנס במלוא תפארתו: חצי שנייה אחרי הכניסה מנפנף בכנפיים לאט ורחב, באותה זווית, ולא רק גולש.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "eagle-closeup-eye", "num": 39, "tc": null, "general": false, "name": "קלוז אפ של העיט", "task": "ג'נרוט מחדש: עין בלי מצמוץ, ברקע הסוואנה, ומקור צהוב במקום שחור. לתקן גם את המצמוץ ב-POV הנפילה.", "client_requested": false, "owner_default": "nadav", "priority_default": "medium", "status_note": "מהזום של הבוקר, לוודא שעדיין פתוח"}, {"id": "eagle-talons", "num": 40, "tc": null, "general": false, "name": "העיט מתקרב לחזירים: רגליים וטפרים", "task": "סביבה ירוקה יותר, העיט פותח יותר את הרגליים, שוט מוגדל על הרגליים בלי הפנים.", "client_requested": false, "owner_default": "nadav", "priority_default": "medium", "status_note": null}, {"id": "clips-to-client", "num": 41, "tc": null, "general": false, "name": "שני קליפים ללקוח (תנועת מצלמה)", "task": "לשלוח ללקוח את שני הקליפים שהוכנו (בלי גורים ובלי קראש זום) ולשאול אם תנועת המצלמה בסדר.", "client_requested": false, "owner_default": "eytan", "priority_default": "low", "status_note": "לוודא אם כבר נשלח"}, {"id": "eagle-life", "num": 42, "tc": null, "general": true, "name": "העיט לאורך כל הסרט", "task": "להוסיף לעיט חיים (נשימה, תנועות ראש וכנפיים טבעיות) בשוטים שבהם הוא נראה מכני.", "client_requested": true, "owner_default": "nadav", "priority_default": "medium", "status_note": null}, {"id": "soldiers-cover-general", "num": 43, "tc": null, "general": true, "name": "הלוחמים חשופים לאורך הסרט", "task": "לתת ללוחמים מחסה טבעי (סלעים, גל אבנים) בכל שוטי הלוחמים כדי שייראו מבצעיים. הפירוט בשוטי הלוחמים ברשימה.", "client_requested": true, "owner_default": "nadav", "priority_default": "high", "status_note": null}, {"id": "rocks-artificial", "num": 44, "tc": null, "general": true, "name": "סלעים שנראים מלאכותיים", "task": "להוריד סלעים שנראים כמו אנימציה. סלע ענק אחד כבר הוסר. ממשיכים אם יימצאו עוד.", "client_requested": true, "owner_default": "nadav", "priority_default": "low", "status_note": "סלע אחד כבר הוסר"}, {"id": "blenders-green", "num": 45, "tc": null, "general": true, "name": "סביבה ירוקה לשוטי הבלנדר", "task": "פריים פתיחה חדש עם סביבה ירוקה לכל שוטי הבלנדר, כולל הבולט טיים. הרצפה החומה לא עובדת.", "client_requested": false, "owner_default": "nadav", "priority_default": "high", "status_note": "בתהליך מאז 14:48"}, {"id": "screens-general", "num": 46, "tc": null, "general": true, "name": "כל המסכים: סטריפ וסוללה", "task": "בכל המסכים: תאריך 25/10/2026, שעה מתחילה ב-16:09:16 ומתקדמת לפי התרחיש, N34 נשאר, E משתנה. סוללה למעלה משמאל: 28:06.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": null}, {"id": "titles-general", "num": 47, "tc": null, "general": true, "name": "כל הכותרות בסרט", "task": "פונט Gotham Bold, קצת יותר גדול. אות ראשונה גדולה בכל מילה, ומילות קישור קטנות, למשל in, at, a. לא להנפיש לפני שהלקוח מאשר את כל הנוסחים.", "client_requested": true, "owner_default": "eytan", "priority_default": "high", "status_note": "ממתין לנוסחי כותרות הפתיחה ולאישור הנוסחים"}], "cancelled": [{"name": "סקיצת בלנדר של עיט שהופך לרחפן (דקה 22 ברשימה)", "tc": null, "reason": "סומן לא רלוונטי", "sources": ["16-19"]}, {"name": "הרמת אייקון הטנק במעבר מהרחפן לרש\"ק", "tc": null, "reason": "הלקוח העדיף להשאיר, לא הפריע לו בהקרנה", "sources": ["16-19"]}, {"name": "מסך חסר לפני העיט", "tc": "1:17", "reason": "נבדק בטיימליין: לא חסר מסך", "sources": ["16-19"]}, {"name": "קיצור שוט העיט וחזרה לרחפן (תיקון אופליין)", "tc": "1:13", "reason": "הוחלף בהחלטה להחזיר את המוניטור למקומו לפי האופליין", "sources": ["18-18"]}, {"name": "החזירים עומדים ב-POV של העיט", "tc": "1:35", "reason": "הוחלף: החזירים הולכים ולא עומדים", "sources": ["17-38"]}, {"name": "גודל החזיר ותוספת חזיר בשוט מאחור", "tc": "1:52", "reason": "השוט מאחור מוחלף בשוט פרונטלי", "sources": ["17-38"]}, {"name": "סיבוב הפריים ב-90 מעלות ליישור הטנקים מול החזירים", "tc": null, "reason": "נדחה: הזווית השונה מקובלת, הטנקים נשארים", "sources": ["17-38"]}], "deadlines": ["מחר 12.11: זום פנימי ב-9:00 ועבודה רצופה כל היום (נדב: בלנדרים ושוטים שעוד לא קיימים, איתן: מסכים וכותרות)", "הלקוח ביום צילום ב-12.11: זמין בטלפון עד 10:00, בהפסקת הצהריים בערך ב-13:30, ואחרי 18:00. בשאר הזמן וואטסאפ", "הסיכום נשלח ללקוח הערב. הוא יעבור עליו ויתעדף מחר בין 6:00 ל-10:00 אם יספיק (ואמר גם: עזבו תעדוף, עושים הכל)", "תאריך הגשה סופי לא נאמר בזומים", "מהזום הפנימי: אם צריך, עובדים גם בשישי בבוקר"], "open_questions": ["איזה שוט היה עם הריצוד וחוסר המרכוז שנדב שלח (16-19, דקה 04:16). ההנחה כאן: שוט הרחפן עולה מאזור הלוחמים", "שוט העיט בביצות שדוהה בלי כנפיים: להוריד אותו (נדב, השוט מיותר) או לתקן (איתן)? לא הוכרע", "רקע \"פריים 0\" במקום שחור בשלושה מקומות: בתחילת 16-19 נאמר גם \"הרקע השחור נשאר\". לא ברור אם עדיין מחליפים", "שוט לונג חדש של הלוחמים מתמקמים מאחורי גל אבנים (הצעת הלקוח). נדב: לא ריאלי בזמן. לא הוכרע", "פיצול שוט העין (1:46) לאקסטרים קלוז ואז שוט פתוח: הוצע ולא הוכרע", "מסך 1:37: הצלב עוקב אחרי הטנק הקדמי (העדפת הלקוח) או האחורי (נדב)", "אייקון טנק למסכים 1:32 עד 1:41: יש לנו אחד? אם לא, לעצב", "תזמון המסך מול built to military standard: איזה מסך בדיוק", "טנקים: להעביר ללוקיישן הררי או לא לגעת (מחלוקת מהזום של הבוקר)", "נחיתת העיט על החזיר: השוט של איתן או של נדב", "מבט הרחפן ב-1:57: להכניס את הרחפן של נדב במקום השחור לבן?", "\"להגדיל את האייקונים בלי הרקע\" מהזום של הבוקר: באיזה שוט, והאם עדיין רלוונטי", "טיימקודים מעורבבים: חלק לפי האופליין וחלק לפי האונליין (למשל הגליץ' 1:19 אונליין מול 1:17 בערך באופליין, החזירים 1:35 לפי האופליין). לאמת לפני עבודה"], "waiting_on_client": [{"text": "קבצי UI/UX של ממשק המסכים (התבקשו שלוש פעמים)", "text_client": "קבצי ה-UI/UX של ממשק המסכים"}, {"text": "נוסחי כותרות הפתיחה (מבקשים כבר שבוע), ואישור כל נוסחי הכותרות לפני אנימציה", "text_client": "נוסחי כותרות הפתיחה, ואישור כל נוסחי הכותרות לפני שמתחילים באנימציה"}, {"text": "החלטה על שוט האריה אחרי שיראה את השוט מהצד", "text_client": "החלטה על שוט האריה, אחרי שתראה את השוט החלופי מהצד"}, {"text": "תעדוף הרשימה (אם יספיק, מחר 6:00 עד 10:00)", "text_client": "תעדוף הרשימה, אם תספיק מחר בבוקר"}]};
+(function(){
+  var KEY = 'x2-board-11-11-26', FKEY = 'x2-board-filter', PRI = {high:'עדיפות גבוהה',medium:'עדיפות בינונית',low:'עדיפות נמוכה'};
+  var S = DATA.shots, byId = {}; S.forEach(function(r){ byId[r.id] = r; });
+  function blank(){ return {o:{}, d:{}}; }
+  function normalize(x){
+    var s = blank(); if (!x) return s;
+    if (x.o) Object.keys(x.o).forEach(function(id){ if (byId[id] && (x.o[id] === 'e' || x.o[id] === 'n')) s.o[id] = x.o[id]; });
+    if (x.d) (Array.isArray(x.d) ? x.d : Object.keys(x.d)).forEach(function(id){ if (byId[id]) s.d[id] = 1; });
+    return s;
+  }
+  function packed(){ var o = {}; Object.keys(st.o).forEach(function(id){ var def = byId[id].owner_default === 'eytan' ? 'e' : 'n'; if (st.o[id] !== def) o[id] = st.o[id]; }); return {o:o, d:Object.keys(st.d)}; }
+  var st, h = U.readHash();
+  if (h && (h.o || h.d)){ st = normalize(h); U.lsSet(KEY, packed()); U.clearHash(); setTimeout(function(){ U.toast('נטען מצב משותף'); }, 300); }
+  else st = normalize(U.lsGet(KEY));
+  function owner(id){ var v = st.o[id]; return v ? (v === 'e' ? 'eytan' : 'nadav') : byId[id].owner_default; }
+  function save(){ U.lsSet(KEY, packed()); }
+  var filter = 'all'; try { var fv = window.localStorage.getItem(FKEY); if (fv) filter = fv; } catch(e){}
+  function rowHtml(r){
+    var o = owner(r.id), done = !!st.d[r.id];
+    return '<li class="row'+(done?' done':'')+'" data-id="'+r.id+'">' +
+      '<button type="button" class="vbtn" role="checkbox" aria-checked="'+done+'" aria-label="בוצע: '+U.esc(r.name)+'">&#10003;</button>' +
+      '<div class="body"><div class="top"><span class="num">'+r.num+'</span>'+U.tcHtml(r)+(r.client_requested?'<span class="badge b-client">לקוח</span>':'')+'<span class="pri">'+PRI[r.priority_default]+'</span></div>' +
+      '<div class="name">'+U.esc(r.name)+'</div><div class="task">'+U.esc(r.task)+'</div>' +
+      (r.status_note ? '<div class="st"><span class="badge b-status">'+U.esc(r.status_note)+'</span></div>' : '') + '</div>' +
+      '<div class="swwrap"><button type="button" class="sw" role="switch" aria-checked="'+(o==='nadav')+'" data-o="'+o+'" aria-label="מבצע: '+U.OWN[o]+'. לחיצה מחליפה"><span class="s-e">איתן</span><span class="s-n">נדב</span></button></div>' +
+      '</li>';
+  }
+  var rowsEl = document.getElementById('rows');
+  function renderRows(){ rowsEl.innerHTML = S.map(rowHtml).join(''); applyFilter(); stats(); }
+  function match(r){
+    var o = owner(r.id), d = !!st.d[r.id];
+    return filter === 'all' || (filter === 'eytan' && o === 'eytan') || (filter === 'nadav' && o === 'nadav') || (filter === 'open' && !d) || (filter === 'done' && d);
+  }
+  function applyFilter(){
+    var shown = 0;
+    rowsEl.querySelectorAll('.row').forEach(function(li){ var ok = match(byId[li.getAttribute('data-id')]); li.hidden = !ok; if (ok) shown++; });
+    document.getElementById('empty').hidden = shown > 0;
+    document.querySelectorAll('.filters .f').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-f') === filter)); });
+  }
+  function setBar(k, a, b){ document.getElementById('p-'+k).textContent = a + ' מתוך ' + b + ' בוצעו'; document.getElementById('b-'+k).style.width = (b ? Math.round(a / b * 100) : 0) + '%'; }
+  function stats(){
+    var t = S.length, d = 0, e = 0, ed = 0, n = 0, nd = 0;
+    S.forEach(function(r){ var o = owner(r.id), x = !!st.d[r.id]; if (x) d++; if (o === 'eytan'){ e++; if (x) ed++; } else { n++; if (x) nd++; } });
+    setBar('all', d, t); setBar('e', ed, e); setBar('n', nd, n);
+    var c = {all:t, eytan:e, nadav:n, open:t - d, done:d};
+    Object.keys(c).forEach(function(k){ document.getElementById('n-'+k).textContent = c[k]; });
+  }
+  rowsEl.addEventListener('click', function(e){
+    var li = e.target.closest('.row'); if (!li) return; var id = li.getAttribute('data-id');
+    if (e.target.closest('.vbtn')){
+      if (st.d[id]) delete st.d[id]; else st.d[id] = 1;
+      var on = !!st.d[id]; li.classList.toggle('done', on); li.querySelector('.vbtn').setAttribute('aria-checked', String(on));
+      save(); stats(); if (filter === 'open' || filter === 'done') applyFilter();
+    } else if (e.target.closest('.sw')){
+      var o = owner(id) === 'eytan' ? 'nadav' : 'eytan';
+      st.o[id] = o === 'eytan' ? 'e' : 'n';
+      var sw = li.querySelector('.sw'); sw.setAttribute('data-o', o); sw.setAttribute('aria-checked', String(o === 'nadav')); sw.setAttribute('aria-label', 'מבצע: ' + U.OWN[o] + '. לחיצה מחליפה');
+      save(); stats(); if (filter === 'eytan' || filter === 'nadav') applyFilter();
+    }
+  });
+  document.querySelector('.filters').addEventListener('click', function(e){
+    var b = e.target.closest('.f'); if (!b) return; filter = b.getAttribute('data-f');
+    try { window.localStorage.setItem(FKEY, filter); } catch(x){} applyFilter();
+  });
+  document.getElementById('share').addEventListener('click', function(){ U.share(packed()); });
+  document.getElementById('reset').addEventListener('click', function(){
+    var ok = true; try { ok = window.confirm('לאפס את כל הסימונים (מי מבצע ומה בוצע)?'); } catch(e){}
+    if (!ok) return; U.lsDel(KEY); st = blank(); renderRows(); U.toast('אופס');
+  });
+  function li(s){ return '<li>'+s+'</li>'; }
+  document.getElementById('wait').innerHTML = DATA.waiting_on_client.map(function(w){ return li(U.esc(w.text)); }).join('');
+  document.getElementById('oq').innerHTML = DATA.open_questions.map(function(q){ return li(U.esc(q)); }).join('');
+  document.getElementById('dl').innerHTML = DATA.deadlines.map(function(q){ return li(U.esc(q)); }).join('');
+  document.getElementById('cx').innerHTML = DATA.cancelled.map(function(c){ return li((c.tc ? '<span class="tc">'+U.esc(c.tc)+'</span> ' : '') + '<b>'+U.esc(c.name)+'</b>: '+U.esc(c.reason)+' <span class="src">['+c.sources.join(', ')+']</span>'); }).join('');
+  renderRows();
+})();
+</script>
+</body>
+</html>
