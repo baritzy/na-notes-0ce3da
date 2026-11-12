@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>X2 · דגשים מזום 12.11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&family=Rubik:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f9;--surface:#ffffff;--surface-2:#eef1f5;--fg:#14181f;--muted:#56606e;--line:#d9dee5;--line-strong:#b8c0cb;
+--accent:#1d4fa8;--accent-fg:#ffffff;--accent-soft:#e4ecfa;
+--nadav:#6b3fa0;--nadav-fg:#ffffff;--nadav-soft:#efe6fa;
+--both:#0f6b6b;--both-fg:#ffffff;--both-soft:#d8f0ef;
+--ok:#14683a;--ok-bg:#dcf1e3;--wait:#8a5200;--wait-bg:#fbebcc;--doubt:#a3243f;--doubt-bg:#fadde3;--cancel:#4b5563;--cancel-bg:#e5e7eb;
+--focus:#1d4fa8;color-scheme:light;
+--font-body:'Heebo','Assistant',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+--font-head:'Rubik','Heebo',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+--font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f1319;--surface:#171c24;--surface-2:#1e242e;--fg:#e6e9ee;--muted:#9aa5b4;--line:#2a323d;--line-strong:#3d4856;
+--accent:#7fa8f0;--accent-fg:#0b1320;--accent-soft:#1c2a45;
+--nadav:#c4a0ef;--nadav-fg:#1a1024;--nadav-soft:#2a1f3b;
+--both:#6fd3cf;--both-fg:#06201f;--both-soft:#12302f;
+--ok:#7ad9a0;--ok-bg:#12301f;--wait:#f1c36b;--wait-bg:#3a2a0b;--doubt:#f09aaa;--doubt-bg:#3d151f;--cancel:#aab3bf;--cancel-bg:#2a2f37;
+--focus:#7fa8f0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1319;--surface:#171c24;--surface-2:#1e242e;--fg:#e6e9ee;--muted:#9aa5b4;--line:#2a323d;--line-strong:#3d4856;
+--accent:#7fa8f0;--accent-fg:#0b1320;--accent-soft:#1c2a45;
+--nadav:#c4a0ef;--nadav-fg:#1a1024;--nadav-soft:#2a1f3b;
+--both:#6fd3cf;--both-fg:#06201f;--both-soft:#12302f;
+--ok:#7ad9a0;--ok-bg:#12301f;--wait:#f1c36b;--wait-bg:#3a2a0b;--doubt:#f09aaa;--doubt-bg:#3d151f;--cancel:#aab3bf;--cancel-bg:#2a2f37;
+--focus:#7fa8f0;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.55;overflow-x:hidden}
+.wrap{max-width:980px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 72px}
+h1,h2,h3{font-family:var(--font-head);line-height:1.25;margin:0}
+.hd h1{font-size:clamp(1.5rem,5vw,2.2rem);font-weight:700;letter-spacing:-.01em}
+.hd .lede{margin:.5rem 0 0;max-width:70ch;color:var(--muted)}
+.hd .lede a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+button{font:inherit;color:inherit}
+.tc{font-family:var(--font-mono);font-weight:600;font-variant-numeric:tabular-nums;color:var(--accent);unicode-bidi:isolate;direction:rtl;display:inline-block}
+.tc.gen{font-family:var(--font-body);font-weight:600;color:var(--muted);direction:rtl}
+.badge{display:inline-flex;align-items:center;font-size:.74rem;font-weight:700;line-height:1.4;padding:1px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.b-kind{color:var(--muted);background:var(--surface-2);border-color:var(--line-strong);font-weight:600}
+.b-chg{color:var(--wait);background:var(--wait-bg)}
+.b-closed{color:var(--ok);background:var(--ok-bg)}
+.b-later{color:var(--cancel);background:var(--cancel-bg)}
+.b-warn{color:var(--doubt);background:var(--doubt-bg)}
+.total{display:flex;align-items:center;gap:12px 22px;flex-wrap:wrap;margin-top:18px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-inline-start:6px solid var(--accent);border-radius:10px}
+.total .stat{display:flex;align-items:baseline;gap:8px}
+.total .big{font-family:var(--font-head);font-weight:700;font-size:clamp(2.2rem,8vw,3rem);line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.total .what{font-size:1.05rem;font-weight:700}
+.total .lines{flex:1 1 260px;min-width:0}
+.total .sub{font-size:.88rem;color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
+.total .sub span{white-space:nowrap}
+.bar{height:12px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .25s}
+.plbl{display:flex;justify-content:space-between;gap:8px;font-size:.86rem;color:var(--muted);margin-top:12px}
+.plbl b{color:var(--fg);font-variant-numeric:tabular-nums}
+details.box{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 16px}
+details.box summary{cursor:pointer;font-family:var(--font-head);font-weight:700;font-size:1rem;min-height:32px;display:list-item}
+details.box h3{font-size:.95rem;margin:14px 0 6px}
+details.box ul{margin:4px 0 4px;padding-inline-start:1.2em;display:grid;gap:6px}
+details.box li{overflow-wrap:anywhere;font-size:.92rem}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
+.btn{cursor:pointer;border:1px solid var(--line-strong);background:var(--surface);padding:7px 16px;border-radius:999px;font-size:.92rem;min-height:40px}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent);font-weight:600}
+.btn:hover{border-color:var(--fg)}
+.note{font-size:.82rem;color:var(--muted);margin:8px 0 0}
+.toast{position:fixed;inset-inline:16px;bottom:20px;margin-inline:auto;max-width:420px;background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.92rem;text-align:center;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .2s,transform .2s;z-index:100}
+.toast.show{opacity:1;transform:none}
+.sharebox{display:none;margin-top:10px;gap:8px;align-items:center;flex-wrap:wrap}
+.sharebox.show{display:flex}
+.sharebox input{flex:1 1 220px;min-width:0;font:inherit;font-size:.82rem;padding:7px 10px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);color:var(--fg);direction:ltr}
+.filters{position:sticky;top:0;z-index:30;background:var(--bg);display:flex;flex-wrap:wrap;gap:8px;padding:12px 0;margin-top:14px;border-bottom:1px solid var(--line)}
+.filters .f{cursor:pointer;border:1px solid var(--line-strong);background:var(--surface);padding:6px 13px;border-radius:999px;font-size:.9rem;min-height:38px}
+.filters .f[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.filters .f span{font-family:var(--font-mono);font-size:.8rem;margin-inline-start:4px;opacity:.75}
+.cards{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:12px}
+.card{display:grid;grid-template-columns:56px minmax(0,1fr);gap:4px 14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card[hidden]{display:none}
+.vbtn{width:52px;height:52px;border-radius:12px;border:2px solid var(--line-strong);background:var(--surface);cursor:pointer;display:grid;place-items:center;font-size:1.7rem;font-weight:700;color:transparent;line-height:1}
+.vbtn:hover{border-color:var(--ok)}
+.vbtn[aria-checked="true"]{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.cbody{min-width:0}
+.ctop{display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap}
+.cname{font-family:var(--font-head);font-weight:700;font-size:1.06rem;margin-top:4px;overflow-wrap:anywhere}
+.ref{font-size:.8rem;color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
+.notes{margin:8px 0 0;padding-inline-start:1.15em;display:grid;gap:5px}
+.notes li{font-size:.93rem;overflow-wrap:anywhere}
+.z{display:inline-block;font-family:var(--font-mono);font-size:.7rem;font-weight:600;color:var(--muted);border:1px solid var(--line-strong);border-radius:4px;padding:0 4px;margin-inline-start:6px;line-height:1.35;vertical-align:1px;direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.warn{margin-top:8px;font-size:.88rem;color:var(--doubt);background:var(--doubt-bg);border-radius:8px;padding:6px 10px;overflow-wrap:anywhere}
+.card.done .cbody > .cname,.card.done .cbody > .notes,.card.done .cbody > .ref,.card.done .cbody > .ctop{opacity:.5}
+.card.done .cname,.card.done .notes li{text-decoration:line-through;text-decoration-thickness:1.5px}
+.own{display:inline-grid;grid-template-columns:repeat(4,auto);border:1px solid var(--line-strong);background:var(--surface-2);border-radius:999px;padding:3px;gap:2px;margin-inline-start:auto}
+.own button{cursor:pointer;border:0;background:transparent;border-radius:999px;padding:5px 10px;font-size:.84rem;font-weight:600;color:var(--muted);min-height:34px}
+.own button[aria-checked="true"][data-v="eytan"]{background:var(--accent);color:var(--accent-fg)}
+.own button[aria-checked="true"][data-v="nadav"]{background:var(--nadav);color:var(--nadav-fg)}
+.own button[aria-checked="true"][data-v="both"]{background:var(--both);color:var(--both-fg)}
+.own button[aria-checked="true"][data-v="tbd"]{background:var(--doubt);color:var(--surface)}
+details.cl{margin-top:10px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);padding:8px 12px}
+details.cl summary{cursor:pointer;font-weight:700;font-size:.92rem;min-height:30px;display:list-item}
+details.cl h4{font-family:var(--font-head);font-size:.86rem;margin:10px 0 4px;color:var(--muted)}
+details.cl ul{margin:0;padding-inline-start:1.15em;display:grid;gap:5px}
+details.cl li{font-size:.9rem;overflow-wrap:anywhere}
+.files{list-style:none;padding:0!important}
+.files li{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+.path{display:block;font-family:var(--font-mono);font-size:.76rem;line-height:1.45;direction:ltr;text-align:left;unicode-bidi:isolate;overflow-wrap:anywhere;word-break:normal;color:var(--fg)}
+.fmeta{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:3px;flex-wrap:wrap}
+.fnote{font-size:.8rem;color:var(--muted);overflow-wrap:anywhere;min-width:0}
+.cp{cursor:pointer;border:1px solid var(--line-strong);background:var(--surface-2);border-radius:6px;font-size:.74rem;padding:2px 8px;min-height:28px}
+.miss li{color:var(--doubt)}
+.emptyrow{padding:24px 0;color:var(--muted)}
+@media (max-width:640px){
+.card{grid-template-columns:42px minmax(0,1fr);gap:4px 10px;padding:12px 10px}
+.vbtn{width:42px;height:42px;font-size:1.4rem}
+details.cl{padding:8px 10px;margin-inline-start:-52px}
+.notes{padding-inline-start:1em}
+.own{margin-inline-start:0;width:100%;grid-template-columns:repeat(4,1fr);margin-top:6px}
+.own button{padding:5px 4px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+@media print{.filters,.tools,.note,.sharebox{display:none!important}.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hd">
+<h1>X2 · דגשים מזום 12.11 (איתן ונדב)</h1>
+<p class="lede">זום פנימי, 12.11.26 בשעה 08:50, כ-32 דקות, בלי הלקוח. עברתם על <a href="X2-חלוקת-משימות-11.11.26.html">רשימת המשימות של 11.11</a> והוספתם דגשים. כל כרטיס: מה נאמר (עם הדקה בזום), מי מבצע, ובחלק המתקפל: מה Claude יכול לעשות ואיפה הקבצים. כשהדובר לא ברור מהתמלול, המבצע מסומן לבירור.</p>
+<div class="total" aria-live="polite">
+<div class="stat"><span class="big" id="cnt"></span><span class="what">פריטים</span></div>
+<div class="lines"><div class="sub" id="sub1"></div><div class="sub" id="sub2"></div></div>
+</div>
+<div class="plbl"><span>התקדמות</span><b id="ptxt"></b></div>
+<div class="bar"><i id="pbar"></i></div>
+<details class="box" id="sum" open><summary>תמצית: הדגשים, מה Claude מתחיל עכשיו, מה חסר</summary>
+<h3>הדגשים המרכזיים</h3>
+<ul>
+<li><b>הבולט טיים (1:22 עד 1:31) עובר כולו לאיתן,</b> לפי המבנה: ממשיכים ישר מהשוט הקודם, סלואו מושן מאותה זווית בלי תזוזת מצלמה, קאט מהיר לפרופלור, חזרה לבולט טיים, והרחפן טס. נדב מציע לשלוח את פריים הפרופלור.</li>
+<li><b>מסכים וכותרות נדחים לסוף.</b> במסכים ממתינים ל-UI מהלקוח, ואת הכותרות עושים בסוף.</li>
+<li><b>חלוקה מחדש:</b> החזירים (1:35, 1:36, 1:52), העיט ב-1:13 (בלנדר), ה-POV והקאט לטאבלט ב-1:17, והצלילה לטנק ב-1:56 עוברים לאיתן. שוט הרחפן בפתיחה (0:16) עובר לנדב.</li>
+<li><b>כמה שורות נסגרו ללא שינוי:</b> 0:19, 0:30, 0:33, 0:46, 0:54, 1:00, המשקפת ב-0:56, וגם המשימות הכלליות. לפי ההשערה שלכם, חלק מההערות היו ישנות. <b>זהירות:</b> ב-0:33 וב-0:38 סגרתם שורות שהיו בעצם משימות כותרת.</li>
+<li><b>לסיים היום</b> כדי לא לעבוד על זה ביום שישי. צריך לקנות קרדיטים היום, כי נשארו בערך 600. ההצעה היא רכישה חד פעמית, כ-80 דולר ל-2,000 קרדיטים, ולרשום אותה ברשימת ההוצאות.</li>
+</ul>
+<h3>Claude יכול להתחיל עכשיו (חינם, בלי לגעת בטיימליין)</h3>
+<ul>
+<li>לחתוך מהזום עם הלקוח מ-11.11 בשעה 16:55 את הקטע שבו הוא מסביר את הבולט טיים (02:50 עד 10:30) ולשלוח לאיתן, כמו שנדב ביקש.</li>
+<li>תזמון מדויק של המילים abort mission, aborted, reuse ו-military מתוך הקריינות של v3, בתמלול מילים מקומי.</li>
+<li>בשוט 1:50: שלוש גרסאות סיבוב (0 מעלות, 90 עם כיוון השעון, 90 נגד כיוון השעון). בשוט 1:56: גרסת פליפ. בשוט 1:19: אפשרויות גליץ'. בשוט 1:10: טסט ייצוב.</li>
+<li>רפרנסים של עיט שמתחיל צלילה ל-1:48, פריימים מנקודת הדיזולב ב-0:47, ואייקון טנק למסכים (כבר קיים על הדיסק).</li>
+</ul>
+<h3>חסר על הדיסק</h3>
+<ul>
+<li>קבצי UI או תוכן מסכים מרפאל. לא נמצא שום קובץ. במסמך הלקוח כתוב שהם "יועברו בנפרד, מסך אחר מסך".</li>
+<li>קבצי ה-.blend החדשים של נדב (טנקים במשקפת, עיט ובולט טיים, צלילה). יש רק רנדרים ב-mp4.</li>
+<li>תיקיית קבצי העיצוב מהדרייב, שנדב אמור להכין לאיתן, ופריים הפרופלור.</li>
+<li>הנוסח הסופי של כותרות הפתיחה מהלקוח, פריים ירוק ייעודי ל-1:42 ווידאו של הטפרים ל-1:57.</li>
+</ul>
+</details>
+<div class="tools">
+<button type="button" class="btn primary" id="share">שתף מצב</button>
+<button type="button" class="btn" id="reset">איפוס</button>
+</div>
+<div class="sharebox" id="sharebox"><input id="shareurl" readonly aria-label="קישור לשיתוף"></div>
+<p class="note">הסימונים נשמרים בדפדפן שלך, בנפרד מהדפים האחרים. פריטים שנסגרו בזום מסומנים מראש כבוצעו. לשיתוף לחצו על "שתף מצב". בסינון "איתן" ו"נדב" מוצגים גם פריטים של שניהם.</p>
+</header>
+<nav class="filters" role="group" aria-label="סינון">
+<button type="button" class="f" data-f="all" aria-pressed="true">הכל<span id="n-all"></span></button>
+<button type="button" class="f" data-f="eytan" aria-pressed="false">איתן<span id="n-eytan"></span></button>
+<button type="button" class="f" data-f="nadav" aria-pressed="false">נדב<span id="n-nadav"></span></button>
+<button type="button" class="f" data-f="open" aria-pressed="false">פתוח<span id="n-open"></span></button>
+<button type="button" class="f" data-f="done" aria-pressed="false">בוצע<span id="n-done"></span></button>
+<button type="button" class="f" data-f="tbd" aria-pressed="false">לבירור<span id="n-tbd"></span></button>
+</nav>
+<main><ol class="cards" id="cards"></ol><p class="emptyrow" id="empty" hidden>אין פריטים בסינון הזה.</p></main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+var R = '/Users/baritzy/Projects/New Angle/רפאל/';
+var NA = '/Users/baritzy/Documents/eytan-workspace/the-system-v8/P-projects/New Angle/';
+var ZM = '/Users/baritzy/Documents/Zoom/';
+var CT = '/Users/baritzy/Documents/eytan-workspace/the-system-v8/temp/zoom-1111/count/';
+var DOC = NA + 'context/משרד-הביטחון/הנחיות-עבודה-לסטודיו-Post-שמואלוף-7.11.26.txt';
+var V3 = R + 'Export זמני 11.11 - 3/X2 - Export זמני 11.11 v3.mp4';
+var OFF = R + 'השוואה - טיימליין מול אופליין 11.11/X2 - cut 5.4 - אופליין מקורי.mp4';
+var UP = R + 'העלאה - שוטים מוכנים לסרטון עיט/';
+var LB = R + 'לבריצי 11.11 מנדב/';
+var MN = R + 'מנדב 11.11 צהריים/';
+var FX = R + 'שוטים מתוקנים 11.11/';
+var GR = R + 'ירוק לשוטי הרחפן - בלנדר/';
+var SD = R + 'לסידנס - צמדים וידאו ותמונה/';
+var BN = R + 'בלנדרים חדשים מנדב/drive-download-20261110T173402Z-1-001/';
+var M1 = R + 'חומרים לסרטון 1/';
+var F = function(p, n){ return {p:p, n:n || ''}; };
+
+var ITEMS = [
+{id:'titles-open', tc:'0:00 עד 0:10', name:'כותרות הפתיחה (4 שורות)', ref:'שורות 1 עד 4 בטבלה של 11.11', owner:'eytan', tag:['later','נדחה לסוף'],
+ notes:[['עוברים הלאה: "שנייה, אנחנו עוזבים את זה. כן, זה בסוף"','03:48']],
+ cl:{can:['להכין את 4 כותרות הפתיחה לפי כללי הכותרות ולשים אותן על V3 בדווינצ\'י, ברגע שמגיע הנוסח','לבדוק בפריים בודד מ-Export v3 מה מופיע כרגע בכל אחת מ-4 הנקודות'],
+ hands:['אישור הנוסח מול הלקוח'],
+ files:[F(V3,'הגרסה האחרונה שהוצגה (11.11, 16:15)'),F(R+'ספר מותג/Rafael Brandbook 2025.pdf','פונטים וצבעים'),F(R+'ספר מותג/brand-summary.md')],
+ miss:['הנוסח הסופי של כותרות הפתיחה מהלקוח (בטבלה מסומן "ממתין")']}},
+
+{id:'s016', tc:'0:16', name:'שוט הרחפן בפתיחה', ref:'שורה 5 · 0:16', owner:'nadav', tag:['chg','מבצע הוחלף: מאיתן לנדב'],
+ notes:[['נדב: "אני אסיים אותו, אני כבר התחלתי איתו"','03:56'],['במתג בדף הועבר לנדב','04:00']],
+ cl:{can:['כשנדב שולח גרסה: החלפה 1:1 בטיימליין (אותו טרק, אותם in ו-out)','להכין השוואה של לפני ואחרי, זו ליד זו, לבדיקת המירכוז, הגודל והחלקות התנועה'],
+ hands:['העבודה על השוט עצמו (נדב)'],
+ files:[F(FX+'בדיקת חיבור v3 - לימבו משמאל לימין ואז הקלוז-אפ של הלוגו - 2026-11-11.mp4','הגרסה האחרונה שמצאתי (11.11, 16:12)'),F(MN+'S4S5 - הרנדר מהטיזר, 360 בלימבו בשניות הראשונות.mp4')]}},
+
+{id:'s019', tc:'0:19', name:'קלוז אפ של הרש"ק (על L-Spike 2X)', ref:'שורה 6 · 0:19', owner:'eytan', tag:['closed','נשאר כמו שהוא'], done:true,
+ notes:[['לא הבינו את ההערה. בזום הלקוח אמר שהוא רוצה לסיים על הלוגו בקלוז, על הרש"ק (השוט השני), ולא על הרחפן. לכן המצב הנוכחי נכון','04:50']],
+ cl:{can:['למצוא בתמלולי הזומים עם הלקוח את הציטוט המדויק ("אני רוצה שזה יסתיים על הלוגו"), כדי שיהיה מקור אם הוא ישאל'],
+ files:[F(NA+'context/transcripts/','כל תמלולי X2')]}},
+
+{id:'s022', tc:'0:22', name:'הרחפן לפני המעבר לעיט', ref:'שורה 7 · 0:22', owner:'eytan', tag:['kind','עריכה'],
+ notes:[['עניין עריכתי: הרחפן יוצא מעט לפני, ובהתחלה יוצא עם העיט. "זה נמצא בקובץ"','05:21'],['הלקוח רוצה שנכין את השוט מחדש, אבל את העיט מעבירים לסוף','05:30']],
+ cl:{can:['החלפה 1:1 של קטע הגשר בטיימליין, מגרסת ה-25fps'],
+ hands:['ההחלטה העריכתית: כמה פריימים לגנוב מהרחפן (איתן)'],
+ files:[F(LB+'25fps לטיימליין/0-23.24 - גשר רחפן לעיט - סידנס ריאליסטי.mp4','25fps, מוכן לטיימליין'),F(UP+'0-23.24 - גשר רחפן לעיט.mp4'),F(R+'בלנדרים חדשים מנדב/0-23.24 - גשר רחפן לעיט (מחליף עד 0-27.64).mp4','גרסת בלנדר')]}},
+
+{id:'s023', tc:'0:23', name:'העיט: כניסת הגיבור (נפנוף כנפיים)', ref:'שורות 8 ו-9 · 0:23, 0:28', owner:'nadav', tag:['later','נדחה לסוף'],
+ notes:[['"הנפנוף המטומטם שלו עוד הפעם. את זה אני שומר לסוף"','05:39'],['הלקוח רוצה יותר נשימה ויותר תנועות','05:47']],
+ cl:{can:['לחתוך מהאופליין 5.4 את הקטע של 0:23 עד 0:29 כרפרנס לתנועה (ffmpeg, חינם)','להכין first frame מהפריים הראשון של השוט, ופרומפט לסידנס, בלי הרצה'],
+ hands:['הג\'נרוט (נדב, בסוף)'],
+ files:[F(OFF,'האופליין המקורי, לרפרנס'),F(FX+'25fps לטיימליין/עיט רקע מתוקן (שנייה 28 בטיימליין) 25fps.mp4','ל-0:28'),F(FX+'25fps לטיימליין/עיט מתוקן 2 25fps.mp4','11.11, 14:18')]}},
+
+{id:'s030', tc:'0:30', name:'שוט האריה', ref:'שורה 10 · 0:30', owner:'eytan', tag:['closed','ההערה נפסלה'], done:true,
+ notes:[['"המצלמה הולכת עם האריה ופותחת את הסוואנה": "לא היה בזה, זה קשקוש"','06:12']],
+ warn:'לא נאמר בזום מה קורה עם שליחת שוט האריה מהצד ללקוח, שהייתה כתובה בשורה. לבירור אם זה עדיין רלוונטי.',
+ cl:{can:['אם עדיין רלוונטי: לאתר את שוט האריה מהצד ולשלוח לאיתן תמונות ממוזערות'],
+ files:[F(UP+'0-29.40 - אריה רץ.mp4'),F(M1+'עיצובי אריות/')]}},
+
+{id:'s031', tc:'0:31', name:'הנמר נותן ביס (Instinct)', ref:'שורה 11 · 0:31', owner:'nadav', tag:['kind','כמו באופליין'],
+ notes:[['ביס לכיוון המצלמה, "שיבוא לאכול את המצלמה"','06:06'],['"באופליין זה, אמרנו. בסדר, אני אעשה את זה". הדובר לא ברור, ובדף נשאר על נדב','06:17']],
+ cl:{can:['לחתוך מהאופליין 5.4 את 0:30 עד 0:32 כרפרנס תנועה','להכין פרומפט ל-video_edit עם "real-time speed, NOT slow motion" (הכלל מ-10.11)'],
+ hands:['ההרצה עצמה: Seedance עולה כ-31 קרדיטים לכל 4 שניות, ולכן רק באישור'],
+ files:[F(OFF,'0:30 עד 0:32'),F(UP+'0-30.56 - לביאות.mp4','מה שיש כרגע בנקודה הזו')]}},
+
+{id:'s032', tc:'0:32', name:'העיט דואה מעל הסוואנה: "יותר חיים"', ref:'שורה 12 · 0:32', owner:'tbd', tag:['warn','מי מבצע: לא הוכרע'],
+ notes:[['"העיט דואה מעל הסוואנה, יותר חיים, יותר נשימה. כן, צריך לתקן את זה"','06:20'],['"מי עושה את זה, אני או אתה?" איתן מוכן לקחת, בתנאי שנדב יכין תיקייה עם כל קבצי העיצוב מהדרייב: "אני לא עשיתי את רוב העיצוב"','06:29'],['"בוא רק נחליט מי עושה את זה". לא הוכרע','06:41']],
+ cl:{can:['לבנות אינדקס מקומי של כל סטילס העיט שכבר יש על הדיסק, כדי שאיתן יתחיל בלי לחכות לתיקייה','להכין first frames ופרומפטים לכל שוטי "יותר חיים" של העיט: 0:28, 0:32, 1:34, 1:51, 1:55, 1:57'],
+ hands:['ההחלטה מי מבצע','הרצות בתשלום (באישור)'],
+ files:[F(FX+'25fps לטיימליין/עייט במקום שוט בריכה 25fps.mp4','השוט שיושב היום ב-0:32'),F(FX+'עיט במקום שוט בריכה - פריים ראשון ברזולוציה מלאה (לנדב).png'),F(SD+'3 תמונה מתוקן עיט פרופיל.png'),F(SD+'1 תמונה - נשר במעוף מעל סוואנה זהובה.png')],
+ miss:['תיקיית קבצי העיצוב מהדרייב (ראו את הפריט הבא)']}},
+
+{id:'design-folder', tc:'', gen:'כללי', name:'תיקייה עם כל קבצי העיצוב בשביל איתן', ref:'חדש בזום', owner:'nadav', tag:['kind','משימה חדשה'],
+ notes:[['"אתה חייב להכין לי תיקייה עם כל הקבצים של העיצוב שנמצאים בדרייב. אני לא יודע מאיפה לקחת"','06:29'],['"כן, בטח"','06:38']],
+ cl:{can:['כשהתיקייה עולה: להוריד אותה מהדרייב, לסדר לפי טיים-קוד ולשייך כל קובץ לכרטיס בדף הזה'],
+ hands:['להעלות את התיקייה (נדב)'],
+ files:[F('Drive: New Angle 2026/פרויקטים/רפאל (id 1LGloG6_nu8ZnUy0GrydVUrzd88Oz8206)','תיקיית הדרייב המשותפת, לפי lessons')],
+ miss:['התיקייה עוד לא קיימת']}},
+
+{id:'s033', tc:'0:33', name:'הלוחמים נכנסים לפריים', ref:'שורה 13 · 0:33 (בטבלה: כותרת Bravo Outpost / At Zero Hour)', owner:'eytan', tag:['closed','סומן V בזום'], done:true,
+ notes:[['פתחו את Export v3 ואת האופליין 5.4 והשוו ביניהם','07:11'],['"השוט הזה בסדר, נכון?" "כן, השוט הזה מעולה". "אז אני מוותר על השוט הזה"','08:08']],
+ warn:'בטבלה של 11.11 השורה הזו הייתה משימת כותרת (Bravo Outpost / At Zero Hour), לא תיקון שוט. ה-V סגר גם אותה. צריך לוודא שהכותרת לא נשכחת.',
+ cl:{can:['לחלץ פריים מ-Export v3 ב-0:33 ולבדוק אם הכותרת כבר על המסך'],
+ files:[F(V3),F(OFF)]}},
+
+{id:'s036', tc:'0:36', name:'הלוחמים יורדים למטה: סלעים', ref:'שורה 14 · 0:36', owner:'nadav', tag:['kind','עיצוב'],
+ notes:[['"זה היה כמה סלעים, צריך להוסיף סלעים". "זה עיצוב"','08:18'],['המיקום: באזור ה-M16, כאילו חצי מה-M16 מונח על הסלע','08:46'],['"אני יכול לעשות את זה, זה שטויות". "נדב, בסדר"','08:57']],
+ cl:{can:['לסמן על הפריים את המיקום המדויק (חץ על ה-M16) ולשלוח לנדב','כשנדב מחזיר: החלפה 1:1 והשוואה מול האופליין'],
+ hands:['עיצוב הסלע (נדב). הלקוח ביקש ב-10.11 בלי סלעי גיר גדולים עם טחב'],
+ files:[F(M1+'עיצובים סבב 2/A 01-00-36-02 שני חיילים הולכים - עיצוב ירוק.png','העיצוב שאושר'),F(UP+'0-36.08 - A שני חיילים הולכים.mp4','מה שיש בטיימליין'),F(M1+'הרצות Seedance/A 01-00-36-02 שני חיילים - הרצה 1.mp4')]}},
+
+{id:'s038', tc:'0:38', name:'הנחת התיקים: הכותרות', ref:'שורה 15 · 0:38 (כותרות: 8 kg / Easy to Carry / Rapid Deployment)', owner:'tbd', tag:['closed','"לא רלוונטי", נמחק'], done:true,
+ notes:[['"למה הוא רוצה את הכותרות האלה?" ואחר כך כמה פעמים "לא רלוונטי"','09:06'],['"אוקיי, אז אני מוחק את ההערה הזאת"','09:21']],
+ warn:'לבירור: הכותרות האלה לא רלוונטיות כי הן כבר בסרט, או שמוותרים עליהן? הן היו ברשימת הכותרות של הלקוח.',
+ cl:{can:['לבדוק ב-Export v3 אם הכותרות כבר מופיעות סביב 0:38, ולהחזיר תשובה עם פריים'],
+ files:[F(V3)]}},
+
+{id:'s047', tc:'0:47 עד 0:49', name:'הרש"קים: חלק חסר במעבר לאנימציה', ref:'שורות 16 ו-17 · 0:47, 0:49', owner:'both', tag:['kind','הערה חדשה של נדב'],
+ notes:[['"לא היו הערות עליהם, נכון?" נדב: "לי יש הערה, אבל הוא לא שם לב אליה"','09:30'],['כשזה הופך לאנימציה, חסר חלק מהרש"ק. צריך לתקן את זה ואת הפריים הזה','09:34'],['איתן שולח לנדב את השוט שלפני, עם הירוק','10:19'],['"אנימציית הרש"קים: נדב"','10:23']],
+ cl:{can:['לחלץ את כל הפריימים של הדיזולב ולסמן את הפריים שבו החלק נעלם','להעלות לנדב לדרייב את השוט הירוק, באישור איתן'],
+ hands:['תיקון האנימציה (נדב)'],
+ files:[F(MN+'25fps לטיימליין/0-47.20 - רשקים ירוק עם דיזולב לאנימציה - 172 פריימים.mp4','האחרון (11.11, 14:13)'),F(UP+'0-47.20 - B שני רשקים הפוך.mp4','השוט עם הירוק'),F(UP+'0-48.64 - הרשקים אייקונים גדולים (נדב v6, מפריים 36).mp4'),F(M1+'עיצובים סבב 2/B 01-00-47-05 שני רשקים - עיצוב ירוק.png')]}},
+
+{id:'stale', tc:'0:54 · 0:56 · 1:00', name:'הערות שסומנו כישנות או לא קיימות', ref:'שורות 18, 19 (משקפת), 20', owner:'both', tag:['closed','סומן V בזום'], done:true,
+ notes:[['0:54, שמיים והשתקפות: "מי אמר את זה? הוא ממציא לנו דברים. נראה לי הכל בסדר"','10:45'],['0:56, קונטור ושנתות למשקפת: "זה ישן, הערות ישנות"','11:23'],['1:00, לונג שוט של הטנקים: "לא קשור, אין לי מושג על מה מדבר, לא קיים"','12:13'],['ההשערה שלכם: הרשימה לקחה הערות מזומים קודמים. "אני מקווה שזה לא מקפיץ לנו דברים"','12:16']],
+ cl:{can:['לבדוק מאיזה זום הגיעה כל אחת מ-3 ההערות ולתעד לקח ב-lessons','עובדה: השנתות במשקפת כבר נעשו. הקובץ קיים מ-11.11 בשעה 13:08','עובדה: לונג שוט ירוק של הטנקים כבר רץ ב-11.11 בשעה 15:46'],
+ files:[F(SD+'6 משקפת ירוק בלי אבק - עם שנתות - 25fps.mp4'),F(SD+'7 סידנס - לונג שוט טנקים ירוק - הרצה 2 25fps.mp4')]}},
+
+{id:'s056', tc:'0:56', name:'הטנקים במשקפת: הטנק השני נראה כמו צעצוע', ref:'שורה 19 · 0:56 טנק', owner:'tbd', tag:['warn','מי מבצע: לא ברור'],
+ notes:[['"אז זה מה שגם אמרתי לך". צריך להריץ את זה שוב בבלנדר','11:03'],['"כדאי שתעשה את זה כי יש לך את זה". "שלחת לי את זה, נכון?" "כן, יש לך את הבלנדר". "בסדר, אני אעשה את זה"','11:13'],['"יש לך גם את קובץ הבלנדר וגם את הווידאו". בדף נשאר על נדב','11:15']],
+ cl:{can:['כשיש קובץ .blend: לפתוח דרך Blender MCP ולתקן את נסיעת הטנק (נדנוד איטי כמו סוס, בלי רעידות, צמוד לקרקע), ואז לרנדר low poly','אחר כך video_edit בסידנס על הפריים הירוק (31 קרדיטים ל-4 שניות, באישור)'],
+ hands:['לקבוע מי מבצע','לשלוח את קובץ ה-.blend אם הוא אצל נדב'],
+ files:[F(LB+'בלנדר/0-55.76 - מבט במשקפת על הטנקים - בלנדר low poly - 2026-11-10 - בלי משקפת.mp4'),F(LB+'בלנדר/0-55.76 - מבט במשקפת על הטנקים - בלנדר low poly - 2026-11-10 - עם משקפת.mp4'),F(SD+'6 משקפת ירוק בלי אבק - עם שנתות - 25fps.mp4','הגרסה הירוקה האחרונה'),F(R+'X2 עבודה 2.11/shots/S02/S02_tanks.blend','סצנת טנקים ישנה שלנו מ-2.11, לא הגרסה של נדב'),F(DOC,'שורות 18 ו-19 במסמך הלקוח: תנועת הטנקים')],
+ miss:['קובץ ה-.blend של שוט המשקפת לא נמצא על הדיסק. יש רק רנדרים']}},
+
+{id:'s101', tc:'1:01 · 1:02', name:'הלוחם ליד הרחפן על הגבעה: מחסה', ref:'שורות 21 ו-22 · 1:01, 1:02', owner:'tbd', tag:['warn','מי מבצע: לא ברור'],
+ notes:[['"אמרתי לו שצריך לשים [סלע] מאחורה". צריך להגביה את האבנים האלה לחצי','12:47'],['הלקוח גם לא אהב את סגנון האבנים','12:57'],['להוסיף אבן מאחורה, ואולי גם ראש של חייל. "למה לסבך?" לא הוכרע','13:12'],['האבנים מאחורה הן המחסה שלהם, לפי האוריינטציה מהשוט עם הרחפן','13:45'],['"נדב, תביא לי את השוט שאוכל לסדר את זה, כל החומרים". בדף נשאר על נדב','14:03']],
+ cl:{can:['עריכת סטיל: להוסיף או להגביה סלע ב-nano_banana_pro, בשיטת החיתוך 4:3 עם מסכה שעבדה בהסרת האבק ב-11.11 (כ-2 קרדיטים, באישור)','להכין פריים השוואה של לפני ואחרי'],
+ hands:['לקבוע מי מבצע','להחליט על ראש החייל הנוסף'],
+ files:[F(M1+'חומרים לאחר שינוי/01-01 רחפן ורשק על הקרקע - בלוקיישן החדש - 2026-11-10.png'),F(M1+'חומרים לאחר שינוי/01-02 מכינים רחפן - בלוקיישן החדש - 2026-11-10.png'),F(UP+'1-01.16 - שוט 8.mp4'),F(UP+'1-02.00 - שוט 9.mp4')]}},
+
+{id:'screens', tc:'1:05 · 1:17 · 1:32 · 1:37 · 1:41', name:'המסכים (5 מסכי טאבלט)', ref:'שורות 23, 27, 33, 37, 39', owner:'eytan', tag:['later','נדחה לסוף'],
+ notes:[['"מסך בסדר, זה מסך, אני יכול לעשות"','14:11'],['"בסדר, נחכה עם המסכים בסוף"','21:55'],['"ממתין, UI, UX"','27:26']],
+ cl:{can:['להכין עכשיו את החלקים שלא תלויים ב-UI של הלקוח: הסטריפ התחתון, שעה, סוללה, הכותרת העליונה (Take Off, Mission, Hover, Homing) ו-X אדום על ה-GPS, כשכבות PNG או Fusion','אייקון טנק לסטריפ כבר קיים בדיסק, ב-3 גרסאות'],
+ hands:['תוכן המסכים מהלקוח'],
+ files:[F(R+'X2 עבודה 2.11/shots/S04/icons/X2_S04_icon_tank.svg','יש גם alt-red-dot ו-on-light'),F(NA+'output/מסכים-וצלב-X2-2.11.26.html','מפרט המסכים מ-2.11'),F(DOC,'שורה 22 במסמך הלקוח')],
+ miss:['UI ותוכן המסכים מרפאל. לא נמצא שום קובץ, והלקוח כתב שהם יועברו בנפרד, מסך אחר מסך']}},
+
+{id:'s108', tc:'1:08', name:'Launch: העיט מתרומם מהענף', ref:'שורה 24 · 1:08 (עיט וחיתוך)', owner:'both', tag:['kind','נדב: פריים · איתן: עריכה'],
+ notes:[['"זה השוט המטומטם הזה שהוא נתן עליו אלף הסברים"','14:25'],['הסיכום: מעצבים מחדש את הפריים, מרנדרים שוב, ועושים דאבל אקשן','14:30'],['"דאבל אקשן זה עריכה". שורת החיתוך סומנה V בדף','14:38']],
+ cl:{can:['למצוא את הפריים שבו הרחפן מתחיל להתרומם (בין 1:08 ל-1:09) ולהציע in ו-out לשני השוטים של הדאבל אקשן','לחפש ברשת רפרנס חינמי של עיט שממריא מענף'],
+ hands:['עיצוב הפריים מחדש (נדב)','החיתוך עצמו (איתן)'],
+ files:[F(LB+'25fps לטיימליין/בדיקת חיבור - החיילים והרחפן ואז העיט ממריא.mp4'),F(LB+'25fps לטיימליין/העיט ממריא בסלו מושן עם קראש זום - סידנס.mp4'),F(UP+'1-07.08 - חיילים ורחפן ואז העיט ממריא.mp4'),F(M1+'שוטים/שוט 27.png','Launch בלוקיישן החדש')]}},
+
+{id:'client-memory', tc:'', gen:'כללי', name:'הלקוח שוכח את ההערות של עצמו', ref:'חדש בזום', owner:'both', tag:['kind','שיטת עבודה'],
+ notes:[['טל: "יש לו תופעה שהוא נותן הערות, וכשאתה עושה אותן הוא חושב שעשית אותן על דעת עצמך, כי הוא לא זוכר שהוא נתן אותן"','14:49']],
+ cl:{can:['לצרף לכל שינוי ציטוט מקור מהתמלולים (איזה זום ובאיזו דקה), כדי שאפשר יהיה להראות ללקוח שהוא ביקש'],
+ files:[F(NA+'context/transcripts/'),F(DOC,'המסמך הכתוב של הלקוח')]}},
+
+{id:'s110', tc:'1:10', name:'הרחפן עולה מאזור הלוחמים', ref:'שורה 25 · 1:10', owner:'nadav', tag:['kind','עיצוב וייצוב'],
+ notes:[['לתקן את העיצוב: יש ריצוד והשוט לא ממורכז','15:00'],['להגביה את הסלע שלפני הלוחמים עד גובה הראש. "להוסיף פה גובה לאבן, זה הכל"','15:17'],['הכותרת: "בסדר" (נשארת אצל איתן)','15:25']],
+ cl:{can:['טסט ייצוב מקומי וחינמי (ffmpeg vidstab) על הגרסה הנוכחית, כדי לראות אם הוא מספיק לפני עבודה ידנית'],
+ hands:['הגבהת הסלע (נדב)'],
+ files:[F(MN+'25fps לטיימליין/1-10.56 - הרחפן עולה וטס קדימה לעומק - 25fps.mp4','האחרון'),F(MN+'1-07 - הרחפן עולה מהחיילים והמצלמה עוקבת לשמיים - סידנס - 2026-11-11.mp4')]}},
+
+{id:'s113', tc:'1:13', name:'העיט בתעופה אחרי ה-Launch (בלנדר)', ref:'שורה 26 · 1:13', owner:'eytan', tag:['chg','מבצע הוחלף: מנדב לאיתן'],
+ notes:[['"יותר נשימה, יותר חיים". "אני אנסה, אני לא יודע איך"','15:36'],['צפו בשוט: זה בלנדר low poly. "יותר תעופה. זה בלנדר"','15:59'],['"אוקיי, אז אני אעשה את הבלנדר הזה". בדף הועבר לאיתן','16:07']],
+ cl:{can:['דרך Blender MCP: מחזור נפנוף וגלישה, תנועות ראש ורינדור','אחר כך video_edit לריאליזם על הפריים הירוק (באישור קרדיטים)'],
+ hands:['אישור התנועה (איתן)'],
+ files:[F(BN+'1-10.56 - עיט, רחפן ובולט טיים (מחליף עד 1-21.12, ואחריו השלט).mp4'),F(BN+'עיט 5 שניות, רחפן ובולט טיים - v6 מראה הפוכה.mp4'),F(GR+'בולט טיים 1 - פריים ראשון עיט סוואנה v2.png','פריים ירוק (11.11, 16:17)'),F(SD+'1 וידאו - בולט טיים חלק 1, העיט מתחלף לרחפן - 9 שניות.mp4')],
+ miss:['קובץ ה-.blend של העיט ושל חלק 1 של הבולט טיים לא נמצא על הדיסק']}},
+
+{id:'s117n', tc:'1:17', name:'מבט הרחפן במסך, וקאט לטאבלט', ref:'שורות 27 ו-28 · 1:17', owner:'eytan', tag:['chg','מבצע הוחלף: מנדב לאיתן'],
+ notes:[['POV של הרחפן על הלוקיישן: לרנדר ולשתול במסך','16:25'],['במקום הפליפ-מורף: קאט לפני שהשוט עובר לרחפן, ולהכניס לשם את הטאבלט','16:51'],['"זה יעזור לנו לג\'נרוט"','17:00'],['"זה בדווינצ\'י, אז אתה תעשה את זה"','17:06']],
+ warn:'קאט ושתילה משנים את מבנה הטיימליין, וזה מעבר לכלל של החלפה 1:1. Claude עושה את זה רק בהוראה מפורשת של איתן.',
+ cl:{can:['לאתר בטיימליין (בקריאה בלבד) את פריים הקאט לפני המעבר לרחפן ולהציע אותו לאיתן','רינדור POV של רחפן מבלנדר בסביבה הירוקה'],
+ hands:['הקאט עצמו (איתן)'],
+ files:[F(GR+'בולט טיים 1 - פריים חילוף רחפן ירוק v2 - 1080.png','הסביבה הירוקה'),F(R+'X2 עבודה 2.11/04 עולם בסיס/drone_look_v2.blend','סצנת רחפן שלנו מ-2.11'),F(M1+'חומרים לאחר שינוי/1-40 לוחם קלוזאפ ליד הטאבלט - בלוקיישן החדש - 2026-11-10.png','איך הטאבלט נראה')],
+ miss:['תוכן מסך הטאבלט (UI) מהלקוח']}},
+
+{id:'s119', tc:'1:19', name:'שוט הרחפן מהצד (שוט הגליץ\')', ref:'שורה 29 · 1:19', owner:'eytan', tag:['kind','גליץ\' ובלנדר'],
+ notes:[['"זה רק ההמשך שלו, זה אותו בלנדר". שורת האנימציה סומנה V בדף','17:30'],['גליץ\': "נשים גליץ\' שלנו, הגליץ\' של טל גם ככה לא קשור"','17:54'],['הערה חשובה לבלנדר: זה שדה קרב. להוסיף עשן שחור, משהו שרוף','18:07'],['ממנו נכנסים לבולט טיים. לא וואן שוט, כי אלה בלנדרים נפרדים. לחבר אותם, אולי בגליץ\'','19:02'],['"מבחינתי השוט טוב, רק שבהתחלה תעבור איזו שריפה, מלחמה"','19:18']],
+ cl:{can:['להכין 2 או 3 אפשרויות גליץ\' חינמיות (ffmpeg: הסטת RGB, רעש, קפיצת פריימים) באורך 6 עד 10 פריימים, לבחירה','דרך Blender MCP: עשן שחור ושריפה בתחילת השוט'],
+ hands:['לבחור גליץ\''],
+ files:[F(BN+'1-10.56 - עיט, רחפן ובולט טיים (מחליף עד 1-21.12, ואחריו השלט).mp4','הבלנדר של השוט'),F(UP+'1-19.12 - I רחפן מעל הכפר.mp4','מה שיושב ב-1:19 בטיימליין'),F(M1+'הרצות Seedance/I רחפן מעל הכפר - הרצה 1.mp4')]}},
+
+{id:'bullet', tc:'1:22 עד 1:31', name:'הבולט טיים (4 שורות)', ref:'שורות 30 עד 32 · 1:22, 1:25, 1:27', owner:'eytan', tag:['chg','מבצע הוחלף: מנדב לאיתן'],
+ notes:[['ממשיכים ישר מהשוט הקודם, ופה מתחיל הבולט טיים בלי תזוזת מצלמה. הכל בסלואו מושן','19:55'],['ואז קאט מהיר לאחד הפרופלורים. לפני הקאט: הזווית הזו','20:03'],['ואז חזרה לבולט טיים שעשית אחר כך, והוא טס. "לא צריך מעבר ביניהם, כי יש קאטים"','20:22'],['"תגיד לאדם שישלח לך את הווידאו שמדברים על זה"','20:34'],['"אז אני אעשה את כל הרינדור של הבולט טיים?" "נראה לי". בדף כל השורות הועברו לאיתן','20:43'],['נדב: "אם לא ברור, דבר איתי. אשלח לך את הפריים של הפרופלור"','20:52']],
+ cl:{can:['לחתוך את הקטע 02:50 עד 10:30 מהזום עם הלקוח (11.11, 16:55), שבו הוא מסביר את הבולט טיים, ולפתוח לאיתן (ffmpeg, חינם, מיידי)','תמלול מילים מקומי (whisper) של הקריינות ב-v3, כדי לקבל את הפריים המדויק של abort mission, aborted, reuse ו-military','דרך Blender MCP: רינדור לפי המסמך. סלואו מושן מאותה זווית, אקסטרים קלוז על הרוטור, שוט פתוח, סיבוב של 180 מעלות ב-reuse, וחזרה למהירות רגילה ב-1:31'],
+ hands:['אישור התנועה','אם צריך: פריים הפרופלור מנדב'],
+ files:[F(ZM+"2026-11-11 16.55.29 Eytan Baritzy's Zoom Meeting/video1370172553.mp4",'הזום עם הלקוח. הבולט טיים בין 02:50 ל-10:30'),F(NA+'context/transcripts/תמלול-זום-X2-11.11.26-16-55.txt'),F(DOC,'שורות 30 עד 37 במסמך הלקוח'),F(CT+'v3.wav','הקריינות לתמלול המילים'),F(GR+'סידנס - בולט טיים 2 ירוק - 25fps.mp4','האחרון (11.11, 15:57)'),F(GR+'בולט טיים 2 - פריים ראשון ירוק v1.png'),F(MN+'שוט 2 - הרחפן נכנס לבולט טיים - בלנדר 10 שניות - מהיר - 2026-11-11.mp4'),F(FX+'25fps לטיימליין/בולט טיים שוט 25fps.mp4'),F(UP+'ללא מיקום - בולט טיים חלק 2 (איתן).mp4')],
+ miss:['קבצי ה-.blend של הבולט טיים (חלק 1 וחלק 2) לא נמצאו על הדיסק','פריים הפרופלור מנדב']}},
+
+{id:'s134', tc:'1:34', name:'העיט מביט', ref:'שורה 34 · 1:34', owner:'nadav', tag:['later','עדיפות נמוכה, לסוף'],
+ notes:[['"העיט מסובב את המבט, אני חושב שזה טוב, אני לא ממהר"','21:08'],['"בסוף, בסוף. מבחינתי בתעדוף נמוך"','21:13']],
+ cl:{can:['לא עכשיו'],
+ files:[F(UP+'1-34.80 - ראש העיט מסתכל למטה (upscale).mp4'),F(MN+'25fps לטיימליין/ראש העיט מסתכל למטה - בלי מצמוץ - UPSCALE 25fps.mp4')]}},
+
+{id:'s135', tc:'1:35', name:'החזירים הולכים ברוגע', ref:'שורה 35 · 1:35 חזירים', owner:'eytan', tag:['chg','מבצע הוחלף: מנדב לאיתן'],
+ notes:[['החזירים הולכים ברוגע, במקביל לתנועת הטנקים. "במקום שהם רצים, הם פשוט הולכים"','21:24'],['"אני אעשה את זה, פשוט לג\'נרט". בדף הועבר לאיתן','21:26']],
+ cl:{can:['להכין first frame: שני חזירי יבלות על השביל, בכיוון התנועה של הטנקים ב-1:37','פרומפט: walking calmly, real-time speed, NOT running, NOT slow motion','הרצה בסידנס רק באישור קרדיטים: omni_reference עולה 28, video_edit עולה 31'],
+ hands:['אישור הפריים'],
+ files:[F(LB+'שני חזירי בר בשביל הסוואנה.png'),F(LB+'חזירי בר בדהרה בשעת זהב.png'),F(LB+'25fps לטיימליין/שני חזירי בר מלמעלה - סטילס 52 פריימים.mp4'),F(FX+'25fps לטיימליין/חזירי בר רצים טופ שוט 25fps.mp4','מה שיש עכשיו (רצים)'),F(R+'אקספורטים שוטים/shot 12.mp4','רפרנס לכיוון הטנקים'),F(DOC,'שורה 39 במסמך הלקוח')]}},
+
+{id:'s136', tc:'1:35 · 1:36', name:'לא לוותר על ה-POV, והחזירים מבחינים', ref:'שורות 35 (קיצור) ו-36 · 1:36', owner:'eytan', tag:['chg','מבצע הוחלף: מנדב לאיתן'],
+ notes:[['הלקוח רצה לחתוך לשני שוטים: אחרי ה-POV עוד שוט של החזירים מקדימה','21:36'],['מרימים את הראש ומתחילים לרוץ לכיוון המצלמה','21:41'],['"זה מבט העיט, לא לוותר על ה-POV"','21:44'],['"זה השוט שדיברנו עליו, אני אעשה". בדף הועבר לאיתן','21:46']],
+ cl:{can:['first frame ופרומפט לשוט הפרונטלי (כ-2.5 שניות, בגובה העיניים של החזירים)','לסמן בטיימליין, בקריאה בלבד, את נקודת הקיצור של ה-POV'],
+ hands:['ההחלטה על אורך ה-POV (איתן)'],
+ files:[F(LB+'חזירי בר בדהרה - שני בוגרים v2.png'),F(LB+'חזירי בר בדהרה - שני בוגרים v1.png'),F(FX+'חזירי בר רצים פול שוט.mp4')]}},
+
+{id:'s140', tc:'1:40', name:'קלוז אפ של לוחם: סלע מהצד', ref:'שורה 38 · 1:40', owner:'nadav', tag:['kind','עיצוב'],
+ notes:[['צריך להיות סלע מהצד של הלוחם. "דיברנו על זה. אז נדב, נכון?"','22:09'],['הכותרת: "לא משנה עכשיו"','22:12']],
+ cl:{can:['עריכת סטיל ב-nano (כ-2 קרדיטים) אם נדב מעדיף שזה יעבור דרך Claude'],
+ hands:['עיצוב (נדב)'],
+ files:[F(R+"שוט 10 - ג\'נרוט מחדש מלא/שוט 10 גמור - 1-39.60 עד 1-41.16 - 39 פריימים.mp4",'השוט הנוכחי (11.11)'),F(R+"שוט 10 - ג\'נרוט מחדש מלא/פריים ראשון ירוק - עיצוב v1.png"),F(M1+'חומרים לאחר שינוי/1-40 לוחם קלוזאפ ליד הטאבלט - בלוקיישן החדש - 2026-11-10.png')]}},
+
+{id:'s142', tc:'1:42', name:'הרחפן מעל החול (בלנדר)', ref:'שורה 40 · 1:42', owner:'nadav', tag:['kind','בלנדר'],
+ notes:[['"שוט בלנדר... אז אני יכול, נגיד אני אעשה אותו". הדובר לא ברור, ובדף נשאר על נדב','22:34']],
+ cl:{can:['דרך Blender MCP: להחליף את הרצפה החומה בסביבה ירוקה ולרנדר'],
+ hands:['לוודא מי מבצע'],
+ files:[F(GR,'כל הפריימים הירוקים לשוטי הבלנדר')],
+ miss:['לא נמצא פריים ירוק ייעודי ל-1:42']}},
+
+{id:'s146', tc:'1:46', name:'עין העיט', ref:'שורה 41 · 1:46', owner:'nadav', tag:['closed','משאירים כמו שהוא'], done:true,
+ notes:[['"עין העיט, זה לא נכון, נכון?" "אנחנו משאירים את העיט כמו שהוא". סומן V בדף','22:47']],
+ cl:{can:['אין צורך'],files:[F(FX+'25fps לטיימליין/עיט עין השתקפות 25fps.mp4')]}},
+
+{id:'s148', tc:'1:48', name:'צלילת העיט (בלנדר)', ref:'שורה 42 · 1:48', owner:'nadav', tag:['kind','בלנדר ורפרנס'],
+ notes:[['לעשות מחדש בבלנדר צלילה ריאליסטית: העיט עולה מעט ופותח כנפיים','22:52'],['צריך למצוא רפרנס, כדי להראות ללקוח איך עיט מתחיל צלילה','22:58'],['"את הבלנדר צריך לחלק ביננו". "אין בעיה, אז אני אעשה את הבלנדר". בדף נשאר על נדב','23:17']],
+ cl:{can:['למצוא 3 עד 5 רפרנסים חינמיים של עיט שמתחיל צלילה (stoop), עם טיים-קוד מדויק בכל סרטון','להוציא מהם גיליון פריימים להראות ללקוח'],
+ hands:['הבלנדר (לפי הדף: נדב)'],
+ files:[F(MN+'1-48.16 - רחפן מטה וצולל, עיט צולל - v3 מראה הפוכה.mp4','האחרון (11.11, 14:56)'),F(MN+'צלילה - רק העיט - בלנדר 6.8 שניות - 2026-11-11.mp4'),F(FX+'25fps לטיימליין/עיט צלילה (לחתוך לפני הסוף) 25fps.mp4')]}},
+
+{id:'s150', tc:'1:50 · 1:53', name:'מבט הרחפן על הטנקים: 90 מעלות והתרסקות', ref:'שורה 43 · 1:50 (בטבלה: רק כותרת)', owner:'tbd', tag:['warn','לא הוכרע'],
+ notes:[['לסדר את ה-POV: "צריך לעשות 90 מעלות לדעתי". "אבל הוא אמר שהוא לא רוצה 90 מעלות"','23:33'],['"עניין עריכתי: להפוך ל-90 מעלות ולתקן את הפיצוץ בסוף"','24:00'],['לא הוכרע: "בוא נשאיר את זה ככה" מול "הוא טועה, 90 מעלות. בוא נעשה לו את זה שוב"','24:16'],['בכל מקרה: לרנדר מחדש עם התרסקות אמיתית בטנק הקדמי','24:25'],['יש כאן שלושה שוטים דומים. "זה הבלנדר שאני צריך לעשות, שייראה אמיתי"','24:50']],
+ cl:{can:['להוציא מיד (ffmpeg, חינם) 3 גרסאות של אותו שוט: 0 מעלות, 90 עם כיוון השעון ו-90 נגד כיוון השעון, להחלטה בשנייה','למפות בטבלה אחת את שלושת שוטי ה-POV (1:50, 1:53, 1:56) עם הקבצים שלהם'],
+ hands:['ההחלטה על 90 מעלות','מי עושה את הבלנדר'],
+ files:[F(LB+'25fps לטיימליין/1-53 - הרחפן מתרסק בטנק - שחור לבן - סידנס.mp4','האחרון (11.11, 16:05)'),F(LB+'25fps לטיימליין/1-53 - הרחפן מתרסק בטנק בצבע עם פיצוץ - סידנס.mp4'),F(LB+'1-53 התרסקות - פריים ראשון.png'),F(R+'אקספורטים שוטים/shot 12.mp4','POV בשחור לבן, צלילה עם כוונת'),F(DOC,'שורה 53 במסמך הלקוח')]}},
+
+{id:'eagles', tc:'1:51 · 1:55 · 1:57', name:'עיטים: "יותר נשימה" (אושר בלי שינוי)', ref:'שורות 44, 47, 49', owner:'nadav', tag:['kind','כמו בטבלה'],
+ notes:[['1:51: "העיט צולל מעל החזירים, יותר נשימה. בסדר"','24:57'],['1:55: "העיט צולל. בסדר"','25:43'],['1:57: "העיט שולח טפרים למצלמה, יותר נשימה, יותר חיים. בסדר"','26:52']],
+ cl:{can:['first frames ופרומפטים מוכנים להרצה אחת לכל שוט'],
+ hands:['ההרצות (נדב)'],
+ files:[F(FX+'25fps לטיימליין/עיט מתקרב לטרף 25fps.mp4'),F(UP+'ללא מיקום - עיט מתקרב למצלמה עם הטפרים.mp4'),F(SD+'5 תמונה - נשר מסתער על חזיר בר (אין וידאו, טפרים).png')],
+ miss:['וידאו הטפרים ל-1:57 עוד לא קיים. יש רק תמונה']}},
+
+{id:'s152', tc:'1:52', name:'החזירים בורחים', ref:'שורה 45 · 1:52', owner:'eytan', tag:['chg','מבצע הוחלף: מנדב לאיתן'],
+ notes:[['"חזירים בורחים, אני אעשה". לא מאחור, קדימה: פרונטלי','25:11'],['החזירים פרונטליים ורצים אלינו (לא מלמטה)','25:18'],['לבירור: "פה לא צריך לראות את העיט" מול "אין בזה היגיון גם, אבל יאללה"','25:24']],
+ cl:{can:['first frame ופרומפט: שני חזירים רצים אל המצלמה, בגובה שלהם'],
+ hands:['ההחלטה אם העיט נכנס לפריים'],
+ files:[F(FX+'חזירי בר רצים פול שוט.mp4'),F(FX+'25fps לטיימליין/חזיר בורח pov שוט 25fps.mp4'),F(LB+'חזירי בר בדהרה - שני בוגרים v2.png'),F(DOC,'שורה 57 במסמך הלקוח')]}},
+
+{id:'s154', tc:'1:54', name:'העיט הופך לרחפן (מורף)', ref:'שורה 46 · 1:54', owner:'eytan', tag:['kind','עריכה'],
+ notes:[['"העיט הופך לרחפן, זה המורף". אחרי שהקולוריסט מחזיר, עושים את המורף בין השוטים, "מין אפקט"','25:32']],
+ cl:{can:['טסט מורף חינמי על הגרסאות הנוכחיות (ffmpeg xfade או Fusion), כדי לבחור סגנון לפני הקולור'],
+ hands:['הבחירה (איתן)'],
+ files:[F(BN+'1-48.16 - רחפן מטה וצולל, עיט צולל (מחליף עד 1-53.60).mp4','שוטי הצלילה שלפני'),F(MN+'1-48.16 - רחפן מטה וצולל, עיט צולל - v3 מראה הפוכה.mp4')]}},
+
+{id:'s156', tc:'1:56', name:'מבט הרחפן בשחור לבן: צלילה לטנק', ref:'שורה 48 · 1:56 (חיתוך וצלילה)', owner:'eytan', tag:['chg','מבצע הוחלף: מנדב לאיתן'],
+ notes:[['"צריך לעשות פיצוץ מאוחר יותר. זה כבר כשעושים את השוט"','25:57'],['"אני רוצה להתעכב על השוט הזה שאני עושה". מה משנים: את הלוקיישן, והטנקים נוסעים לצד השני. "פליפ ולוקיישן"','26:37'],['הפיצוץ יבוא רק בסוף. "או אפילו בלי פיצוץ". "אוהב פיצוצים". לא הוכרע','26:45']],
+ cl:{can:['פליפ אופקי מיידי (ffmpeg hflip, חינם) כדי לבדוק את כיוון הנסיעה','לבדוק את כיוון הנסיעה מול הקנה (הלקח מ-10.11)','סידנס על הפריים הירוק החדש של הצלילה (באישור קרדיטים)'],
+ hands:['פיצוץ או בלי (איתן)'],
+ files:[F(GR+'סידנס - צלילת רחפן ירוק - 25fps.mp4','האחרון (11.11, 16:05)'),F(GR+'צלילת רחפן - פריים ראשון ירוק v2 - 1080.png'),F(GR+'צלילת רחפן - פריים 0 בלנדר.png'),F(LB+'25fps לטיימליין/1-53 - הרחפן מתרסק בטנק - שחור לבן - סידנס.mp4'),F(R+'אקספורטים שוטים/shot 12.mp4')]}},
+
+{id:'titles-end', tc:'2:00 וכל הכותרות', name:'כותרת L-SPIKE 2X ושאר הכותרות', ref:'שורה 50 · 2:00, ושורות הכותרת', owner:'eytan', tag:['later','נדחה לסוף'],
+ notes:[['"כותרות" אחרי 1:57, לסוף','26:55'],['גם הכותרות ב-1:10 וב-1:40: "בסדר" ו"לא משנה עכשיו"','22:12']],
+ cl:{can:['רשימת טקסט מוכנה של כל הכותרות','אנימציית L-SPIKE 2X לפי המסמך: V קטן במרכז, קראש זום, והכותרת קריאה אחרי 20 פריימים'],
+ files:[F(DOC,'שורות 62 ו-63 במסמך הלקוח'),F(R+'ספר מותג/key-pages/09-logo-color-versions.png'),F(R+'ספר מותג/Rafael Brandbook 2025.pdf')]}},
+
+{id:'general', tc:'', gen:'כללי', name:'המשימות הכלליות: סביבה ירוקה, סלעים, שני קליפים', ref:'3 המשימות הכלליות בטבלה', owner:'both', tag:['closed','סומן V בזום'], done:true,
+ notes:[['"ואז משימות כלליות, סביבה ירוקה". סומן V','26:58'],['"בסוף להוריד קצת... בסוף בסוף, כשנקבל את האונליין". לבירור למה הכוונה','27:03'],['"סלעים שנראים מלאכותיים: בסדר"','27:06'],['"שני קליפים ללקוח: לא מעניין"','27:11']],
+ cl:{can:['אין צורך עכשיו'],files:[F(GR)]}},
+
+{id:'open-q', tc:'', gen:'כללי', name:'השאלות הפתוחות מהטבלה', ref:'החלק המתקפל בדף של 11.11', owner:'both', tag:['later','נדחה'],
+ notes:[['עברו בקצרה: ריצוד וחוסר מירכוז, פריים אפס במקום השחור, לונג שוט של הלוחמים. "לא הוכרע"','27:39'],['"בוא נעזוב את זה בינתיים"','27:41']],
+ cl:{can:['להחזיר את השאלות הפתוחות לראש הרשימה אחרי הסבב הנוכחי'],
+ files:[F(NA+'output/X2-חלוקת-משימות-11.11.26.html')]}},
+
+{id:'count', tc:'', gen:'כללי', name:'"זה לא 50 שוטים, זה 44"', ref:'הספירה בראש הטבלה', owner:'tbd', tag:['warn','לבירור'],
+ notes:[['באמצע המעבר על 1:01: "יודע מה? זה לא 50 שוטים, זה 44"','12:28']],
+ cl:{can:['להשוות: בטבלה של 11.11 יש 50 שורות שוט, ובמלאי של v3 נספרו 43. לבדוק אם 44 זו הספירה של הלקוח'],
+ files:[F(CT+'shot-inventory.json')]}},
+
+{id:'credits', tc:'', gen:'כללי', name:'קרדיטים ל-Higgsfield', ref:'חדש בזום', owner:'tbd', tag:['warn','כסף: באישור איתן'],
+ notes:[['מבצע Scale: 80 דולר למושב לחודש, 5 מושבים, כ-4,351 דולר לתשלום. "יקר בקטע היסטרי"','02:46'],['"לי יש עוד איזה 600 קרדיטים. אנחנו נצטרך היום לקנות עוד". הדובר לא ברור','06:55'],['המבצע של "שלושה ימים חינם" (Higgsfield דרך Claude) לא ודאי, ונראה שהוא רק למשתמשים חדשים. "צריך לבדוק"','29:44'],['רכישה חד פעמית: כ-80 דולר ל-2,000 קרדיטים. "אין מה לעשות"','30:55'],['המנוי השנתי (6,000 לחודש) מתחדש ב-18 לחודש','31:18'],['"אני קונה את הקרדיטים". "תוסיף את זה לרשימת ההוצאות". סיכום הוצאות ביום שישי','31:48']],
+ cl:{can:['לבדוק את היתרה ב-Higgsfield (קריאה בלבד, חינם)','לבדוק ברשת את תנאי המבצע','אחרי הקנייה: להוסיף שורה לקובץ מעקב ההוצאות (באישור)'],
+ hands:['הקנייה עצמה (כסף)'],
+ files:[F('/Users/baritzy/Projects/New Angle/מעקב הוצאות - איתן ונדב v2.xlsx','רשימת ההוצאות')]}},
+
+{id:'deadline', tc:'', gen:'כללי', name:'לוח זמנים: לסיים היום', ref:'סוף הזום', owner:'both', tag:['kind','דדליין'],
+ notes:[['אחד מכם יוצא ב-16:00 לאסוף את הילדות וממשיך בלילה (לא ברור מי)','01:14'],['"שלחתי לך בוואטסאפ את המסמך העדכני. בוא נהיה בקשר"','27:45'],['"בוא נסיים את זה היום כמה שיותר מהר", כדי לא לעבוד על זה ביום שישי','28:12']],
+ cl:{can:['לסדר את הפריטים הפתוחים לפי מה שאפשר לסיים היום, ולשלוח לאיתן'],
+ files:[F(NA+'output/X2-תיעדוף-שוטים-11.11.26.html')]}}
+];
+
+var U = (function(){
+  function lsGet(k){ try { var v = window.localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
+  function lsSet(k, v){ try { window.localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  function lsDel(k){ try { window.localStorage.removeItem(k); } catch(e){} }
+  function enc(obj){ var s = btoa(unescape(encodeURIComponent(JSON.stringify(obj)))); return s.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+  function dec(str){ try { var s = str.replace(/-/g,'+').replace(/_/g,'/'); while (s.length % 4) s += '='; return JSON.parse(decodeURIComponent(escape(atob(s)))); } catch(e){ return null; } }
+  function readHash(){ var m = /(?:^#|&)s=([^&]+)/.exec(location.hash || ''); return m ? dec(m[1]) : null; }
+  function clearHash(){ try { history.replaceState(null, '', location.pathname + location.search); } catch(e){ try { location.hash = ''; } catch(e2){} } }
+  var tt;
+  function toast(msg){ var t = document.getElementById('toast'); if (!t) return; t.textContent = msg; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(function(){ t.classList.remove('show'); }, 2600); }
+  function copy(text, okMsg, fail){
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(function(){ toast(okMsg); }, fail); return; }
+    } catch(e){}
+    fail();
+  }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  return {lsGet:lsGet, lsSet:lsSet, lsDel:lsDel, enc:enc, readHash:readHash, clearHash:clearHash, toast:toast, copy:copy, esc:esc};
+})();
+
+(function(){
+  var KEY = 'x2-zoom-1211-emphases-v1', FKEY = 'x2-zoom-1211-filter';
+  var OWN = {eytan:'איתן', nadav:'נדב', both:'שניהם', tbd:'לבירור'}, OC = {eytan:'e', nadav:'n', both:'b', tbd:'t'}, CO = {e:'eytan', n:'nadav', b:'both', t:'tbd'};
+  var byId = {}; ITEMS.forEach(function(it){ byId[it.id] = it; });
+  function blank(){ return {o:{}, d:{}}; }
+  function normalize(x){
+    var s = blank(); if (!x) return s;
+    if (x.o) Object.keys(x.o).forEach(function(id){ if (byId[id] && CO[x.o[id]]) s.o[id] = x.o[id]; });
+    if (x.d) Object.keys(x.d).forEach(function(id){ if (byId[id] && (x.d[id] === 0 || x.d[id] === 1)) s.d[id] = x.d[id]; });
+    return s;
+  }
+  function packed(){
+    var o = {}, d = {};
+    Object.keys(st.o).forEach(function(id){ if (st.o[id] !== OC[byId[id].owner]) o[id] = st.o[id]; });
+    Object.keys(st.d).forEach(function(id){ if (st.d[id] !== (byId[id].done ? 1 : 0)) d[id] = st.d[id]; });
+    return {o:o, d:d};
+  }
+  var st, h = U.readHash();
+  if (h && (h.o || h.d)){ st = normalize(h); U.lsSet(KEY, packed()); U.clearHash(); setTimeout(function(){ U.toast('נטען מצב משותף'); }, 300); }
+  else st = normalize(U.lsGet(KEY));
+  function owner(id){ var v = st.o[id]; return v ? CO[v] : byId[id].owner; }
+  function isDone(id){ var v = st.d[id]; return v === undefined ? !!byId[id].done : v === 1; }
+  function save(){ U.lsSet(KEY, packed()); }
+  var filter = 'all'; try { var fv = window.localStorage.getItem(FKEY); if (fv && /^(all|eytan|nadav|open|done|tbd)$/.test(fv)) filter = fv; } catch(e){}
+
+  var TAGC = {chg:'b-chg', closed:'b-closed', later:'b-later', warn:'b-warn', kind:'b-kind'};
+  function fileHtml(f){
+    return '<li><code class="path">' + f.p.split('/').map(function(s){ return s ? '<bdi>' + U.esc(s) + '</bdi>' : ''; }).join('/<wbr>') + '</code><div class="fmeta"><span class="fnote">' + U.esc(f.n) + '</span><button type="button" class="cp" data-p="' + U.esc(f.p) + '">העתק נתיב</button></div></li>';
+  }
+  function list(arr){ return '<ul>' + arr.map(function(x){ return '<li>' + U.esc(x) + '</li>'; }).join('') + '</ul>'; }
+  function ownHtml(it){
+    var o = owner(it.id);
+    return '<div class="own" role="radiogroup" aria-label="מי מבצע">' + ['eytan','nadav','both','tbd'].map(function(v){
+      return '<button type="button" role="radio" data-v="' + v + '" aria-checked="' + (o === v) + '">' + OWN[v] + '</button>';
+    }).join('') + '</div>';
+  }
+  function cardHtml(it){
+    var d = isDone(it.id), c = it.cl || {};
+    var tc = it.tc ? '<span class="tc">' + U.esc(it.tc) + '</span>' : '<span class="tc gen">' + U.esc(it.gen || 'כללי') + '</span>';
+    var tag = it.tag ? '<span class="badge ' + TAGC[it.tag[0]] + '">' + U.esc(it.tag[1]) + '</span>' : '';
+    var notes = '<ul class="notes">' + it.notes.map(function(n){ return '<li>' + U.esc(n[0]) + (n[1] ? '<span class="z" title="דקה בהקלטת הזום">זום ' + U.esc(n[1]) + '</span>' : '') + '</li>'; }).join('') + '</ul>';
+    var cl = '<details class="cl"><summary>איפה Claude יכול לעבוד + חומרים</summary>' +
+      (c.can && c.can.length ? '<h4>מה Claude יכול לעשות</h4>' + list(c.can) : '') +
+      (c.hands && c.hands.length ? '<h4>צריך יד של איתן או נדב</h4>' + list(c.hands) : '') +
+      (c.files && c.files.length ? '<h4>חומרים על הדיסק</h4><ul class="files">' + c.files.map(fileHtml).join('') + '</ul>' : '') +
+      (c.miss && c.miss.length ? '<h4>חסר</h4><ul class="miss">' + c.miss.map(function(x){ return '<li>' + U.esc(x) + '</li>'; }).join('') + '</ul>' : '') +
+      '</details>';
+    return '<li class="card' + (d ? ' done' : '') + '" data-id="' + it.id + '">' +
+      '<button type="button" class="vbtn" role="checkbox" aria-checked="' + d + '" aria-label="בוצע: ' + U.esc(it.name) + '">&#10003;</button>' +
+      '<div class="cbody"><div class="ctop">' + tc + tag + ownHtml(it) + '</div>' +
+      '<div class="cname">' + U.esc(it.name) + '</div><div class="ref">' + U.esc(it.ref) + '</div>' + notes +
+      (it.warn ? '<div class="warn">' + U.esc(it.warn) + '</div>' : '') + cl + '</div></li>';
+  }
+  var cards = document.getElementById('cards');
+  function render(){ cards.innerHTML = ITEMS.map(cardHtml).join(''); applyFilter(); stats(); }
+  function match(it){
+    var o = owner(it.id), d = isDone(it.id);
+    return filter === 'all' || (filter === 'eytan' && (o === 'eytan' || o === 'both')) || (filter === 'nadav' && (o === 'nadav' || o === 'both')) || (filter === 'open' && !d) || (filter === 'done' && d) || (filter === 'tbd' && o === 'tbd');
+  }
+  function applyFilter(){
+    var shown = 0;
+    cards.querySelectorAll('.card').forEach(function(li){ var ok = match(byId[li.getAttribute('data-id')]); li.hidden = !ok; if (ok) shown++; });
+    document.getElementById('empty').hidden = shown > 0;
+    document.querySelectorAll('.filters .f').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-f') === filter)); });
+  }
+  function stats(){
+    var t = ITEMS.length, d = 0, c = {eytan:0, nadav:0, both:0, tbd:0}, fe = 0, fn = 0;
+    ITEMS.forEach(function(it){ var o = owner(it.id); c[o]++; if (isDone(it.id)) d++; if (o === 'eytan' || o === 'both') fe++; if (o === 'nadav' || o === 'both') fn++; });
+    document.getElementById('cnt').textContent = t;
+    document.getElementById('sub1').innerHTML = '<span>איתן ' + c.eytan + '</span> · <span>נדב ' + c.nadav + '</span> · <span>שניהם ' + c.both + '</span> · <span>לבירור ' + c.tbd + '</span>';
+    document.getElementById('sub2').textContent = 'מתוך הזום הפנימי של 12.11. ' + ITEMS.filter(function(it){ return it.done; }).length + ' פריטים נסגרו כבר בזום (מסומנים מראש כבוצעו).';
+    document.getElementById('ptxt').textContent = d + ' מתוך ' + t + ' בוצעו';
+    document.getElementById('pbar').style.width = (t ? Math.round(d / t * 100) : 0) + '%';
+    var n = {all:t, eytan:fe, nadav:fn, open:t - d, done:d, tbd:c.tbd};
+    Object.keys(n).forEach(function(k){ document.getElementById('n-' + k).textContent = n[k]; });
+  }
+  cards.addEventListener('click', function(e){
+    var cp = e.target.closest('.cp');
+    if (cp){ var p = cp.getAttribute('data-p'); U.copy(p, 'הנתיב הועתק', function(){ try { window.prompt('העתיקו את הנתיב:', p); } catch(x){} }); return; }
+    var li = e.target.closest('.card'); if (!li) return; var id = li.getAttribute('data-id');
+    if (e.target.closest('.vbtn')){
+      var on = !isDone(id); st.d[id] = on ? 1 : 0;
+      li.classList.toggle('done', on); li.querySelector('.vbtn').setAttribute('aria-checked', String(on));
+      save(); stats(); if (filter === 'open' || filter === 'done') applyFilter();
+    } else {
+      var rb = e.target.closest('.own button'); if (!rb) return;
+      var v = rb.getAttribute('data-v'); st.o[id] = OC[v];
+      li.querySelectorAll('.own button').forEach(function(b){ b.setAttribute('aria-checked', String(b === rb)); });
+      save(); stats(); if (filter === 'eytan' || filter === 'nadav' || filter === 'tbd') applyFilter();
+    }
+  });
+  document.querySelector('.filters').addEventListener('click', function(e){
+    var b = e.target.closest('.f'); if (!b) return; filter = b.getAttribute('data-f');
+    try { window.localStorage.setItem(FKEY, filter); } catch(x){} applyFilter();
+  });
+  document.getElementById('share').addEventListener('click', function(){
+    var url = location.href.split('#')[0] + '#s=' + U.enc(packed());
+    var box = document.getElementById('sharebox'), inp = document.getElementById('shareurl');
+    inp.value = url;
+    U.copy(url, 'הקישור עם המצב הנוכחי הועתק', function(){ box.classList.add('show'); inp.focus(); inp.select(); U.toast('העתיקו את הקישור מהתיבה'); });
+  });
+  document.getElementById('reset').addEventListener('click', function(){
+    var ok = true; try { ok = window.confirm('לאפס את כל הסימונים (מי מבצע ומה בוצע)?'); } catch(e){}
+    if (!ok) return; U.lsDel(KEY); st = blank(); render(); U.toast('אופס');
+  });
+  try { if (window.matchMedia && window.matchMedia('(max-width:640px)').matches) document.getElementById('sum').open = false; } catch(e){}
+  render();
+})();
+</script>
+</body>
+</html>
