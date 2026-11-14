@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>X2 · צ'קליסט תיקונים 14.11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&family=Rubik:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f9;--surface:#ffffff;--surface-2:#eef1f5;--fg:#14181f;--muted:#56606e;--line:#d9dee5;--line-strong:#b8c0cb;
+--accent:#1d4fa8;--accent-fg:#ffffff;--nadav:#6b3fa0;--nadav-fg:#ffffff;--both:#0f6b6b;--both-fg:#ffffff;
+--ok:#14683a;--ok-bg:#dcf1e3;--wait:#8a5200;--wait-bg:#fbebcc;--doubt:#a3243f;--doubt-bg:#fadde3;--cancel:#4b5563;--cancel-bg:#e5e7eb;
+--focus:#1d4fa8;color-scheme:light;
+--font-body:'Heebo',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+--font-head:'Rubik','Heebo',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+--font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f1319;--surface:#171c24;--surface-2:#1e242e;--fg:#e6e9ee;--muted:#9aa5b4;--line:#2a323d;--line-strong:#3d4856;
+--accent:#7fa8f0;--accent-fg:#0b1320;--nadav:#c4a0ef;--nadav-fg:#1a1024;--both:#6fd3cf;--both-fg:#06201f;
+--ok:#7ad9a0;--ok-bg:#12301f;--wait:#f1c36b;--wait-bg:#3a2a0b;--doubt:#f09aaa;--doubt-bg:#3d151f;--cancel:#aab3bf;--cancel-bg:#2a2f37;
+--focus:#7fa8f0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1319;--surface:#171c24;--surface-2:#1e242e;--fg:#e6e9ee;--muted:#9aa5b4;--line:#2a323d;--line-strong:#3d4856;
+--accent:#7fa8f0;--accent-fg:#0b1320;--nadav:#c4a0ef;--nadav-fg:#1a1024;--both:#6fd3cf;--both-fg:#06201f;
+--ok:#7ad9a0;--ok-bg:#12301f;--wait:#f1c36b;--wait-bg:#3a2a0b;--doubt:#f09aaa;--doubt-bg:#3d151f;--cancel:#aab3bf;--cancel-bg:#2a2f37;
+--focus:#7fa8f0;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.55;overflow-x:hidden}
+.wrap{max-width:900px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 72px}
+h1,h2,h3{font-family:var(--font-head);line-height:1.25;margin:0}
+h1{font-size:clamp(1.5rem,5vw,2.1rem);font-weight:700}
+.lede{margin:.5rem 0 0;max-width:70ch;color:var(--muted)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+button{font:inherit;color:inherit}
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:16px}
+.who{background:var(--surface);border:1px solid var(--line);border-inline-start:6px solid var(--accent);border-radius:10px;padding:10px 14px}
+.who.n{border-inline-start-color:var(--nadav)}
+.who h3{font-size:.98rem}
+.who ul{margin:6px 0 0;padding-inline-start:1.1em;font-size:.92rem;display:grid;gap:3px}
+.plbl{display:flex;justify-content:space-between;gap:8px;font-size:.9rem;color:var(--muted);margin-top:18px}
+.plbl b{color:var(--fg);font-variant-numeric:tabular-nums}
+.bar{height:12px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .25s}
+.filters{position:sticky;top:0;z-index:30;background:var(--bg);display:flex;flex-wrap:wrap;gap:8px;padding:12px 0;margin-top:14px;border-bottom:1px solid var(--line)}
+.f{cursor:pointer;border:1px solid var(--line-strong);background:var(--surface);padding:6px 13px;border-radius:999px;font-size:.9rem;min-height:38px}
+.f[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.f span{font-family:var(--font-mono);font-size:.8rem;margin-inline-start:4px;opacity:.75}
+.cards{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:12px}
+.card{display:grid;grid-template-columns:56px minmax(0,1fr);gap:4px 14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card[hidden]{display:none}
+.vbtn{width:52px;height:52px;border-radius:12px;border:2px solid var(--line-strong);background:var(--surface);cursor:pointer;display:grid;place-items:center;font-size:1.7rem;font-weight:700;color:transparent;line-height:1}
+.vbtn:hover{border-color:var(--ok)}
+.vbtn[aria-checked="true"]{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.cbody{min-width:0}
+.ctop{display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap}
+.tc{font-family:var(--font-mono);font-weight:600;font-size:1.05rem;font-variant-numeric:tabular-nums;color:var(--accent);direction:rtl;unicode-bidi:isolate}
+.badge{display:inline-flex;align-items:center;font-size:.74rem;font-weight:700;line-height:1.4;padding:1px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.s-todo{color:var(--accent);background:var(--surface-2)}
+.s-client{color:var(--doubt);background:var(--doubt-bg)}
+.s-later{color:var(--wait);background:var(--wait-bg)}
+.s-done{color:var(--ok);background:var(--ok-bg)}
+.s-cancel{color:var(--cancel);background:var(--cancel-bg)}
+.o{font-size:.74rem;font-weight:700;padding:2px 9px;border-radius:999px;margin-inline-start:auto;white-space:nowrap}
+.o-eytan{background:var(--accent);color:var(--accent-fg)}
+.o-nadav{background:var(--nadav);color:var(--nadav-fg)}
+.o-both{background:var(--both);color:var(--both-fg)}
+.o-tbd{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-strong)}
+.cname{font-family:var(--font-head);font-weight:700;font-size:1.06rem;margin-top:4px;overflow-wrap:anywhere}
+.lbl{font-size:.8rem;font-weight:700;color:var(--muted);margin-top:8px}
+.txt{font-size:.94rem;margin:2px 0 0;overflow-wrap:anywhere}
+.do{margin:2px 0 0;padding-inline-start:1.15em;display:grid;gap:4px}
+.do li{font-size:.94rem;overflow-wrap:anywhere}
+.z{display:inline-block;font-family:var(--font-mono);font-size:.7rem;font-weight:600;color:var(--muted);border:1px solid var(--line-strong);border-radius:4px;padding:0 4px;margin-top:8px;direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.card.done .cbody{opacity:.55}
+.card.done .cname{text-decoration:line-through;text-decoration-thickness:1.5px}
+.note{font-size:.84rem;color:var(--muted);margin-top:18px}
+.btn{cursor:pointer;border:1px solid var(--line-strong);background:var(--surface);padding:6px 14px;border-radius:999px;font-size:.88rem;min-height:38px}
+@media (max-width:640px){
+.card{grid-template-columns:42px minmax(0,1fr);gap:4px 10px;padding:12px 10px}
+.vbtn{width:42px;height:42px;font-size:1.4rem}
+.do{padding-inline-start:1em}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+@media print{.filters,.btn{display:none!important}.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1>X2 רפאל · צ'קליסט תיקונים</h1>
+<p class="lede">הזום של איתן ונדב, 14.11.26 בשעה 17:41, בערך 39 דקות. עברנו על ההערות של איתן שמואלוף מהזום של 13.11, לפי הטיים קוד בסרט. בכל פריט: מה הלקוח העיר, מה החלטנו לעשות, מי עושה. התג הקטן בתחתית כל כרטיס הוא הדקה בהקלטה של הזום, למי שרוצה לשמוע שוב.</p>
+<div class="split">
+<div class="who"><h3>איתן, עכשיו</h3><ul><li>שני פריימים של הסלע (1:40) לאישור הלקוח, ישן מול חדש</li><li>הסיכום הזה</li><li>הצלב על הטאבלט (1:32)</li></ul></div>
+<div class="who n"><h3>נדב, עכשיו</h3><ul><li>הצלילה: שוט המדיום של העיט, הנחיתה של העיט והצלילה של הרחפן (1:46 עד 1:51)</li></ul></div>
+</div>
+<div class="plbl"><span>התקדמות</span><b id="ptxt"></b></div>
+<div class="bar"><i id="pbar"></i></div>
+</header>
+
+<nav class="filters" id="filters" aria-label="סינון"></nav>
+<ul class="cards" id="cards"></ul>
+
+<p class="note">הסימונים נשמרים בדפדפן של מי שמסמן, בכל מכשיר בנפרד. אם איתן מסמן, נדב לא רואה את זה אצלו. <button class="btn" id="reset" type="button">איפוס הסימונים</button></p>
+<p class="note">נכתב מתמלול אוטומטי של הקלטת הזום. איפה שהתמלול לא היה ברור, כתוב "לבירור".</p>
+</div>
+
+<script>
+var ITEMS = [
+{id:'t027', tc:'0:27', name:'מבט העיט (POV)', st:'done', own:'tbd',
+ client:'ה-POV של העיט לא מתחבר לשוט הקודם.',
+ doit:['בוצע: ה-POV הוחלף בעריכה, והשוט מסתדר על הטיימליין של האופליין.'], z:'09:01'},
+{id:'t108', tc:'1:08', name:'הירידה מגזע העץ', st:'cancel', own:'tbd',
+ client:'להוריד את הירידה מגזע העץ כדי לחסוך זמן.',
+ doit:['לא קורה. בסוף הלקוח ירד מזה, והשוט נשאר.'], z:'10:00'},
+{id:'t111a', tc:'1:11', name:'מעבר לשחור ותיקון הגליץ\'', st:'done', own:'tbd',
+ client:'',
+ doit:['בוצע: נוסף fade to black, והגליץ\' תוקן.'], z:'11:22'},
+{id:'t111b', tc:'1:11', name:'שלושה לוקיישנים שונים באותו רצף', st:'todo', own:'tbd',
+ client:'',
+ doit:['אותה דמות, חותכים בין מצלמות, אבל כל שוט נראה כמו מקום אחר. זה לא נראה אותו עולם.','להחליף רק את הלונג שוט לנוף של שאר השוטים, ואולי להוריד את השיחים מאחור. המטרה: שייראה אותו מקום.'], z:'11:35'},
+{id:'t111c', tc:'1:11', name:'האבן מקדימה נראית מונפשת', st:'client', own:'tbd',
+ client:'אבנים.',
+ doit:['לעצב מחדש את האבן שבקדמת הפריים, כי היא נראית אנימציה.','לפני שמרנדרים: לשלוח ללקוח פריים עם הלוק של האבן, לאישור.','אחרי אישור: לרנדר את השוט מחדש.'], z:'12:38'},
+{id:'t111d', tc:'1:11', name:'שמיים אפורים, עיט ריאליסטי יותר', st:'later', own:'tbd',
+ client:'',
+ doit:['להפוך את השמיים לאפורים.','העיט צריך להיות קצת יותר ריאליסטי.','זה שלנו, לא של הלקוח. עושים בסוף.'], z:'13:31'},
+{id:'t115', tc:'1:15 עד 1:17', name:'כנפי העיט נעצרות', st:'todo', own:'tbd',
+ client:'הכנפיים נעצרות באמצע התנועה, ונראה מודבק גם ב-1:16.',
+ doit:['לייצר בערך את אותו שוט מחדש, רק לתקן את התנועה.','לתקן גם את הצבע: כרגע הוא חלבי.','תיקון קטן.'], z:'14:29'},
+{id:'t117a', tc:'1:17', name:'קיצור בגלל הקריינות, הטאבלט אחורה', st:'done', own:'tbd',
+ client:'לקצר בגלל הקריין ולהחזיר את הטאבלט אחורה.',
+ doit:['בוצע: זו הייתה טעות עריכה, והיא תוקנה.'], z:'15:23'},
+{id:'t117b', tc:'1:17', name:'איפה השלט מתחיל', st:'client', own:'eytan',
+ client:'',
+ doit:['בסרטון המקורי השלט מתחיל ממקום אחר. אצלנו העברנו את השלט למקום, חתכנו איפה שהוא נגמר, ונתנו את כל התנועה.','לשאול את הלקוח לקראת הסוף: לייצר שלט שמתחיל כך מההתחלה, או להשאיר? השארה חוסכת עבודה.'], z:'15:39'},
+{id:'t120a', tc:'1:20', name:'בולט טיים: העשן', st:'todo', own:'tbd',
+ client:'לתקן את העשן.',
+ doit:['העשן של הבית נראה מודבק כשהרחפן עובר דרכו.','לייצר עשן בנפרד ולשים אותו בפורגראונד באפטר, כך שהרחפן עובר מאחוריו. הרחפן נשאר באותו מקום.'], z:'16:26'},
+{id:'t120b', tc:'1:20', name:'בולט טיים: 90 מעלות', st:'client', own:'eytan',
+ client:'תחילת השוט לא נכונה בגלל הקריינות. המצלמה צריכה ללכת קדימה עד 90 מעלות.',
+ doit:['שמנו בצד. לדעתנו יותר יפה כמו שזה עכשיו, כי זה נותן תנועה במקום שהיה סטטי הרבה זמן.','לשאול את הלקוח אם הוא עדיין רוצה.'], z:'17:33'},
+{id:'t131', tc:'1:31', name:'ריאליזם לעיט', st:'later', own:'tbd',
+ client:'',
+ doit:['שוט שצריך בו רק ריאליזם לעיט.','זה בשבילנו, לאיכות שלנו. עושים אחרי שהלקוח רואה.','לבירור: בתמלול נשמע "31", כנראה 1:31.'], z:'10:54'},
+{id:'t132', tc:'1:32 עד 1:33', name:'הצלב על הטאבלט (מסך 3)', st:'todo', own:'eytan',
+ client:'הצלב זז למרכז הטנק על הטאבלט רק כשלוחצים.',
+ doit:['הצלב צריך להישאר כל הזמן במרכז הפריים. רק הריבוע מקיף את הטנק ועוקב אחריו.','כל השוט בסדר, כולל הקפיצות של הריבועים. הבעיה רק בהתחלה: להזיז את הצלב בערך מילימטר ימינה, לאמצע הריבוע.','איתן עושה, כי הוא בנה את המסכים.'], z:'18:38'},
+{id:'t134a', tc:'1:34', name:'הרחפן בשמיים: חוזרים לשוט המקורי', st:'todo', own:'tbd',
+ client:'הלקוח אמר שהשוט הנוכחי נראה כמו צעצוע של עלי אקספרס, ושהמקורי הרבה יותר טוב.',
+ doit:['להחליף לשוט המקורי מהקאט הישן, בהיפוך כמו מראה ובגודל כמו שם.','לתקן את הכיתוב EXPLOSIVE, שלא יהיה הפוך.','שמיים אפורים במקום כחולים.','ההשתקפות בעדשה: משהו שקשור ללוקיישן, כלומר הטנקים, ולא סתם.','זה שוט ארוך שחוזרים אליו שלוש פעמים. כבר עשינו את זה פעם, אז זו בעיקר החלפה.'], z:'21:21'},
+{id:'t134b', tc:'1:34', name:'סוף השוט: רחפן ישר, מצלמה למטה', st:'client', own:'tbd',
+ client:'',
+ doit:['בסוף השוט הלקוח רוצה שהרחפן יהיה ישר ולא ב-30 מעלות, כי זה עוד לפני ה-45 מעלות של ההתקרבות. המצלמה צריכה להיות מכוונת למטה.','זה ג\'נרוט מחדש. עושים רק אם יש זמן.'], z:'22:11'},
+{id:'t136', tc:'1:36', name:'החזירים: הרגליים האחוריות', st:'todo', own:'tbd',
+ client:'כמה פריימים אחורה, שיראו את הרגליים האחוריות זזות. נראה שהם מרחפים באוויר. החזירים מקדימה עושים צעד ונעצרים.',
+ doit:['אפשר לפתוח את השוט כך שרואים את הרגליים זזות.','מעבירים לעורך את השוט כמו שהוא, והוא מחליט איפה לחתוך.'], z:'24:03'},
+{id:'t140', tc:'1:40', name:'הסלע (שני שוטים)', st:'client', own:'eytan',
+ client:'הלקוח לא אוהב את הסלע. הוא נראה מצויר.',
+ doit:['אותו סלע בשני השוטים, עם טקסטורה טובה וריאליסטית יותר: השוט שבו הרחפן ממריא רחוק, והשוט שבו החייל מתכופף עם המכשיר.','לשלוח ללקוח את שניהם עכשיו, ישן מול חדש זה ליד זה, לפני הכל.','אחרי אישור: לייצר את השוטים מחדש.'], z:'27:37'},
+{id:'tscr5', tc:'מסך 5', name:'הריבוע החיצוני', st:'later', own:'eytan',
+ client:'',
+ doit:['יש ריבוע חיצוני גדול וריבוע פנימי עם הכוונת. אחרי הלחיצה צריך להיות רק ריבוע אחד, אז להוריד את החיצוני.','הלקוח לא העיר על זה. זה שלנו, עושים בסוף.'], z:'26:10'},
+{id:'t144', tc:'1:44', name:'שמיים, ו-EXPLOSIVE בשוט ההמשך', st:'later', own:'tbd',
+ client:'השמיים בהירים וכחולים, ובשאר שוטי הרחפן אפורים.',
+ doit:['בתיקון הצבע כל השמיים אפורים, לאורך כל הסרט.','זה שוט ההמשך של 1:34. אם 1:34 יוצא בפליפ, גם פה צריך לתקן את EXPLOSIVE ולרנדר מחדש.'], z:'28:57'},
+{id:'t146', tc:'1:46 עד 1:47', name:'העין של העיט: שוט מדיום חדש', st:'todo', own:'nadav',
+ client:'השוט יפה, אבל העיט לא מתחיל לזוז בו, ולכן החיבור לצלילה מוזר.',
+ doit:['שוט מדיום חדש: רואים את העין, את הצוואר וקצת מהכנפיים. העיט מתחיל להוריד את הראש ולרדת.','לחתוך את שוט העין בחצי, אחרי המצמוץ, ולפתוח לשוט הגדול יותר.'], z:'32:11'},
+{id:'t148', tc:'1:48 עד 1:51', name:'הצלילה והנחיתה של העיט', st:'todo', own:'nadav',
+ client:'הלקוח לא אוהב את הנחיתה. העיט נראה כמו צעצוע, ולא רואים את הצלילה שלו.',
+ doit:['נדב יצר שוט חדש בפרומט ולא בבלנדר, כי בבלנדר זה יצא רובוטי.','השניות הראשונות לא טובות. מהרגע שהעיט מתחיל לרדת, השוט שמיש, בערך 6 השניות האחרונות.','לא משנה ללקוח שזה לא מאותו כיוון של הרחפן. צריך עוד לעבוד על החיתוך.'], z:'33:17'},
+{id:'t150a', tc:'1:50', name:'הצלילה של הרחפן', st:'todo', own:'nadav',
+ client:'הרחפן מתחיל כבר על רקע של עצים והר, ולכן לא מרגישים את הצלילה.',
+ doit:['שהשוט יתחיל בשמיים, וההר יהיה בצד. התנועה בסדר, צריך בעיקר להחליף רקע.','לקחת את שוט העיט מ-Higgsfield (בתמלול נשמע "X-Field", לבירור) ולתת לקלוד: המיקום של העיט וזווית המצלמה מהשוט הזה, ולבנות אותו דבר בבלנדר עם הרחפן.','ככה התנועות תואמות, ואפשר לעשות את המורף ואת החילופים בין העיט לרחפן.'], z:'34:38'},
+{id:'t150b', tc:'1:50', name:'ה-POV של הרחפן על הטנקים (שחור לבן)', st:'todo', own:'tbd',
+ client:'המבט של הרחפן על הטנקים צריך להיות מהיר יותר.',
+ doit:['התנועה איטית יותר מהתנועות המהירות של השוטים שמסביב.','אי אפשר פשוט להאיץ, כי אז הטנקים משנים את הקצב שלהם.','לייצר את ה-POV מחדש עם תנועת מצלמה הרבה יותר מהירה, והטנקים בצד הנכון.','עושים בסוף, אחרי הצלילה.'], z:'31:02'}
+];
+
+var ST = {todo:['לעשות','s-todo'], client:['צריך אישור או תשובה מהלקוח','s-client'], later:['שלנו, בסוף','s-later'], done:['בוצע','s-done'], cancel:['בוטל','s-cancel']};
+var OWN = {eytan:['איתן','o-eytan'], nadav:['נדב','o-nadav'], both:['שניהם','o-both'], tbd:['','']};
+var KEY = 'x2-checklist-1411';
+var state = {};
+try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch(e) { state = {}; }
+function isDone(it){ return (it.id in state) ? state[it.id] : (it.st === 'done' || it.st === 'cancel'); }
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {} }
+
+function el(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+var list = document.getElementById('cards');
+function toMin(tc){ var m = /(\d+):(\d+)/.exec(tc); return m ? (+m[1]) * 60 + (+m[2]) : 999; }
+ITEMS.sort(function(a, b){ return toMin(a.tc) - toMin(b.tc); });
+
+ITEMS.forEach(function(it){
+  var li = el('li', 'card'); li.dataset.id = it.id; li.dataset.st = it.st;
+  var b = el('button', 'vbtn', '✓'); b.type = 'button'; b.setAttribute('role', 'checkbox');
+  b.setAttribute('aria-label', 'סיימנו: ' + it.tc + ' ' + it.name);
+  b.addEventListener('click', function(){ state[it.id] = !isDone(it); save(); paint(); });
+  li.appendChild(b);
+  var body = el('div', 'cbody');
+  var top = el('div', 'ctop');
+  top.appendChild(el('span', 'tc', it.tc));
+  top.appendChild(el('span', 'badge ' + ST[it.st][1], ST[it.st][0]));
+  if (it.own !== 'tbd') top.appendChild(el('span', 'o ' + OWN[it.own][1], OWN[it.own][0]));
+  body.appendChild(top);
+  body.appendChild(el('div', 'cname', it.name));
+  if (it.client) { body.appendChild(el('div', 'lbl', 'מה הלקוח העיר (13.11)')); body.appendChild(el('p', 'txt', it.client)); }
+  body.appendChild(el('div', 'lbl', 'מה החלטנו'));
+  var ul = el('ul', 'do'); it.doit.forEach(function(t){ ul.appendChild(el('li', null, t)); }); body.appendChild(ul);
+  body.appendChild(el('span', 'z', 'בזום ' + it.z));
+  li.appendChild(body);
+  list.appendChild(li);
+});
+
+var FILTERS = [['all','הכל'],['open','פתוח'],['todo','לעשות'],['client','מול הלקוח'],['later','שלנו בסוף'],['eytan','איתן'],['nadav','נדב'],['closed','סגור']];
+var cur = 'all';
+try { cur = localStorage.getItem(KEY + '-f') || 'all'; } catch(e) {}
+var nav = document.getElementById('filters');
+function match(it, f){
+  var d = isDone(it);
+  if (f === 'all') return true;
+  if (f === 'open') return !d;
+  if (f === 'closed') return d;
+  if (f === 'eytan' || f === 'nadav') return it.own === f;
+  return it.st === f;
+}
+FILTERS.forEach(function(f){
+  var b = el('button', 'f', f[1]); b.type = 'button'; b.dataset.f = f[0];
+  b.appendChild(el('span'));
+  b.addEventListener('click', function(){ cur = f[0]; try { localStorage.setItem(KEY + '-f', cur); } catch(e) {} paint(); });
+  nav.appendChild(b);
+});
+
+function paint(){
+  var done = 0;
+  ITEMS.forEach(function(it){
+    var d = isDone(it); if (d) done++;
+    var li = list.querySelector('[data-id="' + it.id + '"]');
+    li.classList.toggle('done', d);
+    li.querySelector('.vbtn').setAttribute('aria-checked', d ? 'true' : 'false');
+    li.hidden = !match(it, cur);
+  });
+  nav.querySelectorAll('.f').forEach(function(b){
+    b.setAttribute('aria-pressed', b.dataset.f === cur ? 'true' : 'false');
+    b.querySelector('span').textContent = ITEMS.filter(function(it){ return match(it, b.dataset.f); }).length;
+  });
+  document.getElementById('ptxt').textContent = done + ' מתוך ' + ITEMS.length;
+  document.getElementById('pbar').style.width = Math.round(done / ITEMS.length * 100) + '%';
+}
+document.getElementById('reset').addEventListener('click', function(){ state = {}; save(); paint(); });
+paint();
+</script>
+</body>
+</html>
